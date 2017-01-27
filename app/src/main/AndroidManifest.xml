@@ -53,7 +53,6 @@
             android:name=".MainActivity"
             android:label="Meet Me"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Contacts" />
     </application>
 
 </manifest>
