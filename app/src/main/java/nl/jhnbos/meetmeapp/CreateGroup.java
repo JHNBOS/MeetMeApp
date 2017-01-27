@@ -97,19 +97,19 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
     //BEGIN OF METHODS
 
     //ADD GROUP
-    private void addGroup(final String name, final String email) {
+    private void addGroup(String name, String email) {
         try {
             String url1 = GET_ALL_GROUPS_URL+"?email='"+email+"'";;
             getData(url1);
 
             if(controlList.contains(name)){
+                Toast.makeText(this, "Group name is already taken!", Toast.LENGTH_LONG).show();
+            } else {
                 String response = http.sendGet(ADDGROUP_URL + "?name=" + name + "&email=" + email);
 
                 if(response.equals(name)){
                     addGroupMember(name, email);
                 }
-            } else {
-                Toast.makeText(this, "Please enter a valid group name!", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -122,10 +122,10 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
         try {
             String response = http.sendGet(ADDGROUPMEMBER_URL + "?name=" + name + "&email=" + email);
 
-            if(!response.equals(name) || name.isEmpty() || !name.contains("@") || !name.contains(".")){
-                Toast.makeText(this, "Problem with creating group!", Toast.LENGTH_LONG).show();
-            } else{
+            if(response.equals(name)){
                 CreateGroup.this.onBackPressed();
+            } else{
+                Toast.makeText(this, "Problem with creating group!", Toast.LENGTH_LONG).show();
             }
 
         } catch (Exception e) {
