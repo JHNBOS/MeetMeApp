@@ -105,11 +105,11 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
             if(controlList.contains(name)){
                 String response = http.sendGet(ADDGROUP_URL + "?name=" + name + "&email=" + email);
 
-                if(!response.equals(name) || name.isEmpty()){
-                    Toast.makeText(this, "Please enter a valid group name!", Toast.LENGTH_LONG).show();
+                if(response.equals(name)){
+                    addGroupMember(name, email);
                 }
             } else {
-                addGroupMember(name, email);
+                Toast.makeText(this, "Please enter a valid group name!", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -144,8 +144,8 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
 
                     for (int i = 0; i < ja.length(); i++) {
                         JSONObject jo = ja.getJSONObject(i);
-                        Log.d("Contact", jo.getString("email"));
-                        controlList.add(jo.getString("email"));
+                        Log.d("Control Group", jo.getString("name"));
+                        controlList.add(jo.getString("name"));
                     }
 
                 } catch (JSONException e) {

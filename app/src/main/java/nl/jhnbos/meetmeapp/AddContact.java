@@ -133,7 +133,7 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
 
                     for (int i = 0; i < ja.length(); i++) {
                         JSONObject jo = ja.getJSONObject(i);
-                        Log.d("Contact", jo.getString("email"));
+                        Log.d("Control Contact", jo.getString("email"));
                         controlList.add(jo.getString("email"));
                     }
 
