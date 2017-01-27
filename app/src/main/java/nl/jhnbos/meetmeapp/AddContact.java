@@ -35,7 +35,7 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
     private EditText contactEmailField;
     private Button addContactButton;
     private static final String ADDCONTACT_URL = "http://jhnbos.nl/android/addContact.php";
-    public static final String GET_ALL_CONTACTS_URL = "http://jhnbos.nl/android/getAllContacts.php";
+    public static final String GET_ALL_USERS_URL = "http://jhnbos.nl/android/getAllUsers.php";
     private String currentUser;
     private String contactEmail;
     public StringRequest stringRequest1;
@@ -62,9 +62,6 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
         addContactButton.setOnClickListener(this);
 
         http = new HTTP();
-
-        String url1 = GET_ALL_CONTACTS_URL+"?email='"+currentUser+"'";
-        getData(url1);
     }
 
     @Override
@@ -109,10 +106,15 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
     //ADD CONTACT
     private void addContact(final String contact_email, final String email) {
         try {
-            String response = http.sendGet(ADDCONTACT_URL + "?name=" + contact_email + "&email=" + email);
+            String url1 = GET_ALL_USERS_URL;
+            getData(url1);
 
-            if(controlList.contains(response)){
-                AddContact.this.onBackPressed();
+            if(controlList.contains(contact_email)){
+                String response = http.sendGet(ADDCONTACT_URL + "?name=" + contact_email + "&email=" + email);
+
+                if(response.equals(contact_email)){
+                    AddContact.this.onBackPressed();
+                }
             } else{
                 Toast.makeText(this, "Please enter an existing email address!", Toast.LENGTH_LONG).show();
             }
@@ -131,8 +133,8 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
 
                     for (int i = 0; i < ja.length(); i++) {
                         JSONObject jo = ja.getJSONObject(i);
-                        Log.d("Contact", jo.getString("contact_email"));
-                        controlList.add(jo.getString("contact_email"));
+                        Log.d("Contact", jo.getString("email"));
+                        controlList.add(jo.getString("email"));
                     }
 
                 } catch (JSONException e) {
