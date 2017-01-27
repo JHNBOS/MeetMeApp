@@ -74,7 +74,7 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
             currentUser =  getIntent().getStringExtra("Email");
 
             try{
-                if(contactEmail == "" || contactEmail.isEmpty()){
+                if(contactEmail == "" || contactEmail.isEmpty() || !contactEmail.contains("@") || !contactEmail.contains(".")){
                     Toast.makeText(getApplicationContext(), "Please enter a existing email!", Toast.LENGTH_LONG).show();
                 } else {
                     addContact(contactEmail, currentUser);
@@ -89,32 +89,17 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    //SHOW DIALOG WHEN DELETING CONTACT
-    private void ShowDialog(final String data) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Remove Contact?");
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //TODO
-                //dialog.dismiss();
-
-            }
-        });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //TODO
-                dialog.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
     //ADD CONTACT
     private void addContact(String contact_email, String email) {
         try {
-            http.sendGet(ADDCONTACT_URL + "?name=" + contact_email + "&email=" + email);
-            AddContact.this.onBackPressed();
+            String response = http.sendGet(ADDCONTACT_URL + "?name=" + contact_email + "&email=" + email);
+
+            if(!response.equals(contact_email) || contact_email.isEmpty() || email.isEmpty()
+                    || !contact_email.contains("@") || !contact_email.contains(".")){
+                Toast.makeText(this, "Please enter an existing email address!", Toast.LENGTH_LONG).show();
+            } else{
+                AddContact.this.onBackPressed();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
