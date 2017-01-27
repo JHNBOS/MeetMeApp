@@ -9,24 +9,37 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class AddContact extends AppCompatActivity implements View.OnClickListener {
 
     private EditText contactEmailField;
     private Button addContactButton;
     private static final String ADDCONTACT_URL = "http://jhnbos.nl/android/addContact.php";
+    public static final String GET_ALL_CONTACTS_URL = "http://jhnbos.nl/android/getAllContacts.php";
     private String currentUser;
     private String contactEmail;
+    public StringRequest stringRequest1;
+    public ArrayList<String> controlList;
     private HTTP http;
 
     @Override
@@ -44,10 +57,14 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
 
         contactEmailField = (EditText) findViewById(R.id.contactEditText);
         addContactButton = (Button) findViewById(R.id.addContactsButton);
+        controlList = new ArrayList<>();
 
         addContactButton.setOnClickListener(this);
 
         http = new HTTP();
+
+        String url1 = GET_ALL_CONTACTS_URL+"?email='"+currentUser+"'";
+        getData(url1);
     }
 
     @Override
@@ -90,18 +107,46 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
     //BEGIN OF METHODS
 
     //ADD CONTACT
-    private void addContact(String contact_email, String email) {
+    private void addContact(final String contact_email, final String email) {
         try {
             String response = http.sendGet(ADDCONTACT_URL + "?name=" + contact_email + "&email=" + email);
 
-            if(!response.equals(contact_email) || contact_email.isEmpty() || email.isEmpty()){
-                Toast.makeText(this, "Please enter an existing email address!", Toast.LENGTH_LONG).show();
-            } else{
+            if(controlList.contains(response)){
                 AddContact.this.onBackPressed();
+            } else{
+                Toast.makeText(this, "Please enter an existing email address!", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void getData(String url1){
+        stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jArray = new JSONArray(response);
+                    JSONArray ja = jArray.getJSONArray(0);
+
+                    for (int i = 0; i < ja.length(); i++) {
+                        JSONObject jo = ja.getJSONObject(i);
+                        Log.d("Contact", jo.getString("contact_email"));
+                        controlList.add(jo.getString("contact_email"));
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(AddContact.this, "Error while reading from url", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        VolleySingleton.getInstance(AddContact.this).addToRequestQueue(stringRequest1);
     }
 
     //END OF METHODS

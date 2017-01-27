@@ -73,7 +73,7 @@ public class Login extends AppCompatActivity {
         try {
             String response = http.sendPost(LOGIN_URL + "?email=" + email + "&password=" + password);
 
-            if(!response.equals(email)|| email.isEmpty() || password.isEmpty()){
+            if(!response.equals(email)){
                 Toast.makeText(this, "Invalid username and/or password!", Toast.LENGTH_LONG).show();
             } else {
                 Intent intent = new Intent(Login.this, MainActivity.class);
