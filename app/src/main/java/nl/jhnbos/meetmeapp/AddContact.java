@@ -94,8 +94,7 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
         try {
             String response = http.sendGet(ADDCONTACT_URL + "?name=" + contact_email + "&email=" + email);
 
-            if(!response.equals(contact_email) || contact_email.isEmpty() || email.isEmpty()
-                    || !contact_email.contains("@") || !contact_email.contains(".")){
+            if(!response.equals(contact_email) || contact_email.isEmpty() || email.isEmpty()){
                 Toast.makeText(this, "Please enter an existing email address!", Toast.LENGTH_LONG).show();
             } else{
                 AddContact.this.onBackPressed();

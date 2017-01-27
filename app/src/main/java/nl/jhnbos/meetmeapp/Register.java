@@ -84,8 +84,7 @@ public class Register extends AppCompatActivity {
             String response = http.sendPost(REGISTER_URL + suffix);
 
             if(!response.equals(email) || fname.isEmpty() || lname.isEmpty() || color.isEmpty()
-                    || username.isEmpty() || password.isEmpty() || email.isEmpty() || !email.contains("@")
-                    || !email.contains(".")){
+                    || username.isEmpty() || password.isEmpty() || email.isEmpty()){
                 Toast.makeText(this, "Please fill in all fields!", Toast.LENGTH_LONG).show();
             } else {
                 Intent intent = new Intent(Register.this, Login.class);
