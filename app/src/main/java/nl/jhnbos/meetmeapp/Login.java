@@ -1,11 +1,9 @@
 package nl.jhnbos.meetmeapp;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,25 +18,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Login extends AppCompatActivity {
-    //LAYOUT ITEMS
-    private Button loginButton;
-    private Button registerButton;
-    private EditText emailEditText;
-    private EditText passwordEditText;
-
     //STRINGS
     public static final String EMAIL = "USER_NAME";
     public static final String PASSWORD = "PASSWORD";
     private static final String LOGIN_URL = "http://jhnbos.nl/android/login.php";
     private static final String GET_ALL_USERS_URL = "http://jhnbos.nl/android/getAllUsers.php";
-
-    private HTTP http;
     public StringRequest stringRequest1;
     public HashMap<String, String> controlList;
+    //LAYOUT ITEMS
+    private Button loginButton;
+    private Button registerButton;
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private HTTP http;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,10 +79,10 @@ public class Login extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
-        try{
+        try {
             String response = http.sendPost(LOGIN_URL + "?email=" + email + "&password=" + password);
 
-            if(!response.equals(email + password)){
+            if (!response.equals(email + password)) {
                 Toast.makeText(this, "Invalid username and/or password!", Toast.LENGTH_LONG).show();
             } else {
                 Intent intent = new Intent(Login.this, MainActivity.class);
@@ -126,7 +121,7 @@ public class Login extends AppCompatActivity {
         */
     }
 
-    public void getData(String url1){
+    public void getData(String url1) {
         stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

@@ -14,28 +14,24 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CreateGroup extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText groupNameField;
-    private Button createButton;
+    public static final String GET_ALL_GROUPS_URL = "http://jhnbos.nl/android/getAllGroups.php";
     private static final String ADDGROUP_URL = "http://jhnbos.nl/android/addGroup.php";
     private static final String ADDGROUPMEMBER_URL = "http://jhnbos.nl/android/addGroupMember.php";
-    public static final String GET_ALL_GROUPS_URL = "http://jhnbos.nl/android/getAllGroups.php";
+    public StringRequest stringRequest1;
+    public ArrayList<String> controlList;
+    private EditText groupNameField;
+    private Button createButton;
     private String currentUser;
     private String groupName;
     private HTTP http;
-    public StringRequest stringRequest1;
-    public ArrayList<String> controlList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +55,29 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
         http = new HTTP();
     }
 
+
+
+    /*-----------------------------------------------------------------------------------------------------*/
+    //BEGIN OF LISTENERS
+
+    @Override
+    public void onClick(View v) {
+        if (v == createButton) {
+            groupName = groupNameField.getText().toString();
+            currentUser = getIntent().getStringExtra("Email");
+
+            try {
+                if (groupName == "" || groupName.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please fill in a name for the group!", Toast.LENGTH_LONG).show();
+                } else {
+                    addGroup(groupName, currentUser);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -72,25 +91,13 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    /*-----------------------------------------------------------------------------------------------------*/
-    //BEGIN OF LISTENERS
-
     @Override
-    public void onClick(View v) {
-        if(v == createButton){
-            groupName = groupNameField.getText().toString();
-            currentUser =  getIntent().getStringExtra("Email");
+    public void onResume() {
+        super.onResume();
 
-            try{
-                if(groupName == "" || groupName.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Please fill in a name for the group!", Toast.LENGTH_LONG).show();
-                } else {
-                    addGroup(groupName, currentUser);
-                }
-            } catch(Exception e){
-                e.printStackTrace();
-            }
-        }
+        String url1 = GET_ALL_GROUPS_URL + "?email='" + currentUser + "'";
+        ;
+        getData(url1);
     }
 
 
@@ -101,15 +108,12 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
     //ADD GROUP
     private void addGroup(String name, String email) {
         try {
-            String url1 = GET_ALL_GROUPS_URL+"?email='"+email+"'";;
-            getData(url1);
-
-            if(controlList.contains(name)){
+            if (controlList.contains(name)) {
                 Toast.makeText(this, "Group name is already taken!", Toast.LENGTH_LONG).show();
             } else {
                 String response = http.sendGet(ADDGROUP_URL + "?name=" + name + "&email=" + email);
 
-                if(response.equals(name)){
+                if (response.equals(name)) {
                     addGroupMember(name, email);
                 }
             }
@@ -124,10 +128,10 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
         try {
             String response = http.sendGet(ADDGROUPMEMBER_URL + "?name=" + name + "&email=" + email);
 
-            if(response.equals(name)){
+            if (response.equals(name)) {
                 //Go back to main
                 CreateGroup.this.onBackPressed();
-            } else{
+            } else {
                 Toast.makeText(this, "Problem with creating group!", Toast.LENGTH_LONG).show();
             }
 
@@ -137,7 +141,7 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
 
     }
 
-    public void getData(String url1){
+    public void getData(String url1) {
         stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

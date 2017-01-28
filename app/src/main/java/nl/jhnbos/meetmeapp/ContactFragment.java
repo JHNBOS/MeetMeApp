@@ -35,9 +35,8 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ContactFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemLongClickListener {
+public class ContactFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
 
-    private String email;
     public static final String GET_ALL_CONTACTS_URL = "http://jhnbos.nl/android/getAllContacts.php";
     public static final String DELETE_CONTACT_URL = "http://jhnbos.nl/android/deleteContact.php";
     public ArrayList<String> contactsList;
@@ -45,6 +44,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
     public Button addContact;
     public ArrayAdapter<String> adapter;
     public StringRequest stringRequest1;
+    private String email;
     private HTTP http;
 
     public ContactFragment() {
@@ -55,7 +55,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        RelativeLayout rl = (RelativeLayout )inflater.inflate(R.layout.fragment_contact, container, false);
+        RelativeLayout rl = (RelativeLayout) inflater.inflate(R.layout.fragment_contact, container, false);
 
         //ALLOW HTTP
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -72,6 +72,8 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
         //Listeners
         addContact.setOnClickListener(this);
         lv.setOnItemLongClickListener(this);
+        lv.setOnItemClickListener(this);
+        lv.setClickable(true);
         lv.setLongClickable(true);
 
         registerForContextMenu(lv);
@@ -110,7 +112,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
         dialog.show();
     }
 
-    public void getData(String url1){
+    public void getData(String url1) {
         stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -156,10 +158,10 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
     //BEGIN OF LISTENERS
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
 
-        String url1 = GET_ALL_CONTACTS_URL+"?email='"+email+"'";
+        String url1 = GET_ALL_CONTACTS_URL + "?email='" + email + "'";
         getData(url1);
 
         adapter.clear();
@@ -169,7 +171,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onClick(View v) {
-        if(v == addContact){
+        if (v == addContact) {
             Intent addContactIntent = new Intent(getActivity(), AddContact.class);
 
             addContactIntent.putExtra("Email", email);
@@ -202,6 +204,16 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String selected = (String)parent.getItemAtPosition(position);
+
+        Intent showContact = new Intent(getActivity(), ShowContact.class);
+        showContact.putExtra("Contact", selected);
+
+        startActivity(showContact);
     }
 
     //END OF LISTENERS

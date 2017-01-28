@@ -54,18 +54,19 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddGroupMember"
-            android:label="Add Groupmembers" >
+            android:label="Add Groupmembers">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".ShowMembers"
             android:label="Show Groupmembers">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
+        <activity android:name=".ShowContact"></activity>
     </application>
 
 </manifest>

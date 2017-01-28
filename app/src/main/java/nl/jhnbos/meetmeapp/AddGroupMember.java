@@ -1,15 +1,12 @@
 package nl.jhnbos.meetmeapp;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -25,28 +22,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AddGroupMember extends AppCompatActivity implements View.OnClickListener {
 
-    //STRINGS
-    private String group;
-    private String email;
     public static final String ADD_GROUPMEMBER_URL = "http://jhnbos.nl/android/addGroupMember.php";
     public static final String GET_ALL_CONTACTS_URL = "http://jhnbos.nl/android/getAllContacts.php";
-
     //LISTS
     public ArrayList<String> contactsList;
     public ArrayList<String> selectedList;
-
     //LAYOUT
     public ListView lv;
     public Button addGroupMemberButton;
-
     //OBJECTS
     public ArrayAdapter<String> adapter;
     public StringRequest stringRequest1;
+    //STRINGS
+    private String group;
+    private String email;
     private HTTP http;
 
     @Override
@@ -68,9 +60,6 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
 
         http = new HTTP();
 
-        String url1 = GET_ALL_CONTACTS_URL + "?email='" + email + "'";
-        getData(url1);
-
         //Listeners
         addGroupMemberButton.setOnClickListener(this);
         lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -86,23 +75,23 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        if(v == addGroupMemberButton){
-            try{
+        if (v == addGroupMemberButton) {
+            try {
 
                 SparseBooleanArray checked = lv.getCheckedItemPositions();
 
                 for (int i = 0; i < checked.size(); i++) {
                     int position = checked.keyAt(i);
 
-                    if (checked.valueAt(i)){
-                        String mail = ((TextView)lv.getChildAt(position)).getText().toString();
+                    if (checked.valueAt(i)) {
+                        String mail = ((TextView) lv.getChildAt(position)).getText().toString();
                         Log.d("Mail: ", mail);
-                        selectedList.add(((TextView)lv.getChildAt(position)).getText().toString());
+                        selectedList.add(((TextView) lv.getChildAt(position)).getText().toString());
                     }
                 }
 
                 addGroupMembers(group, selectedList);
-            } catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -121,11 +110,19 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    public void onRestart() {
+        super.onRestart();
+
+        String url1 = GET_ALL_CONTACTS_URL + "?email='" + email + "'";
+        getData(url1);
+    }
+
     //END OF LISTENERS
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    public void getData(String url1){
+    public void getData(String url1) {
         stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -159,7 +156,7 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
     private void addGroupMembers(String group, ArrayList<String> members) {
         try {
             for (int i = 0; i < members.size(); i++) {
-                String response = http.sendGet(ADD_GROUPMEMBER_URL + "?name=" + group + "&email=" + members.get(i)  + "");
+                String response = http.sendGet(ADD_GROUPMEMBER_URL + "?name=" + group + "&email=" + members.get(i) + "");
             }
 
             //Go back to main

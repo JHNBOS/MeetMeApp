@@ -1,10 +1,7 @@
 package nl.jhnbos.meetmeapp;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,14 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class Register extends AppCompatActivity {
+    private static final String REGISTER_URL = "http://jhnbos.nl/android/register.php";
     private int currentColor;
     private EditText editTextFirst;
     private EditText editTextLast;
@@ -28,11 +21,8 @@ public class Register extends AppCompatActivity {
     private EditText editTextUsername;
     private EditText editTextPassword;
     private EditText editTextEmail;
-
     private Button buttonRegister;
     private Button btnPick;
-
-    private static final String REGISTER_URL = "http://jhnbos.nl/android/register.php";
     private HTTP http;
 
     @Override
@@ -98,11 +88,11 @@ public class Register extends AppCompatActivity {
         String email = editTextEmail.getText().toString().toLowerCase();
 
         try {
-            String suffix = "?first_name="+fname+"&last_name="+lname+"&color="+color+"&username="+username+"&password="+password+"&email="+email;
+            String suffix = "?first_name=" + fname + "&last_name=" + lname + "&color=" + color + "&username=" + username + "&password=" + password + "&email=" + email;
             String response = http.sendPost(REGISTER_URL + suffix);
 
-            if(!response.equals(email) || fname.isEmpty() || lname.isEmpty() || color.isEmpty()
-                    || username.isEmpty() || password.isEmpty() || email.isEmpty()){
+            if (!response.equals(email) || fname.isEmpty() || lname.isEmpty() || color.isEmpty()
+                    || username.isEmpty() || password.isEmpty() || email.isEmpty()) {
                 Toast.makeText(this, "Please fill in all fields!", Toast.LENGTH_LONG).show();
             } else {
                 super.onBackPressed();
@@ -128,6 +118,7 @@ public class Register extends AppCompatActivity {
                 TextView colorView = (TextView) findViewById(R.id.colorEditText);
                 colorView.setText(hex.toUpperCase());
             }
+
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
                 Toast.makeText(getApplicationContext(), "Action canceled!", Toast.LENGTH_SHORT).show();

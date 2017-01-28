@@ -1,14 +1,8 @@
 package nl.jhnbos.meetmeapp;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.StrictMode;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,22 +18,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class AddContact extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String GET_ALL_USERS_URL = "http://jhnbos.nl/android/getAllUsers.php";
+    private static final String ADDCONTACT_URL = "http://jhnbos.nl/android/addContact.php";
+    private StringRequest stringRequest1;
+    private ArrayList<String> controlList;
     private EditText contactEmailField;
     private Button addContactButton;
-    private static final String ADDCONTACT_URL = "http://jhnbos.nl/android/addContact.php";
-    public static final String GET_ALL_USERS_URL = "http://jhnbos.nl/android/getAllUsers.php";
     private String currentUser;
-    private String contactEmail;
-    public StringRequest stringRequest1;
-    public ArrayList<String> controlList;
     private HTTP http;
 
     @Override
@@ -64,6 +53,28 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
         http = new HTTP();
     }
 
+
+    /*-----------------------------------------------------------------------------------------------------*/
+    //BEGIN OF LISTENERS
+
+    @Override
+    public void onClick(View v) {
+        if (v == addContactButton) {
+            String contactEmail = contactEmailField.getText().toString();
+            currentUser = getIntent().getStringExtra("Email");
+
+            try {
+                if (contactEmail == "" || contactEmail.isEmpty() || !contactEmail.contains("@") || !contactEmail.contains(".")) {
+                    Toast.makeText(getApplicationContext(), "Please enter a existing email!", Toast.LENGTH_LONG).show();
+                } else {
+                    addContact(contactEmail, currentUser);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -78,34 +89,12 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
     }
 
     @Override
-    public void onRestart(){
-        super.onRestart();
-        
+    public void onResume() {
+        super.onResume();
+
         String url1 = GET_ALL_USERS_URL;
-        getData(url1); 
-        
-        adapter.clear();
-        adapter.notifyDataSetChanged();
-    {
-    /*-----------------------------------------------------------------------------------------------------*/
-    //BEGIN OF LISTENERS
+        getData(url1);
 
-    @Override
-    public void onClick(View v) {
-        if(v == addContactButton){
-            contactEmail = contactEmailField.getText().toString();
-            currentUser =  getIntent().getStringExtra("Email");
-
-            try{
-                if(contactEmail == "" || contactEmail.isEmpty() || !contactEmail.contains("@") || !contactEmail.contains(".")){
-                    Toast.makeText(getApplicationContext(), "Please enter a existing email!", Toast.LENGTH_LONG).show();
-                } else {
-                    addContact(contactEmail, currentUser);
-                }
-            } catch(Exception e){
-                e.printStackTrace();
-            }
-        }
     }
 
     //END OF LISTENERS
@@ -113,17 +102,13 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
     //BEGIN OF METHODS
 
     //ADD CONTACT
-    private void addContact(final String contact_email, final String email) {
+    private void addContact(String contact_email, String email) {
         try {
-            
+            String response = http.sendGet(ADDCONTACT_URL + "?name=" + contact_email + "&email=" + email);
 
-            if(controlList.contains(contact_email)){
-                String response = http.sendGet(ADDCONTACT_URL + "?name=" + contact_email + "&email=" + email);
-
-                if(response.equals(contact_email)){
-                    AddContact.this.onBackPressed();
-                }
-            } else{
+            if (response.equals(contact_email)) {
+                AddContact.this.onBackPressed();
+            } else {
                 Toast.makeText(this, "Please enter an existing email address!", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
@@ -131,7 +116,7 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public void getData(String url1){
+    public void getData(String url1) {
         stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

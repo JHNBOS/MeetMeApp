@@ -1,11 +1,10 @@
 package nl.jhnbos.meetmeapp;
 
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,21 +27,18 @@ import java.util.ArrayList;
 
 public class ShowMembers extends AppCompatActivity implements View.OnClickListener {
 
-    //STRINGS
-    private String group;
     public static final String GET_ALL_MEMBERS_URL = "http://jhnbos.nl/android/getAllGroupMembers.php";
     public static final String DELETE_GROUPMEMBER_URL = "http://jhnbos.nl/android/deleteGroupMember.php";
-
     //LISTS
     public ArrayList<String> memberList;
-
     //LAYOUT
     public ListView lv;
     public Button returnButton;
-
     //OBJECTS
     public ArrayAdapter<String> adapter;
     public StringRequest stringRequest1;
+    //STRINGS
+    private String group;
     private HTTP http;
 
     @Override
@@ -76,13 +72,13 @@ public class ShowMembers extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if(v == returnButton){
+        if (v == returnButton) {
             super.onBackPressed();
         }
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
 
         String url1 = GET_ALL_MEMBERS_URL + "?name='" + group + "'";
@@ -129,7 +125,7 @@ public class ShowMembers extends AppCompatActivity implements View.OnClickListen
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    public void getData(String url1){
+    public void getData(String url1) {
         stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

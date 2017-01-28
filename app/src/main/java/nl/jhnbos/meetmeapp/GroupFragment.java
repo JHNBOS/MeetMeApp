@@ -1,14 +1,12 @@
 package nl.jhnbos.meetmeapp;
 
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -30,7 +28,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,26 +38,23 @@ import java.util.Map;
  */
 public class GroupFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemLongClickListener {
 
-    //STRINGS
-    private String email;
     public static final String GET_ALL_GROUPS_URL = "http://jhnbos.nl/android/getAllGroups.php";
     public static final String GET_ALL_GROUPSMEMBERS_URL = "http://jhnbos.nl/android/getAllGroupMembers.php";
     public static final String DELETE_GROUP_URL = "http://jhnbos.nl/android/deleteGroup.php";
     public static final String DELETE_GROUPMEMBERS_URL = "http://jhnbos.nl/android/deleteGroupMembers.php";
     public static final String DELETE_GROUPMEMBER_URL = "http://jhnbos.nl/android/deleteGroupMember.php";
-
     //LISTS
     public ArrayList<String> groupsList;
     public ArrayList<String> memberList;
     public HashMap<String, String> controlList;
-
     //LAYOUT
     public ListView lv;
     public Button createGroup;
-
     //OBJECTS
     public ArrayAdapter<String> adapter;
     public StringRequest stringRequest1;
+    //STRINGS
+    private String email;
     private HTTP http;
 
 
@@ -72,7 +66,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        RelativeLayout rl = (RelativeLayout )inflater.inflate(R.layout.fragment_group, container, false);
+        RelativeLayout rl = (RelativeLayout) inflater.inflate(R.layout.fragment_group, container, false);
 
         //ALLOW HTTP
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -129,7 +123,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
 
 
     //GET GROUPS
-    public void getData(String url1){
+    public void getData(String url1) {
         stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -170,10 +164,10 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
                 Object key = entry.getKey();
                 Object value = entry.getValue();
 
-                if(value != email){
+                if (value != email) {
                     http.sendPost(DELETE_GROUP_URL + "?name='" + group + "'");
                     removeGroupMembers(group);
-                } else{
+                } else {
                     removeGroupMember(group, email);
                 }
             }
@@ -208,10 +202,10 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
 
-        String url1 = GET_ALL_GROUPS_URL+"?email='"+email+"'";
+        String url1 = GET_ALL_GROUPS_URL + "?email='" + email + "'";
         getData(url1);
 
         adapter.clear();
@@ -221,7 +215,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
 
     @Override
     public void onClick(View v) {
-        if(v == createGroup){
+        if (v == createGroup) {
             Intent createGroupIntent = new Intent(getActivity(), CreateGroup.class);
 
             createGroupIntent.putExtra("Email", email);

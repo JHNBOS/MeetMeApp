@@ -18,194 +18,194 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
-    <TextView
-        android:text="Register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:id="@+id/registerText"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:fontFamily="sans-serif"
-        android:textSize="36sp"
-        android:textStyle="normal|bold"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textCapWords|textPersonName"
-        android:ems="10"
-        android:layout_below="@+id/fnameTextView"
-        android:layout_alignLeft="@+id/fnameTextView"
-        android:layout_alignStart="@+id/fnameTextView"
-        android:id="@+id/fnameEditText"
-        android:capitalize="words" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textCapWords|textPersonName"
-        android:ems="10"
-        android:id="@+id/unameEditText"
-        android:selectAllOnFocus="false"
-        android:layout_below="@+id/usernameTextView"
-        android:layout_alignLeft="@+id/usernameTextView"
-        android:layout_alignStart="@+id/usernameTextView"
-        android:capitalize="words" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textCapWords|textPersonName"
-        android:ems="10"
-        android:layout_below="@+id/lnameTextView"
-        android:layout_alignLeft="@+id/lnameTextView"
-        android:layout_alignStart="@+id/lnameTextView"
-        android:id="@+id/lnameEditText"
-        android:capitalize="words" />
+        <TextView
+            android:id="@+id/registerText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif"
+            android:text="Register"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textSize="36sp"
+            android:textStyle="normal|bold" />
 
         <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:layout_below="@+id/emailTextView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/emailEditText" />
+            android:id="@+id/fnameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/fnameTextView"
+            android:layout_alignStart="@+id/fnameTextView"
+            android:layout_below="@+id/fnameTextView"
+            android:capitalize="words"
+            android:ems="10"
+            android:inputType="textCapWords|textPersonName" />
 
-    <TextView
-        android:text="Last Name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:id="@+id/lnameTextView"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="18sp"
-        android:layout_below="@+id/fnameEditText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <EditText
+            android:id="@+id/unameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/usernameTextView"
+            android:layout_alignStart="@+id/usernameTextView"
+            android:layout_below="@+id/usernameTextView"
+            android:capitalize="words"
+            android:ems="10"
+            android:inputType="textCapWords|textPersonName"
+            android:selectAllOnFocus="false" />
 
-    <TextView
-        android:text="First Name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:id="@+id/fnameTextView"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="18sp"
-        android:layout_below="@+id/unameEditText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <EditText
+            android:id="@+id/lnameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/lnameTextView"
+            android:layout_alignStart="@+id/lnameTextView"
+            android:layout_below="@+id/lnameTextView"
+            android:capitalize="words"
+            android:ems="10"
+            android:inputType="textCapWords|textPersonName" />
 
-    <TextView
-        android:text="Email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/emailTextView"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="18sp"
-        android:layout_marginTop="8dp"
-        android:layout_below="@+id/lnameEditText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="Password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:id="@+id/passTextView"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="18sp"
-        android:layout_below="@+id/emailEditText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_below="@+id/passTextView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/passEditText"
-        android:textAlignment="viewStart"
-        android:inputType="textPassword"
-        android:singleLine="false"
-        android:fontFamily="sans-serif"
-        android:textSize="18sp" />
-
-    <TextView
-        android:text="Color"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:id="@+id/colorTextView"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="18sp"
-        android:layout_below="@+id/passEditText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-        <Button
-            android:text="Pick Color"
-            android:layout_height="40dp"
-            android:id="@+id/colorButton"
-            android:layout_below="@+id/colorTextView"
+        <EditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_width="170dp"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="2dp"
-            android:background="@color/colorPrimary" />
-
-        <EditText
-            android:layout_height="wrap_content"
+            android:layout_below="@+id/emailTextView"
             android:ems="10"
-            android:id="@+id/colorEditText"
-            android:inputType="text|textCapCharacters"
-            android:singleLine="true"
-            android:textStyle="normal|bold"
-            android:textSize="18sp"
-            android:textAlignment="center"
-            style="@style/Widget.AppCompat.EditText"
-            android:layout_width="170dp"
-            android:layout_above="@+id/registerButton"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:capitalize="characters" />
+            android:inputType="textEmailAddress" />
 
         <TextView
-            android:text="Username"
+            android:id="@+id/lnameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:id="@+id/usernameTextView"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp"
-            android:textAlignment="textStart"
-            android:layout_below="@+id/registerText"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/fnameEditText"
+            android:layout_marginTop="11dp"
+            android:text="Last Name"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/fnameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/unameEditText"
+            android:layout_marginTop="11dp"
+            android:text="First Name"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/emailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/lnameEditText"
+            android:layout_marginTop="8dp"
+            android:text="Email"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/passTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/emailEditText"
+            android:layout_marginTop="10dp"
+            android:text="Password"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/passEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/passTextView"
+            android:ems="10"
+            android:fontFamily="sans-serif"
+            android:inputType="textPassword"
+            android:singleLine="false"
+            android:textAlignment="viewStart"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/colorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/passEditText"
+            android:layout_marginTop="10dp"
+            android:text="Color"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp" />
 
         <Button
-            android:text="Register"
+            android:id="@+id/colorButton"
+            android:layout_width="170dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/colorTextView"
+            android:layout_marginTop="2dp"
+            android:background="@color/colorPrimary"
+            android:text="Pick Color"
+            android:textColor="@android:color/white" />
+
+        <EditText
+            android:id="@+id/colorEditText"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/registerButton"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:capitalize="characters"
+            android:ems="10"
+            android:inputType="text|textCapCharacters"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:id="@+id/usernameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="43dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/registerText"
+            android:layout_marginTop="28dp"
+            android:text="Username"
+            android:textAlignment="textStart"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp" />
+
+        <Button
             android:id="@+id/registerButton"
-            android:layout_below="@+id/colorButton"
-            android:layout_centerHorizontal="true"
-            android:textStyle="normal|bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:textSize="18sp"
+            android:layout_below="@+id/colorButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="43dp"
             android:background="@color/colorPrimary"
-            android:textColor="@android:color/white" />
+            android:text="Register"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
 
 
     </RelativeLayout>
