@@ -162,7 +162,7 @@ public class ShowMembers extends AppCompatActivity implements View.OnClickListen
     //SHOW DIALOG WHEN DELETING GROUP
     private void ShowDialog(final String data) {
         AlertDialog.Builder builder = new AlertDialog.Builder(ShowMembers.this);
-        builder.setTitle("Remove Group?");
+        builder.setTitle("Remove Member?");
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 //TODO
