@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -67,6 +68,23 @@ public class Register extends AppCompatActivity {
 
     }
 
+     /*-----------------------------------------------------------------------------------------------------*/
+    //BEGIN OF LISTENERS
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                super.onBackPressed();
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    //END OF LISTENERS
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
@@ -87,10 +105,7 @@ public class Register extends AppCompatActivity {
                     || username.isEmpty() || password.isEmpty() || email.isEmpty()){
                 Toast.makeText(this, "Please fill in all fields!", Toast.LENGTH_LONG).show();
             } else {
-                Intent intent = new Intent(Register.this, Login.class);
-
-                Toast.makeText(this, "Succesfully registered!", Toast.LENGTH_LONG).show();
-                startActivity(intent);
+                super.onBackPressed();
             }
 
         } catch (Exception e) {

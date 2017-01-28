@@ -4,4 +4,6 @@
         android:title="Remove Group" />
     <item android:id="@+id/addMember"
         android:title="Add Groupmember" />
+    <item android:id="@+id/showMember"
+        android:title="Show Groupmembers" />
 </menu>

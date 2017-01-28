@@ -92,6 +92,8 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
+
+
     //END OF LISTENERS
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS

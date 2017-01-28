@@ -20,8 +20,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Register"
-            android:label="Register"
-            android:parentActivityName=".Login">
+            android:label="Register">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Login" />
@@ -53,7 +52,20 @@
             android:name=".MainActivity"
             android:label="Meet Me"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddGroupMember"></activity>
+        <activity
+            android:name=".AddGroupMember"
+            android:label="Add Groupmembers" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+        <activity
+            android:name=".ShowMembers"
+            android:label="Show Groupmembers">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
     </application>
 
 </manifest>

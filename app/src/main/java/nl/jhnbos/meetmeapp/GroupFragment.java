@@ -1,6 +1,7 @@
 package nl.jhnbos.meetmeapp;
 
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,12 +44,14 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     //STRINGS
     private String email;
     public static final String GET_ALL_GROUPS_URL = "http://jhnbos.nl/android/getAllGroups.php";
+    public static final String GET_ALL_GROUPSMEMBERS_URL = "http://jhnbos.nl/android/getAllGroupMembers.php";
     public static final String DELETE_GROUP_URL = "http://jhnbos.nl/android/deleteGroup.php";
     public static final String DELETE_GROUPMEMBERS_URL = "http://jhnbos.nl/android/deleteGroupMembers.php";
     public static final String DELETE_GROUPMEMBER_URL = "http://jhnbos.nl/android/deleteGroupMember.php";
 
     //LISTS
     public ArrayList<String> groupsList;
+    public ArrayList<String> memberList;
     public HashMap<String, String> controlList;
 
     //LAYOUT
@@ -58,6 +62,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     public ArrayAdapter<String> adapter;
     public StringRequest stringRequest1;
     private HTTP http;
+
 
     public GroupFragment() {
         // Required empty public constructor
@@ -77,6 +82,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         email = getActivity().getIntent().getStringExtra("Email");
         lv = (ListView) rl.findViewById(R.id.glist);
         createGroup = (Button) rl.findViewById(R.id.createGroupButton);
+
         groupsList = new ArrayList<>();
         controlList = new HashMap<>();
 
@@ -121,6 +127,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         dialog.show();
     }
 
+
+    //GET GROUPS
     public void getData(String url1){
         stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
             @Override
@@ -242,12 +250,24 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
             case R.id.delete:
                 String selected = groupsList.get((int) info.id);
                 ShowDialog(selected);
+
                 return true;
             case R.id.addMember:
                 Intent addMemberIntent = new Intent(getActivity(), AddGroupMember.class);
+
                 addMemberIntent.putExtra("Group", groupsList.get((int) info.id));
                 addMemberIntent.putExtra("Email", email);
+
                 startActivity(addMemberIntent);
+
+                return true;
+            case R.id.showMember:
+                Intent showMemberIntent = new Intent(getActivity(), ShowMembers.class);
+
+                showMemberIntent.putExtra("Group", groupsList.get((int) info.id));
+
+                startActivity(showMemberIntent);
+
                 return true;
             default:
                 return super.onContextItemSelected(item);
