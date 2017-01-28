@@ -62,9 +62,6 @@ public class ShowMembers extends AppCompatActivity implements View.OnClickListen
 
         http = new HTTP();
 
-        String url1 = GET_ALL_MEMBERS_URL + "?name='" + group + "'";
-        getData(url1);
-
         //ADAPTER
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, memberList);
 
