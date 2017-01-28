@@ -22,7 +22,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Login extends AppCompatActivity {
     //LAYOUT ITEMS
@@ -89,32 +88,22 @@ public class Login extends AppCompatActivity {
             String url1 = GET_ALL_USERS_URL;
             getData(url1);
 
-            for (Map.Entry<String, String> entry : controlList.entrySet()) {
-                Object key = entry.getKey();
-                Object value = entry.getValue();
+            if(controlList.containsKey(email)) {
+                String response = http.sendPost(LOGIN_URL + "?email=" + email + "&password=" + password);
 
-                if(key == email){
-                    if(value == password){
-                        String response = http.sendPost(LOGIN_URL + "?email=" + email + "&password=" + password);
-
-                        if(response.equals(email)){
-                            Intent intent = new Intent(Login.this, MainActivity.class);
-                            intent.putExtra("Email", email);
-
-                            Toast.makeText(this, "Succesfully logged in!", Toast.LENGTH_SHORT).show();
-                            startActivity(intent);
-                        }
-                    } else{
-                        Toast.makeText(this, "Invalid password!", Toast.LENGTH_LONG).show();
-                    }
+                if (!response.equals(email)) {
+                    Toast.makeText(this, "Invalid email and/or password!", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(this, "Invalid email address!", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(Login.this, MainActivity.class);
+                    intent.putExtra("Email", email);
+
+                    Toast.makeText(this, "Login Succeeded!", Toast.LENGTH_LONG).show();
+                    startActivity(intent);
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "Login Failed!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Login Failed!", Toast.LENGTH_LONG).show();
         }
     }
 

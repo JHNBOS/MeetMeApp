@@ -91,8 +91,6 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
 
         //ADAPTER
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupsList);
-        //String url1 = GET_ALL_GROUPS_URL+"?email='"+email+"'";
-        //getData(url1);
 
         // Inflate the layout for this fragment
         return rl;
@@ -133,10 +131,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
 
                     for (int i = 0; i < ja.length(); i++) {
                         JSONObject jo = ja.getJSONObject(i);
-                        Log.d("Group", jo.getString("name"));
-                        Log.d("Group", jo.getString("creator"));
-                        groupsList.add(jo.getString("name"));
 
+                        groupsList.add(jo.getString("name"));
                         controlList.put(jo.getString("name"), jo.getString("creator"));
                     }
 
@@ -171,6 +167,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
 
                     if(response.equals(group)){
                         removeGroupMembers(group);
+                    } else {
+                        removeGroupMember(group, email);
                     }
                 } else{
                     removeGroupMember(group, email);
@@ -206,8 +204,6 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     //END OF METHODS
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
-
-
     @Override
     public void onResume(){
         super.onResume();
