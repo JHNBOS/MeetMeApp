@@ -12,7 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Login extends AppCompatActivity {
     //LAYOUT ITEMS
@@ -25,8 +35,11 @@ public class Login extends AppCompatActivity {
     public static final String EMAIL = "USER_NAME";
     public static final String PASSWORD = "PASSWORD";
     private static final String LOGIN_URL = "http://jhnbos.nl/android/login.php";
+    private static final String GET_ALL_USERS_URL = "http://jhnbos.nl/android/getAllUsers.php";
 
     private HTTP http;
+    public StringRequest stringRequest1;
+    public HashMap<String, String> controlList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +55,8 @@ public class Login extends AppCompatActivity {
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         loginButton = (Button) findViewById(R.id.loginButton);
         registerButton = (Button) findViewById(R.id.registerButton);
+
+        controlList = new HashMap<>();
 
         //Listeners
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -71,22 +86,65 @@ public class Login extends AppCompatActivity {
         String password = passwordEditText.getText().toString().trim();
 
         try {
-            String response = http.sendPost(LOGIN_URL + "?email=" + email + "&password=" + password);
+            String url1 = GET_ALL_USERS_URL;
+            getData(url1);
 
-            if(!response.equals(email)){
-                Toast.makeText(this, "Invalid username and/or password!", Toast.LENGTH_LONG).show();
-            } else {
-                Intent intent = new Intent(Login.this, MainActivity.class);
-                intent.putExtra("Email", email);
+            for (Map.Entry<String, String> entry : controlList.entrySet()) {
+                Object key = entry.getKey();
+                Object value = entry.getValue();
 
-                Toast.makeText(this, "Login Succeeded!", Toast.LENGTH_LONG).show();
-                startActivity(intent);
+                if(key == email){
+                    if(value == password){
+                        String response = http.sendPost(LOGIN_URL + "?email=" + email + "&password=" + password);
+
+                        if(response.equals(email)){
+                            Intent intent = new Intent(Login.this, MainActivity.class);
+                            intent.putExtra("Email", email);
+
+                            Toast.makeText(this, "Succesfully logged in!", Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+                        }
+                    } else{
+                        Toast.makeText(this, "Invalid password!", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(this, "Invalid email address!", Toast.LENGTH_LONG).show();
+                }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "Login Failed!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Login Failed!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void getData(String url1){
+        stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jArray = new JSONArray(response);
+                    JSONArray ja = jArray.getJSONArray(0);
+
+                    for (int i = 0; i < ja.length(); i++) {
+                        JSONObject jo = ja.getJSONObject(i);
+                        Log.d("Control User", jo.getString("email"));
+                        Log.d("Control User", jo.getString("password"));
+                        controlList.put(jo.getString("email"), jo.getString("password"));
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Login.this, "Error while reading from url", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        VolleySingleton.getInstance(Login.this).addToRequestQueue(stringRequest1);
     }
 
     //END OF METHODS
