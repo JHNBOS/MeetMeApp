@@ -94,9 +94,9 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
                     int position = checked.keyAt(i);
 
                     if (checked.valueAt(i)){
-                        String mail = ((TextView)lv.getChildAt(i)).getText().toString();
+                        String mail = ((TextView)lv.getChildAt(position)).getText().toString();
                         Log.d("Mail: ", mail);
-                        selectedList.add(((TextView)lv.getChildAt(i)).getText().toString());
+                        selectedList.add(((TextView)lv.getChildAt(position)).getText().toString());
                     }
                 }
 
