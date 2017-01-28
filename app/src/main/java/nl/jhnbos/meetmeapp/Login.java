@@ -84,6 +84,24 @@ public class Login extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
+        try{
+            String response = http.sendPost(LOGIN_URL + "?email=" + email + "&password=" + password);
+
+            if(!response.equals(email + password)){
+                Toast.makeText(this, "Invalid username and/or password!", Toast.LENGTH_LONG).show();
+            } else {
+                Intent intent = new Intent(Login.this, MainActivity.class);
+                intent.putExtra("Email", email);
+
+                Toast.makeText(this, "Login Succeeded!", Toast.LENGTH_LONG).show();
+                startActivity(intent);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /*
         try {
             String url1 = GET_ALL_USERS_URL;
             getData(url1);
@@ -105,6 +123,7 @@ public class Login extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "Login Failed!", Toast.LENGTH_LONG).show();
         }
+        */
     }
 
     public void getData(String url1){

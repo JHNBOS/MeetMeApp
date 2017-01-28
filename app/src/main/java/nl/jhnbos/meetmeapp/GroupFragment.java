@@ -249,7 +249,10 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
                 ShowDialog(selected);
                 return true;
             case R.id.addMember:
-                Toast.makeText(getActivity(), "Coming soon!", Toast.LENGTH_LONG).show();
+                Intent addMemberIntent = new Intent(getActivity(), AddGroupMember.class);
+                addMemberIntent.putExtra("Group", groupsList.get((int) info.id));
+                addMemberIntent.putExtra("Email", email);
+                startActivity(addMemberIntent);
                 return true;
             default:
                 return super.onContextItemSelected(item);
