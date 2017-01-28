@@ -123,6 +123,7 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
             String response = http.sendGet(ADDGROUPMEMBER_URL + "?name=" + name + "&email=" + email);
 
             if(response.equals(name)){
+                //Go back to main
                 CreateGroup.this.onBackPressed();
             } else{
                 Toast.makeText(this, "Problem with creating group!", Toast.LENGTH_LONG).show();

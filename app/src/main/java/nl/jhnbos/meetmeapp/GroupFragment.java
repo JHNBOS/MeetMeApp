@@ -162,14 +162,9 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
                 Object key = entry.getKey();
                 Object value = entry.getValue();
 
-                if(value == email){
-                    String response = http.sendPost(DELETE_GROUP_URL + "?name='" + group + "'");
-
-                    if(response.equals(group)){
-                        removeGroupMembers(group);
-                    } else {
-                        removeGroupMember(group, email);
-                    }
+                if(value != email){
+                    http.sendPost(DELETE_GROUP_URL + "?name='" + group + "'");
+                    removeGroupMembers(group);
                 } else{
                     removeGroupMember(group, email);
                 }

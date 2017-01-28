@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AbsListView;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddGroupMember extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class AddGroupMember extends AppCompatActivity implements View.OnClickListener {
 
     //STRINGS
     private String group;
@@ -93,6 +94,8 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
                     int position = checked.keyAt(i);
 
                     if (checked.valueAt(i)){
+                        String mail = ((TextView)lv.getChildAt(i)).getText().toString();
+                        Log.d("Mail: ", mail);
                         selectedList.add(((TextView)lv.getChildAt(i)).getText().toString());
                     }
                 }
@@ -144,27 +147,16 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
     private void addGroupMembers(String group, ArrayList<String> members) {
         try {
             for (int i = 0; i < members.size(); i++) {
-                String response = http.sendPost(ADD_GROUPMEMBER_URL + "?name='" + group + "'&email='" + members.get(i)  + "'");
-
-                if(response.equals(members.get(i))){
-                    i++;
-                }
+                String response = http.sendGet(ADD_GROUPMEMBER_URL + "?name=" + group + "&email=" + members.get(i)  + "");
             }
 
-            Intent main = new Intent(AddGroupMember.this, MainActivity.class);
-            startActivity(main);
-
+            //Go back to main
+            AddGroupMember.this.onBackPressed();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        parent.getChildAt(position).setSelected(true);
-    }
-
 
     //END OF METHODS
 }

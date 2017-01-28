@@ -17,7 +17,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:listSelector="@android:color/holo_green_light"
         android:layout_above="@+id/addGMButton" />
 
     <Button
