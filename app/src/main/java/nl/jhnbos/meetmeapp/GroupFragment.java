@@ -30,6 +30,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -37,13 +39,22 @@ import java.util.ArrayList;
  */
 public class GroupFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemLongClickListener {
 
+    //STRINGS
     private String email;
     public static final String GET_ALL_GROUPS_URL = "http://jhnbos.nl/android/getAllGroups.php";
-    public static final String DELETE_GROUPS_URL = "http://jhnbos.nl/android/deleteGroup.php";
+    public static final String DELETE_GROUP_URL = "http://jhnbos.nl/android/deleteGroup.php";
     public static final String DELETE_GROUPMEMBERS_URL = "http://jhnbos.nl/android/deleteGroupMembers.php";
+    public static final String DELETE_GROUPMEMBER_URL = "http://jhnbos.nl/android/deleteGroupMember.php";
+
+    //LISTS
     public ArrayList<String> groupsList;
+    public HashMap<String, String> controlList;
+
+    //LAYOUT
     public ListView lv;
     public Button createGroup;
+
+    //OBJECTS
     public ArrayAdapter<String> adapter;
     public StringRequest stringRequest1;
     private HTTP http;
@@ -67,6 +78,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         lv = (ListView) rl.findViewById(R.id.glist);
         createGroup = (Button) rl.findViewById(R.id.createGroupButton);
         groupsList = new ArrayList<>();
+        controlList = new HashMap<>();
 
         http = new HTTP();
 
@@ -122,7 +134,10 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
                     for (int i = 0; i < ja.length(); i++) {
                         JSONObject jo = ja.getJSONObject(i);
                         Log.d("Group", jo.getString("name"));
+                        Log.d("Group", jo.getString("creator"));
                         groupsList.add(jo.getString("name"));
+
+                        controlList.put(jo.getString("name"), jo.getString("creator"));
                     }
 
                     lv.setAdapter(adapter);
@@ -144,8 +159,24 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     //REMOVE GROUP
     private void removeGroup(String group) {
         try {
-            http.sendPost(DELETE_GROUPS_URL + "?name='" + group + "'");
-            removeGroupMembers(group);
+            String url1 = GET_ALL_GROUPS_URL;
+            getData(url1);
+
+            for (Map.Entry<String, String> entry : controlList.entrySet()) {
+                Object key = entry.getKey();
+                Object value = entry.getValue();
+
+                if(value == email){
+                    String response = http.sendPost(DELETE_GROUP_URL + "?name='" + group + "'");
+
+                    if(response.equals(group)){
+                        removeGroupMembers(group);
+                    }
+                } else{
+                    removeGroupMember(group, email);
+                }
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -155,6 +186,16 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     private void removeGroupMembers(String group) {
         try {
             http.sendPost(DELETE_GROUPMEMBERS_URL + "?name='" + group + "'");
+            onResume();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //REMOVE GROUPMEMBER
+    private void removeGroupMember(String group, String email) {
+        try {
+            http.sendPost(DELETE_GROUPMEMBER_URL + "?name='" + group + "'&email='" + email + "'");
             onResume();
         } catch (Exception e) {
             e.printStackTrace();
