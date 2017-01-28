@@ -1,10 +1,16 @@
 package nl.jhnbos.meetmeapp;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.StrictMode;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -25,6 +31,7 @@ public class ShowMembers extends AppCompatActivity implements View.OnClickListen
     //STRINGS
     private String group;
     public static final String GET_ALL_MEMBERS_URL = "http://jhnbos.nl/android/getAllGroupMembers.php";
+    public static final String DELETE_GROUPMEMBER_URL = "http://jhnbos.nl/android/deleteGroupMember.php";
 
     //LISTS
     public ArrayList<String> memberList;
@@ -63,6 +70,7 @@ public class ShowMembers extends AppCompatActivity implements View.OnClickListen
 
         //Listeners
         returnButton.setOnClickListener(this);
+        registerForContextMenu(lv);
 
     }
 
@@ -77,6 +85,17 @@ public class ShowMembers extends AppCompatActivity implements View.OnClickListen
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+
+        String url1 = GET_ALL_MEMBERS_URL + "?name='" + group + "'";
+        getData(url1);
+
+        adapter.clear();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -86,6 +105,26 @@ public class ShowMembers extends AppCompatActivity implements View.OnClickListen
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = this.getMenuInflater();
+        inflater.inflate(R.menu.members_context_menu, menu);
+    }
+
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.delete:
+                String selected = memberList.get((int) info.id);
+                ShowDialog(selected);
+
+                return true;
+            default:
+                return super.onContextItemSelected(item);
         }
     }
 
@@ -121,6 +160,38 @@ public class ShowMembers extends AppCompatActivity implements View.OnClickListen
         });
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest1);
+    }
+
+    //SHOW DIALOG WHEN DELETING GROUP
+    private void ShowDialog(final String data) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ShowMembers.this);
+        builder.setTitle("Remove Group?");
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //TODO
+                //dialog.dismiss();
+                removeGroupMember(data);
+
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //TODO
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    //REMOVE GROUPMEMBER
+    private void removeGroupMember(String email) {
+        try {
+            http.sendPost(DELETE_GROUPMEMBER_URL + "?name='" + group + "'&email='" + email + "'");
+            onResume();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
