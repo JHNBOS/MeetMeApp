@@ -77,7 +77,16 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        
+        String url1 = GET_ALL_USERS_URL;
+        getData(url1); 
+        
+        adapter.clear();
+        adapter.notifyDataSetChanged();
+    {
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
 
@@ -106,8 +115,7 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
     //ADD CONTACT
     private void addContact(final String contact_email, final String email) {
         try {
-            String url1 = GET_ALL_USERS_URL;
-            getData(url1);
+            
 
             if(controlList.contains(contact_email)){
                 String response = http.sendGet(ADDCONTACT_URL + "?name=" + contact_email + "&email=" + email);
