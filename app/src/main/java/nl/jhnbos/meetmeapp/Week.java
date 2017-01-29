@@ -6,6 +6,7 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,7 +48,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     //OBJECTS
     public StringRequest stringRequest1;
     public StringRequest stringRequest2;
-    public ArrayList<Event> eventList;
+    public ArrayList<Event> eventList= new ArrayList<>();
+    public ArrayList<WeekViewEvent> events;
     public User user = new User();
 
     @Override
@@ -65,7 +67,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
         group = getIntent().getExtras().getString("Group");
         contact = getIntent().getExtras().getString("Email");
-        eventList = new ArrayList<>();
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
@@ -89,11 +90,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         // the week view. This is optional.
         setupDateTimeInterpreter(true);
 
-        String url1 = GET_EVENTS_URL + "?group='" + group + "'";
-        getData(url1);
-
-        String url2 = GET_USER_URL + "?email='" + contact + "'";
-        getUser(url2);
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
@@ -102,6 +98,28 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     @Override
     public void onResume(){
         super.onResume();
+
+        String url1 = GET_EVENTS_URL + "?group='" + group + "'";
+        getData(url1);
+
+        String url2 = GET_USER_URL + "?email='" + contact + "'";
+        getUser(url2);
+    }
+
+    @Override
+    public void onRestart(){
+        super.onRestart();
+
+        String url1 = GET_EVENTS_URL + "?group='" + group + "'";
+        getData(url1);
+
+        String url2 = GET_USER_URL + "?email='" + contact + "'";
+        getUser(url2);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
 
         String url1 = GET_EVENTS_URL + "?group='" + group + "'";
         getData(url1);
@@ -158,7 +176,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     @Override
     public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         //Create Event
-        ArrayList<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+        events = new ArrayList<WeekViewEvent>();
 
         int idset = 0;
 
@@ -166,10 +184,10 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             String Title = eventList.get(i).getTitles().toString();
             String Start = eventList.get(i).getStart();
             String End = eventList.get(i).getEnd();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
 
-            Calendar start = Calendar.getInstance();
-            Calendar end = Calendar.getInstance();
+            Calendar start = Calendar.getInstance(TimeZone.getTimeZone("CEST"));
+            Calendar end = Calendar.getInstance(TimeZone.getTimeZone("CEST"));
 
             try {
 
@@ -183,6 +201,9 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             WeekViewEvent event = new WeekViewEvent(idset++, Title, start, end);
 
             String color = "#" + user.getColor();
+
+            Log.d("Color: ", color);
+
             int colorInt = Color.parseColor(color);
 
             event.setColor(colorInt);
@@ -295,18 +316,21 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                     JSONArray jArray = new JSONArray(response);
                     JSONArray ja = jArray.getJSONArray(0);
 
+                    Event e = new Event();
+
                     for (int i = 0; i < ja.length(); i++) {
                         JSONObject jo = ja.getJSONObject(i);
-
-                        Event e = new Event();
-
+                        
                         e.setTitle(jo.getString("title"));
                         e.setLocation(jo.getString("location"));
                         e.setStart(jo.getString("start"));
                         e.setEnd(jo.getString("end"));
 
+                        Log.d("Title Retrieved Event: ", jo.getString("title"));
                         eventList.add(e);
                     }
+
+                    Log.d("Size eventList: ", String.valueOf(eventList.size()));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -340,6 +364,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                         user.setEmail(jo.getString("email"));
                         user.setPassword(jo.getString("password"));
                         user.setColor(jo.getString("color"));
+
+                        Log.d("Username: ", jo.getString("username"));
                     }
 
                 } catch (JSONException e) {
