@@ -16,6 +16,7 @@ import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
+import com.alamkanak.weekview.WeekViewLoader;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -31,7 +32,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-public class Week extends AppCompatActivity implements WeekView.EventClickListener, WeekView.EventLongPressListener, WeekView.EmptyViewClickListener, WeekView.ScrollListener, MonthLoader.MonthChangeListener {
+public class Week extends AppCompatActivity implements WeekView.EventClickListener, WeekView.EventLongPressListener, WeekView.EmptyViewClickListener, WeekView.ScrollListener, MonthLoader.MonthChangeListener, WeekViewLoader {
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
@@ -75,6 +76,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
         // Set an action when any event is clicked.
         mWeekView.setOnEventClickListener(this);
+
+        mWeekView.setWeekViewLoader(this);
 
         // The week view has infinite scrolling horizontally. We have to provide the events of a
         // month every time the month changes on the week view.
@@ -170,10 +173,10 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             String Title = eventList.get(i).getEvent_title(user.getFirstName() + " " + user.getLastName()).toString();
             String Start = eventList.get(i).getStart();
             String End = eventList.get(i).getEnd();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-            Calendar start = Calendar.getInstance(TimeZone.getTimeZone("CEST"));
-            Calendar end = Calendar.getInstance(TimeZone.getTimeZone("CEST"));
+            Calendar start = Calendar.getInstance();
+            Calendar end = (Calendar) start.clone();
 
             try {
 
@@ -360,6 +363,16 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         });
 
         VolleySingleton.getInstance(Week.this).addToRequestQueue(stringRequest2);
+    }
+
+    @Override
+    public double toWeekViewPeriodIndex(Calendar instance) {
+        return 0;
+    }
+
+    @Override
+    public List<? extends WeekViewEvent> onLoad(int periodIndex) {
+        return null;
     }
 
 
