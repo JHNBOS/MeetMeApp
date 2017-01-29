@@ -30,21 +30,6 @@
             android:textSize="36sp"
             android:textStyle="normal|bold" />
 
-        <TextView
-            android:text="Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/titleView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="70dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:id="@+id/event_titleView"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp"
-            android:textStyle="normal|bold" />
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,20 +51,6 @@
             android:layout_alignParentStart="true"
             android:id="@+id/spacer1" />
 
-        <TextView
-            android:text="Start"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/startView"
-            android:layout_below="@+id/spacer1"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp"
-            android:textStyle="normal|bold" />
-
         <Button
             android:id="@+id/addEventButton"
             android:layout_width="match_parent"
@@ -93,63 +64,12 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
-        <Button
-            android:text="Pick Date"
-            android:layout_height="wrap_content"
-            android:id="@+id/startDateButton"
-            android:layout_width="170dp"
-            android:layout_below="@+id/startView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="23dp"
-            android:layout_marginStart="23dp" />
-
         <Space
             android:layout_width="25dp"
             android:layout_toRightOf="@+id/startDateButton"
             android:id="@+id/buttonspacer"
             android:layout_height="40dp"
             android:layout_below="@+id/startView" />
-
-        <Button
-            android:text="Pick Time"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/startView"
-            android:layout_toRightOf="@+id/buttonspacer"
-            android:layout_toEndOf="@+id/buttonspacer"
-            android:id="@+id/startTimeButton" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_below="@+id/startDateButton"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/spacer2" />
-
-        <TextView
-            android:text="End"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/spacer2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/endView"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp"
-            android:textStyle="normal|bold" />
-
-        <Button
-            android:text="Pick Date"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/endView"
-            android:layout_alignLeft="@+id/startDateButton"
-            android:layout_alignStart="@+id/startDateButton"
-            android:id="@+id/endDateButton" />
 
         <Space
             android:layout_width="25dp"
@@ -167,6 +87,124 @@
             android:layout_toRightOf="@+id/buttonspaver2"
             android:layout_toEndOf="@+id/buttonspaver2"
             android:id="@+id/endTimeButton" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:id="@+id/spacer2"
+            android:layout_above="@+id/endView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="26dp" />
+
+        <Button
+            android:text="Pick Date"
+            android:layout_height="wrap_content"
+            android:id="@+id/startDateButton"
+            android:layout_width="170dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginStart="23dp"
+            android:layout_above="@+id/spacer2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="14dp" />
+
+        <Button
+            android:text="Pick Time"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/startTimeButton"
+            android:layout_alignBaseline="@+id/startDateButton"
+            android:layout_alignBottom="@+id/startDateButton"
+            android:layout_toRightOf="@+id/buttonspacer"
+            android:layout_toEndOf="@+id/buttonspacer" />
+
+        <TextView
+            android:text="Start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/startView"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:layout_above="@+id/startDateButton"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="End"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/endView"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:layout_above="@+id/endTimeButton"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:id="@+id/event_titleView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:layout_below="@+id/titleView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="Location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spacer1"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:layout_alignParentStart="true"
+            android:id="@+id/locView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textStyle="normal|bold"
+            android:textSize="18sp" />
+
+        <Button
+            android:text="Pick Date"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/endDateButton"
+            android:layout_marginBottom="38dp"
+            android:layout_above="@+id/addEventButton"
+            android:layout_alignLeft="@+id/startDateButton"
+            android:layout_alignStart="@+id/startDateButton" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:layout_below="@+id/locView"
+            android:layout_toLeftOf="@+id/startTimeButton"
+            android:layout_toStartOf="@+id/startTimeButton"
+            android:id="@+id/locField"
+            android:inputType="textCapWords" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@+id/locField"
+            android:layout_alignLeft="@+id/locField"
+            android:layout_alignStart="@+id/locField"
+            android:id="@+id/spacer3" />
 
 
     </RelativeLayout>

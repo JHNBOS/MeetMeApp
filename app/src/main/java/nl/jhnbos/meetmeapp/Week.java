@@ -195,6 +195,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                 String selected = getIntent().getExtras().getString("selectedGroup");
 
                 Intent createEvent = new Intent(this, Event.class);
+                createEvent.putExtra("Email", contact);
                 createEvent.putExtra("Group", selected);
                 startActivity(createEvent);
                 return true;
@@ -275,6 +276,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                             e.setEnd(format.parse(jo.get("end").toString()));
                             e.setCreator(contact);
                             e.setGroup(group);
+
                         } catch (ParseException pe) {
                             pe.printStackTrace();
                         }
