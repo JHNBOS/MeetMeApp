@@ -113,9 +113,9 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
             Log.d("End: ", ev_end);
 
 
-            String response = http.sendPost(ADDEVENT_URL + "?title='" + ev_title
-                    + "'&loc='" + ev_loc + "'&start='" + ev_start + "'&end='" + ev_end + "'"
-                    + "'&creator='" + ev_creator + "'&group='" + ev_group + "'" );
+            String response = http.sendPost(ADDEVENT_URL + "?title=" + ev_title
+                    + "&loc=" + ev_loc + "&start=" + ev_start + "&end=" + ev_end + ""
+                    + "&creator=" + ev_creator + "&group=" + ev_group + "" );
 
             if (response.equals(ev_title)) {
                 Toast.makeText(Event.this, "Event created!", Toast.LENGTH_SHORT).show();
