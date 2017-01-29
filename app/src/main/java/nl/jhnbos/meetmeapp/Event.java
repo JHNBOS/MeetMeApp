@@ -45,6 +45,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     private static final String ADDEVENT_URL = "http://jhnbos.nl/android/addEvent.php";
     private String startDate;
     private String endDate;
+    public String name;
 
     public Event(){
 
@@ -64,6 +65,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
         StrictMode.setThreadPolicy(policy);
 
         creator = getIntent().getExtras().getString("EmailC");
+        name = getIntent().getExtras().getString("Name");
 
         titleField = (EditText) findViewById(R.id.titleField);
         locField = (EditText) findViewById(R.id.locField);

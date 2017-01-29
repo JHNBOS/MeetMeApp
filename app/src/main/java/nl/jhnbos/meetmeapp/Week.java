@@ -103,9 +103,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
-
-
-
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
 
@@ -118,8 +115,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
     @Override
     public void onEmptyViewClicked(Calendar time) {
-
-
+        mWeekView.notifyDatasetChanged();
     }
 
 
@@ -159,7 +155,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         int idset = 0;
 
         for (int i = 0; i < eventList.size(); i++) {
-            String Title = eventList.get(i).getEvent_title(contact).toString();
+            String Title = eventList.get(i).getEvent_title(user.getFirstName() + " " + user.getLastName()).toString();
             String Start = eventList.get(i).getStart();
             String End = eventList.get(i).getEnd();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -196,8 +192,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     }
 
     public void onFirstVisibleDayChanged(Calendar calendar, Calendar calendar1) {
-
-
         mWeekView.notifyDatasetChanged();
     }
 
@@ -214,8 +208,10 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         switch (id) {
             case R.id.eventcreate:
                 Intent createEvent = new Intent(this, Event.class);
-                createEvent.putExtra("EmailC", user.getFirstName() + " " + user.getLastName());
+                createEvent.putExtra("Name", user.getFirstName() + " " + user.getLastName());
                 createEvent.putExtra("GroupC", group);
+                createEvent.putExtra("EmailC", contact);
+
                 startActivity(createEvent);
                 return true;
 
