@@ -26,8 +26,8 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
     public String title;
     public String location;
-    public Date start;
-    public Date end;
+    public String start;
+    public String end;
     public String creator;
     public String group;
 
@@ -53,7 +53,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
     }
 
-    public Event(String title, String location, Date start, Date end, String creator, String group) {
+    public Event(String title, String location, String start, String end, String creator, String group) {
         this.title = title;
         this.location = location;
         this.start = start;
@@ -94,15 +94,12 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
     //ADD GROUP
     private void addEvent() {
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
         try
         {
             String ev_title = titleField.getText().toString();
             String ev_loc = locField.getText().toString();
-            Date ev_start = sdf.parse(startDate);
-            Date ev_end = sdf.parse(endDate);
+            String ev_start = startDate;
+            String ev_end = endDate;
             String ev_creator = getIntent().getExtras().getString("EmailC");
             String ev_group = getIntent().getExtras().getString("GroupC");
 
@@ -152,19 +149,19 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
     public void setLocation(String location) {this.location = location;}
 
-    public Date getStart() {
+    public String getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public Date getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 

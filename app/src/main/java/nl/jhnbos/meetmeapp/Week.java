@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-public class Week extends AppCompatActivity implements WeekView.EventClickListener, WeekView.EventLongPressListener, WeekView.EmptyViewClickListener, WeekView.MonthChangeListener {
+public class Week extends AppCompatActivity implements WeekView.EventClickListener, WeekView.EventLongPressListener, WeekView.EmptyViewClickListener, WeekView.MonthChangeListener, WeekView.ScrollListener {
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
@@ -63,12 +63,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         contact = getIntent().getExtras().getString("Email");
         eventList = new ArrayList<>();
 
-        String url1 = GET_EVENTS_URL + "?group='" + group + "'";
-        getData(url1);
-
-        String url2 = GET_USER_URL + "?email='" + contact + "'";
-        getUser(url2);
-
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
 
@@ -85,13 +79,32 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         //Set empty view listener
         mWeekView.setEmptyViewClickListener(this);
 
+        mWeekView.setScrollListener(this);
+
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
         setupDateTimeInterpreter(true);
+
+        String url1 = GET_EVENTS_URL + "?group='" + group + "'";
+        getData(url1);
+
+        String url2 = GET_USER_URL + "?email='" + contact + "'";
+        getUser(url2);
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        String url1 = GET_EVENTS_URL + "?group='" + group + "'";
+        getData(url1);
+
+        String url2 = GET_USER_URL + "?email='" + contact + "'";
+        getUser(url2);
+    }
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
@@ -146,17 +159,23 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
         for (int i = 0; i < eventList.size(); i++) {
             String Title = eventList.get(i).getTitles().toString();
-            Date Start = eventList.get(i).getStart();
-            Date End = eventList.get(i).getEnd();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+            String Start = eventList.get(i).getStart();
+            String End = eventList.get(i).getEnd();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
-            Calendar startTime = Calendar.getInstance(TimeZone.getTimeZone("CEST"));
-            startTime.setTime(Start);
+            Calendar start = Calendar.getInstance();
+            Calendar end = Calendar.getInstance();
 
-            Calendar endTime = (Calendar) startTime.clone();
-            endTime.setTime(End);
+            try {
 
-            WeekViewEvent event = new WeekViewEvent(idset++, Title, startTime, endTime);
+                start.setTime(sdf.parse(Start));
+                end.setTime(sdf.parse(End));
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            WeekViewEvent event = new WeekViewEvent(idset++, Title, start, end);
 
             String color = "#" + user.getColor();
             int colorInt = Color.parseColor(color);
@@ -177,6 +196,12 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     }
 
     public void onFirstVisibleDayChanged(Calendar calendar, Calendar calendar1) {
+        String url1 = GET_EVENTS_URL + "?group='" + group + "'";
+        getData(url1);
+
+        String url2 = GET_USER_URL + "?email='" + contact + "'";
+        getUser(url2);
+
         mWeekView.notifyDatasetChanged();
     }
 
@@ -192,8 +217,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         setupDateTimeInterpreter(id == R.id.action_week_view);
         switch (id) {
             case R.id.eventcreate:
-                String selected = getIntent().getExtras().getString("Groups");
-
                 Intent createEvent = new Intent(this, Event.class);
                 createEvent.putExtra("EmailC", contact);
                 createEvent.putExtra("GroupC", group);
@@ -262,22 +285,15 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                     JSONArray jArray = new JSONArray(response);
                     JSONArray ja = jArray.getJSONArray(0);
 
-                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-
                     for (int i = 0; i < ja.length(); i++) {
                         JSONObject jo = ja.getJSONObject(i);
 
                         Event e = new Event();
 
-                        try {
-                            e.setTitle(jo.getString("title"));
-                            e.setLocation(jo.getString("location"));
-                            e.setStart(format.parse(jo.get("start").toString()));
-                            e.setEnd(format.parse(jo.get("end").toString()));
-
-                        } catch (ParseException pe) {
-                            pe.printStackTrace();
-                        }
+                        e.setTitle(jo.getString("title"));
+                        e.setLocation(jo.getString("location"));
+                        e.setStart(jo.getString("start"));
+                        e.setEnd(jo.getString("end"));
 
                         eventList.add(e);
                     }
