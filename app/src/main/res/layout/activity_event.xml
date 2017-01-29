@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fillViewport="true"
-    android:padding="0dp">
-
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/activity_event"
@@ -33,8 +27,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             android:ems="10"
             android:layout_below="@+id/event_titleView"
             android:layout_alignParentLeft="true"
@@ -186,28 +180,26 @@
             android:layout_alignLeft="@+id/startDateButton"
             android:layout_alignStart="@+id/startDateButton" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:layout_below="@+id/locView"
-            android:layout_toLeftOf="@+id/startTimeButton"
-            android:layout_toStartOf="@+id/startTimeButton"
-            android:id="@+id/locField"
-            android:inputType="textCapWords" />
-
         <Space
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_below="@+id/locField"
-            android:layout_alignLeft="@+id/locField"
-            android:layout_alignStart="@+id/locField"
-            android:id="@+id/spacer3" />
+            android:id="@+id/spacer3"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:id="@+id/locField"
+            android:inputType="textCapWords"
+            android:layout_below="@+id/locView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
 
-    </RelativeLayout>
 
-
-</ScrollView>
+</RelativeLayout>

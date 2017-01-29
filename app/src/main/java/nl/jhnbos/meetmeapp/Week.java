@@ -192,11 +192,11 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         setupDateTimeInterpreter(id == R.id.action_week_view);
         switch (id) {
             case R.id.eventcreate:
-                String selected = getIntent().getExtras().getString("selectedGroup");
+                String selected = getIntent().getExtras().getString("Groups");
 
                 Intent createEvent = new Intent(this, Event.class);
-                createEvent.putExtra("Email", contact);
-                createEvent.putExtra("Group", selected);
+                createEvent.putExtra("EmailC", contact);
+                createEvent.putExtra("GroupC", selected);
                 startActivity(createEvent);
                 return true;
 

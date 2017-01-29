@@ -4,17 +4,22 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Event extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
@@ -32,6 +37,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     private Button startTimeButton;
     private Button endDateButton;
     private Button endTimeButton;
+
     private DatePickerDialog startdatepickerdialog;
     private DatePickerDialog enddatepickerdialog;
     private TimePickerDialog starttimepickerdialog;
@@ -39,6 +45,8 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
     private HTTP http;
     private static final String ADDEVENT_URL = "http://jhnbos.nl/android/addEvent.php";
+    private Calendar startCal = new GregorianCalendar();
+    private Calendar endCal = new GregorianCalendar();
 
     public Event(){
 
@@ -59,8 +67,8 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        creator = getIntent().getExtras().getString("Email");
-        group = getIntent().getExtras().getString("Group");
+        creator = getIntent().getExtras().getString("EmailC");
+        group = getIntent().getExtras().getString("GroupC");
 
         titleField = (EditText) findViewById(R.id.titleField);
         locField = (EditText) findViewById(R.id.locField);
@@ -86,16 +94,25 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     //ADD GROUP
     private void addEvent() {
 
+        final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+
         try
         {
             String ev_title = titleField.getText().toString();
             String ev_loc = locField.getText().toString();
-            String ev_start = this.getStart().toString();
-            String ev_end = this.getEnd().toString();
+            String ev_start = sdf.format(startCal.getTime());
+            String ev_end = sdf.format(endCal.getTime());
             String ev_creator = this.getCreator();
             String ev_group = this.getGroup();
 
-            String response = http.sendGet(ADDEVENT_URL + "?title='" + ev_title
+            Log.d("Title", ev_title);
+            Log.d("Location: ", ev_loc);
+            Log.d("Start: ", ev_start);
+            Log.d("End: ", ev_end);
+            Log.d("Creator: ", ev_creator);
+            Log.d("Group: ", ev_group);
+
+            String response = http.sendPost(ADDEVENT_URL + "?title='" + ev_title
                     + "'&loc='" + ev_loc + "'&start='" + ev_start + "'&end='" + ev_end + "'"
                     + "'&creator='" + ev_creator + "'&group='" + ev_group + "'" );
 
@@ -154,6 +171,8 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     public void onClick(View v) {
         if(v == createEventButton){
             addEvent();
+
+            super.onBackPressed();
         }
 
         if(v == startDateButton){
@@ -168,7 +187,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
             startdatepickerdialog.vibrate(false); //vibrate on choosing date?
             startdatepickerdialog.dismissOnPause(true); //dismiss dialog when onPause() called?
             startdatepickerdialog.showYearPickerFirst(false); //choose year first?
-            startdatepickerdialog.setAccentColor(Color.GREEN); // custom accent color
+            startdatepickerdialog.setAccentColor(Color.BLUE); // custom accent color
             startdatepickerdialog.setTitle("Start Date"); //dialog title
             startdatepickerdialog.show(getFragmentManager(), "Datepickerdialog"); //show dialog
         }
@@ -205,7 +224,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
             enddatepickerdialog.vibrate(false); //vibrate on choosing date?
             enddatepickerdialog.dismissOnPause(true); //dismiss dialog when onPause() called?
             enddatepickerdialog.showYearPickerFirst(false); //choose year first?
-            enddatepickerdialog.setAccentColor(Color.GREEN); // custom accent color
+            enddatepickerdialog.setAccentColor(Color.BLUE); // custom accent color
             enddatepickerdialog.setTitle("End Date"); //dialog title
             enddatepickerdialog.show(getFragmentManager(), "Datepickerdialog"); //show dialog
         }
@@ -236,13 +255,29 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         if(view == startdatepickerdialog){
             String date = "You picked the following start date: " + dayOfMonth + "/" + (++monthOfYear) + "/" + year;
+            startCal.set(year, monthOfYear, dayOfMonth);
         }
 
         if(view == enddatepickerdialog){
             String date = "You picked the following end date: " + dayOfMonth + "/" + (++monthOfYear) + "/" + year;
+            endCal.set(year, monthOfYear, dayOfMonth);
+
         }
 
     }
+
+    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+        if(view == starttimepickerdialog){
+            String date = "You picked the following start time: " + hourOfDay + ":" + (++minute);
+            startCal.set(hourOfDay, minute);
+        }
+
+        if(view == starttimepickerdialog){
+            String date = "You picked the following end time: " + hourOfDay + ":" + (++minute);
+            endCal.set(hourOfDay, minute);
+        }
+    }
+
 
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
