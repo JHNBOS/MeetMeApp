@@ -27,7 +27,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -48,7 +47,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     //OBJECTS
     public StringRequest stringRequest1;
     public StringRequest stringRequest2;
-    public ArrayList<Event> eventList= new ArrayList<>();
+    public ArrayList<Event> eventList;
     public ArrayList<WeekViewEvent> events;
     public User user = new User();
 
@@ -67,6 +66,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
         group = getIntent().getExtras().getString("Group");
         contact = getIntent().getExtras().getString("Email");
+
+        eventList = new ArrayList<>();
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
@@ -95,38 +96,22 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
 
+
     @Override
     public void onResume(){
         super.onResume();
 
-        String url1 = GET_EVENTS_URL + "?group='" + group + "'";
-        getData(url1);
-
-        String url2 = GET_USER_URL + "?email='" + contact + "'";
-        getUser(url2);
-    }
-
-    @Override
-    public void onRestart(){
-        super.onRestart();
+        eventList.clear();
 
         String url1 = GET_EVENTS_URL + "?group='" + group + "'";
         getData(url1);
 
         String url2 = GET_USER_URL + "?email='" + contact + "'";
         getUser(url2);
+
+        mWeekView.notifyDatasetChanged();
     }
 
-    @Override
-    public void onStart(){
-        super.onStart();
-
-        String url1 = GET_EVENTS_URL + "?group='" + group + "'";
-        getData(url1);
-
-        String url2 = GET_USER_URL + "?email='" + contact + "'";
-        getUser(url2);
-    }
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
@@ -181,7 +166,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         int idset = 0;
 
         for (int i = 0; i < eventList.size(); i++) {
-            String Title = eventList.get(i).getTitles().toString();
+            String Title = eventList.get(i).getEvent_title().toString();
             String Start = eventList.get(i).getStart();
             String End = eventList.get(i).getEnd();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
@@ -222,12 +207,15 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     }
 
     public void onFirstVisibleDayChanged(Calendar calendar, Calendar calendar1) {
+        /*
+        eventList.clear();
+
         String url1 = GET_EVENTS_URL + "?group='" + group + "'";
         getData(url1);
 
         String url2 = GET_USER_URL + "?email='" + contact + "'";
         getUser(url2);
-
+        */
         mWeekView.notifyDatasetChanged();
     }
 
@@ -316,12 +304,14 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                     JSONArray jArray = new JSONArray(response);
                     JSONArray ja = jArray.getJSONArray(0);
 
+                    Log.d("JSONARRAY: ", ja.toString());
+
                     Event e = new Event();
 
                     for (int i = 0; i < ja.length(); i++) {
                         JSONObject jo = ja.getJSONObject(i);
-                        
-                        e.setTitle(jo.getString("title"));
+
+                        e.setEvent_title(jo.getString("title"));
                         e.setLocation(jo.getString("location"));
                         e.setStart(jo.getString("start"));
                         e.setEnd(jo.getString("end"));
@@ -379,7 +369,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             }
         });
 
-        VolleySingleton.getInstance(Week.this).addToRequestQueue(stringRequest1);
+        VolleySingleton.getInstance(Week.this).addToRequestQueue(stringRequest2);
     }
 
 

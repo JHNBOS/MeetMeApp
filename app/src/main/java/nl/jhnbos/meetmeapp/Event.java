@@ -2,15 +2,14 @@ package nl.jhnbos.meetmeapp;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -18,15 +17,11 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class Event extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    public String title;
+    public String event_title;
     public String location;
     public String start;
     public String end;
@@ -55,15 +50,6 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
     }
 
-    public Event(String title, String location, String start, String end, String creator, String group) {
-        this.title = title;
-        this.location = location;
-        this.start = start;
-        this.end = end;
-        this.creator = creator;
-        this.group = group;
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +63,8 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
         //ALLOW HTTP
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        creator = getIntent().getExtras().getString("EmailC");
 
         titleField = (EditText) findViewById(R.id.titleField);
         locField = (EditText) findViewById(R.id.locField);
@@ -143,16 +131,14 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     /*-------------------------------------------------------------------------*/
     //BEGIN OF GETTERS AND SETTERS
 
-    public String getTitles() {
-        ///GET TITLE TEXT
-        EditText name = (EditText) findViewById(R.id.titleField);
-        String title = creator + ": " + "\n" + name.getText().toString();
+    public String getEvent_title() {
+        String event_title = creator + "\n" + this.event_title.toString();
 
-        return title;
+        return event_title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setEvent_title(String event_title) {
+        this.event_title = event_title;
     }
 
     public String getLocation() {return location;}
