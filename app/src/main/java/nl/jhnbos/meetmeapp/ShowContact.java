@@ -42,7 +42,6 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
 
     //Objects
     private StringRequest stringRequest1;
-    private HTTP http;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +70,6 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
 
         String url1 = GET_USER_URL + "?email='" + contact + "'";
         getData(url1);
-
-
-        http = new HTTP();
 
         //Listeners
         returnButton.setOnClickListener(this);

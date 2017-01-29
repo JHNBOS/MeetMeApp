@@ -36,7 +36,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GroupFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemLongClickListener {
+public class GroupFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
 
     public static final String GET_ALL_GROUPS_URL = "http://jhnbos.nl/android/getAllGroups.php";
     public static final String GET_ALL_GROUPSMEMBERS_URL = "http://jhnbos.nl/android/getAllGroupMembers.php";
@@ -85,6 +85,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         //Listeners
         createGroup.setOnClickListener(this);
         lv.setOnItemLongClickListener(this);
+        lv.setOnItemClickListener(this);
         lv.setLongClickable(true);
 
         registerForContextMenu(lv);
@@ -266,6 +267,16 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent weekviewIntent = new Intent(getActivity(), Week.class);
+
+        weekviewIntent.putExtra("Group", groupsList.get(position));
+        weekviewIntent.putExtra("Email", email);
+
+        startActivity(weekviewIntent);
     }
 
     //END OF LISTENERS
