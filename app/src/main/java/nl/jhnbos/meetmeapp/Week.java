@@ -103,6 +103,18 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
+    /*
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        String url1 = GET_EVENTS_URL + "?group='" + group + "'";
+        getData(url1);
+        mWeekView.notifyDatasetChanged();
+
+    }
+*/
+
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
 
