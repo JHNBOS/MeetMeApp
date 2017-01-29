@@ -95,7 +95,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     //ADD GROUP
     private void addEvent() {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
 
         try
         {
@@ -105,7 +105,6 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
             Date ev_end = sdf.parse(endDate);
             String ev_creator = getIntent().getExtras().getString("EmailC");
             String ev_group = getIntent().getExtras().getString("GroupC");
-
 
             Log.d("Title", ev_title);
             Log.d("Location: ", ev_loc);
