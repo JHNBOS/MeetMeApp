@@ -15,6 +15,7 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -45,8 +46,8 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
     private HTTP http;
     private static final String ADDEVENT_URL = "http://jhnbos.nl/android/addEvent.php";
-    private Calendar startCal;
-    private Calendar endCal;
+    private String startDate;
+    private String endDate;
 
     public Event(){
 
@@ -66,9 +67,6 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
-
-        startCal = Calendar.getInstance();
-        endCal = Calendar.getInstance();
 
         titleField = (EditText) findViewById(R.id.titleField);
         locField = (EditText) findViewById(R.id.locField);
@@ -91,31 +89,39 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
     }
 
+    /*-------------------------------------------------------------------------*/
+    //BEGIN OF METHODS
+
     //ADD GROUP
     private void addEvent() {
 
-        final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
 
         try
         {
             String ev_title = titleField.getText().toString();
             String ev_loc = locField.getText().toString();
-            String ev_start = sdf.format(startCal.getTime());
-            String ev_end = sdf.format(endCal.getTime());
+            Date ev_start = sdf.parse(startDate);
+            Date ev_end = sdf.parse(endDate);
             String ev_creator = getIntent().getExtras().getString("EmailC");
             String ev_group = getIntent().getExtras().getString("GroupC");
 
-            Log.d("Creator: ", getIntent().getExtras().getString("EmailC"));
-            Log.d("Group: ", getIntent().getExtras().getString("GroupC"));
+
             Log.d("Title", ev_title);
             Log.d("Location: ", ev_loc);
-            Log.d("Start: ", ev_start);
-            Log.d("End: ", ev_end);
+            Log.d("Start: ", ev_start.toString());
+            Log.d("End: ", ev_end.toString());
+            Log.d("Creator: ", ev_creator);
+            Log.d("Group: ", ev_group);
 
-
-            String response = http.sendPost(ADDEVENT_URL + "?title=" + ev_title
-                    + "&loc=" + ev_loc + "&start=" + ev_start + "&end=" + ev_end + ""
-                    + "&creator=" + ev_creator + "&group=" + ev_group + "" );
+            String response = http.sendPost(
+                    ADDEVENT_URL + "?title=" + URLEncoder.encode(ev_title, "UTF-8")
+                    + "&loc=" + URLEncoder.encode(ev_loc, "UTF-8")
+                    + "&start=" + URLEncoder.encode(ev_start.toString(), "UTF-8")
+                    + "&end=" + URLEncoder.encode(ev_end.toString(), "UTF-8")
+                    + "&creator=" + URLEncoder.encode(ev_creator, "UTF-8")
+                    + "&group=" + URLEncoder.encode(ev_group, "UTF-8")
+            );
 
             if (response.equals(ev_title)) {
                 Toast.makeText(Event.this, "Event created!", Toast.LENGTH_SHORT).show();
@@ -126,6 +132,10 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
         }
 
     }
+
+    //END OF METHODS
+    /*-------------------------------------------------------------------------*/
+    //BEGIN OF GETTERS AND SETTERS
 
     public String getTitles() {
         ///GET TITLE TEXT
@@ -159,19 +169,23 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
         this.end = end;
     }
 
-
+    //END OF GETTERS AND SETTERS
+    /*-------------------------------------------------------------------------*/
+    //BEGIN OF LISTENERS
 
     @Override
     public void onClick(View v) {
+        //IF PRESSED ON CREATE EVENT BUTTON
         if(v == createEventButton){
             addEvent();
 
             super.onBackPressed();
         }
 
+        //IF PRESSED ON PICK START DATE
         if(v == startDateButton){
             Calendar now = Calendar.getInstance();
-            startdatepickerdialog = DatePickerDialog.newInstance(
+            startdatepickerdialog =  DatePickerDialog.newInstance(
                     Event.this,
                     now.get(Calendar.YEAR),
                     now.get(Calendar.MONTH),
@@ -183,29 +197,60 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
             startdatepickerdialog.showYearPickerFirst(false); //choose year first?
             startdatepickerdialog.setAccentColor(Color.BLUE); // custom accent color
             startdatepickerdialog.setTitle("Start Date"); //dialog title
+
+            startdatepickerdialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                    String date = "You picked the following start date: " + dayOfMonth + "/" + (++monthOfYear) + "/" + year;
+                    startDate = year + "-" + monthOfYear + "-" + dayOfMonth;
+                }
+            });
+
+            startdatepickerdialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    Toast.makeText(Event.this, "Cancel choosing date", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            });
+
             startdatepickerdialog.show(getFragmentManager(), "Datepickerdialog"); //show dialog
         }
 
+        //IF PRESSED ON PICK START TIME
         if(v == startTimeButton){
             Calendar now = Calendar.getInstance();
-            starttimepickerdialog = TimePickerDialog.newInstance(Event.this,
-                    now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), true);
+            starttimepickerdialog = TimePickerDialog.newInstance(
+                    Event.this,
+                    now.get(Calendar.HOUR_OF_DAY),
+                    now.get(Calendar.MINUTE), true);
             starttimepickerdialog.setThemeDark(false); //Dark Theme?
             starttimepickerdialog.vibrate(false); //vibrate on choosing time?
             starttimepickerdialog.dismissOnPause(false); //dismiss the dialog onPause() called?
             starttimepickerdialog.enableSeconds(false); //show seconds?
             starttimepickerdialog.setTitle("Start Time");
 
+            starttimepickerdialog.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                    String date = "You picked the following start time: " + hourOfDay + ":" + (++minute);
+                    startDate += " " + hourOfDay + ":" + minute;
+                }
+            });
+
             //Handling cancel event
             starttimepickerdialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialogInterface) {
                     Toast.makeText(Event.this, "Cancel choosing time", Toast.LENGTH_SHORT).show();
+                    dialogInterface.dismiss();
                 }
             });
+
             starttimepickerdialog.show(getFragmentManager(), "Timepickerdialog"); //show time picker dialog
         }
 
+        //IF PRESSED ON PICK END DATE
         if(v == endDateButton){
             Calendar now = Calendar.getInstance();
             enddatepickerdialog = DatePickerDialog.newInstance(
@@ -220,61 +265,70 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
             enddatepickerdialog.showYearPickerFirst(false); //choose year first?
             enddatepickerdialog.setAccentColor(Color.BLUE); // custom accent color
             enddatepickerdialog.setTitle("End Date"); //dialog title
+
+            enddatepickerdialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                    String date = "You picked the following end date: " + dayOfMonth + "/" + (++monthOfYear) + "/" + year;
+                    endDate = year + "-" + monthOfYear + "-" + dayOfMonth;
+                }
+            });
+
+            enddatepickerdialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    Toast.makeText(Event.this, "Cancel choosing date", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            });
+
             enddatepickerdialog.show(getFragmentManager(), "Datepickerdialog"); //show dialog
         }
 
+        //IF PRESSED ON PICK END TIME
         if(v == endTimeButton){
             Calendar now = Calendar.getInstance();
-            endtimepickerdialog = TimePickerDialog.newInstance(Event.this,
-                    now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), true);
+            endtimepickerdialog = TimePickerDialog.newInstance(
+                    Event.this,
+                    now.get(Calendar.HOUR_OF_DAY),
+                    now.get(Calendar.MINUTE), true);
             endtimepickerdialog.setThemeDark(false); //Dark Theme?
             endtimepickerdialog.vibrate(false); //vibrate on choosing time?
             endtimepickerdialog.dismissOnPause(false); //dismiss the dialog onPause() called?
             endtimepickerdialog.enableSeconds(false); //show seconds?
             endtimepickerdialog.setTitle("End Time");
 
+            endtimepickerdialog.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                    String date = "You picked the following end time: " + hourOfDay + ":" + (++minute);
+                    endDate += " " + hourOfDay + ":" + minute;
+                }
+            });
+
             //Handling cancel event
             endtimepickerdialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialogInterface) {
                     Toast.makeText(Event.this, "Cancel choosing time", Toast.LENGTH_SHORT).show();
+                    dialogInterface.dismiss();
                 }
             });
+
             endtimepickerdialog.show(getFragmentManager(), "Timepickerdialog"); //show time picker dialog
         }
     }
 
-
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        if(view == startdatepickerdialog){
-            String date = "You picked the following start date: " + dayOfMonth + "/" + (++monthOfYear) + "/" + year;
-            startCal.set(year, monthOfYear, dayOfMonth);
-        }
-
-        if(view == enddatepickerdialog){
-            String date = "You picked the following end date: " + dayOfMonth + "/" + (++monthOfYear) + "/" + year;
-            endCal.set(year, monthOfYear, dayOfMonth);
-
-        }
 
     }
-
-    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
-        if(view == starttimepickerdialog){
-            String date = "You picked the following start time: " + hourOfDay + ":" + (++minute);
-            startCal.set(hourOfDay, minute);
-        }
-
-        if(view == starttimepickerdialog){
-            String date = "You picked the following end time: " + hourOfDay + ":" + (++minute);
-            endCal.set(hourOfDay, minute);
-        }
-    }
-
 
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
 
     }
+
+    //END OF LISTENERS
+
 }
