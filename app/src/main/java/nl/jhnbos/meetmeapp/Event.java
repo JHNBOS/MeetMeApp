@@ -105,12 +105,13 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
             String ev_creator = getIntent().getExtras().getString("EmailC");
             String ev_group = getIntent().getExtras().getString("GroupC");
 
+            Log.d("Creator: ", getIntent().getExtras().getString("EmailC"));
+            Log.d("Group: ", getIntent().getExtras().getString("GroupC"));
             Log.d("Title", ev_title);
             Log.d("Location: ", ev_loc);
             Log.d("Start: ", ev_start);
             Log.d("End: ", ev_end);
-            Log.d("Creator: ", getIntent().getExtras().getString("EmailC"));
-            Log.d("Group: ", getIntent().getExtras().getString("GroupC"));
+
 
             String response = http.sendPost(ADDEVENT_URL + "?title='" + ev_title
                     + "'&loc='" + ev_loc + "'&start='" + ev_start + "'&end='" + ev_end + "'"

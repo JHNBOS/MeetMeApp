@@ -196,7 +196,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
                 Intent createEvent = new Intent(this, Event.class);
                 createEvent.putExtra("EmailC", contact);
-                createEvent.putExtra("GroupC", selected);
+                createEvent.putExtra("GroupC", group);
                 startActivity(createEvent);
                 return true;
 

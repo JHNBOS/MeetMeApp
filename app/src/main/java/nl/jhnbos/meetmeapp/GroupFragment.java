@@ -273,8 +273,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent weekviewIntent = new Intent(getActivity(), Week.class);
 
-        weekviewIntent.putExtra("Groups", groupsList.get(position));
-        weekviewIntent.putExtra("Emails", email);
+        weekviewIntent.putExtra("Group", groupsList.get(position));
+        weekviewIntent.putExtra("Email", email);
 
         startActivity(weekviewIntent);
     }
