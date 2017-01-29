@@ -55,6 +55,10 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_view);
 
+        //BACK BUTTON
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //ALLOW HTTP
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -120,6 +124,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     public void onEmptyViewClicked(Calendar time) {
 
     }
+
 
     /**
      * Set up a date time interpreter which will show short date values when in week view and long
@@ -258,6 +263,11 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                     mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
                     mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
                 }
+                return true;
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                super.onBackPressed();
+
                 return true;
         }
 
