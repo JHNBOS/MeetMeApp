@@ -45,8 +45,8 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
     private HTTP http;
     private static final String ADDEVENT_URL = "http://jhnbos.nl/android/addEvent.php";
-    private Calendar startCal = new GregorianCalendar();
-    private Calendar endCal = new GregorianCalendar();
+    private Calendar startCal;
+    private Calendar endCal;
 
     public Event(){
 
@@ -69,6 +69,12 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
         creator = getIntent().getExtras().getString("EmailC");
         group = getIntent().getExtras().getString("GroupC");
+
+        this.setCreator(getIntent().getExtras().getString("EmailC"));
+        this.setGroup(getIntent().getExtras().getString("GroupC"));
+
+        startCal = Calendar.getInstance();
+        endCal = Calendar.getInstance();
 
         titleField = (EditText) findViewById(R.id.titleField);
         locField = (EditText) findViewById(R.id.locField);
