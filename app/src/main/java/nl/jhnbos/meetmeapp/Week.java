@@ -274,8 +274,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                             e.setLocation(jo.getString("location"));
                             e.setStart(format.parse(jo.get("start").toString()));
                             e.setEnd(format.parse(jo.get("end").toString()));
-                            e.setCreator(contact);
-                            e.setGroup(group);
 
                         } catch (ParseException pe) {
                             pe.printStackTrace();

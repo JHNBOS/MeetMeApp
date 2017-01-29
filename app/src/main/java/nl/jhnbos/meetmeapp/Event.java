@@ -67,12 +67,6 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        creator = getIntent().getExtras().getString("EmailC");
-        group = getIntent().getExtras().getString("GroupC");
-
-        this.setCreator(getIntent().getExtras().getString("EmailC"));
-        this.setGroup(getIntent().getExtras().getString("GroupC"));
-
         startCal = Calendar.getInstance();
         endCal = Calendar.getInstance();
 
@@ -108,15 +102,15 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
             String ev_loc = locField.getText().toString();
             String ev_start = sdf.format(startCal.getTime());
             String ev_end = sdf.format(endCal.getTime());
-            String ev_creator = this.getCreator();
-            String ev_group = this.getGroup();
+            String ev_creator = getIntent().getExtras().getString("EmailC");
+            String ev_group = getIntent().getExtras().getString("GroupC");
 
             Log.d("Title", ev_title);
             Log.d("Location: ", ev_loc);
             Log.d("Start: ", ev_start);
             Log.d("End: ", ev_end);
-            Log.d("Creator: ", ev_creator);
-            Log.d("Group: ", ev_group);
+            Log.d("Creator: ", getIntent().getExtras().getString("EmailC"));
+            Log.d("Group: ", getIntent().getExtras().getString("GroupC"));
 
             String response = http.sendPost(ADDEVENT_URL + "?title='" + ev_title
                     + "'&loc='" + ev_loc + "'&start='" + ev_start + "'&end='" + ev_end + "'"
@@ -164,13 +158,6 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
         this.end = end;
     }
 
-    public String getCreator() {return creator;}
-
-    public void setCreator(String creator) {this.creator = creator;}
-
-    public String getGroup() {return group;}
-
-    public void setGroup(String group) {this.group = group;}
 
 
     @Override
