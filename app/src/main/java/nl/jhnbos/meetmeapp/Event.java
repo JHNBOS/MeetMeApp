@@ -95,7 +95,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     //ADD GROUP
     private void addEvent() {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         try
         {
