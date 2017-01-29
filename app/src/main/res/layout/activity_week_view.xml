@@ -13,6 +13,8 @@
         android:layout_height="match_parent"
         app:eventTextColor="@android:color/white"
         app:textSize="12sp"
+        app:dayNameLength="length_short"
+        app:firstDayOfWeek="monday"
         app:hourHeight="70dp"
         app:headerColumnPadding="10dp"
         app:headerColumnTextColor="#8f000000"

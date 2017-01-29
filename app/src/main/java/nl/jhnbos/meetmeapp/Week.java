@@ -182,11 +182,13 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             String numberAsString = String.valueOf(eventID).toString();
             int id = Integer.parseInt(numberAsString);
 
-            Log.d("start.get", String.valueOf(start.get(Calendar.MONTH)));
-            Log.d("newMonth", String.valueOf(newMonth));
+            Log.d("start.get", String.valueOf(start.get(Calendar.MONTH)+1));
+            Log.d("newMonth", String.valueOf(newMonth-1));
 
+            if((start.get(Calendar.MONTH)+1) == (newMonth-1) && start.get(Calendar.YEAR) == newYear){
+                events.add(id, event);
+            }
 
-            events.add(id, event);
             //mWeekView.notifyDatasetChanged();
         }
 
