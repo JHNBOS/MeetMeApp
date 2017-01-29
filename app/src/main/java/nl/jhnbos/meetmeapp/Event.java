@@ -50,7 +50,6 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,8 +130,8 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     /*-------------------------------------------------------------------------*/
     //BEGIN OF GETTERS AND SETTERS
 
-    public String getEvent_title() {
-        String event_title = creator + "\n" + this.event_title.toString();
+    public String getEvent_title(String create) {
+        String event_title = create + "\n" + this.event_title.toString();
 
         return event_title;
     }

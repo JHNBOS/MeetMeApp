@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
+import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.android.volley.Response;
@@ -30,7 +31,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-public class Week extends AppCompatActivity implements WeekView.EventClickListener, WeekView.EventLongPressListener, WeekView.EmptyViewClickListener, WeekView.MonthChangeListener, WeekView.ScrollListener {
+public class Week extends AppCompatActivity implements WeekView.EventClickListener, WeekView.EventLongPressListener, WeekView.EmptyViewClickListener, WeekView.ScrollListener, MonthLoader.MonthChangeListener {
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
@@ -91,18 +92,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         // the week view. This is optional.
         setupDateTimeInterpreter(true);
 
-    }
-
-    /*-----------------------------------------------------------------------------------------------------*/
-    //BEGIN OF LISTENERS
-
-
-    @Override
-    public void onResume(){
-        super.onResume();
-
-        eventList.clear();
-
         String url1 = GET_EVENTS_URL + "?group='" + group + "'";
         getData(url1);
 
@@ -111,6 +100,10 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
         mWeekView.notifyDatasetChanged();
     }
+
+    /*-----------------------------------------------------------------------------------------------------*/
+    //BEGIN OF LISTENERS
+
 
 
     @Override
@@ -125,6 +118,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
     @Override
     public void onEmptyViewClicked(Calendar time) {
+
 
     }
 
@@ -158,18 +152,17 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         });
     }
 
-    @Override
     public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         //Create Event
-        events = new ArrayList<WeekViewEvent>();
+        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
 
         int idset = 0;
 
         for (int i = 0; i < eventList.size(); i++) {
-            String Title = eventList.get(i).getEvent_title().toString();
+            String Title = eventList.get(i).getEvent_title(contact).toString();
             String Start = eventList.get(i).getStart();
             String End = eventList.get(i).getEnd();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
             Calendar start = Calendar.getInstance(TimeZone.getTimeZone("CEST"));
             Calendar end = Calendar.getInstance(TimeZone.getTimeZone("CEST"));
@@ -187,35 +180,24 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
             String color = "#" + user.getColor();
 
-            Log.d("Color: ", color);
-
-            int colorInt = Color.parseColor(color);
-
-            event.setColor(colorInt);
+            event.setColor(Color.parseColor(color));
 
             long eventID = event.getId();
             String numberAsString = String.valueOf(eventID).toString();
             int id = Integer.parseInt(numberAsString);
 
             events.add(id, event);
-            mWeekView.notifyDatasetChanged();
+            //mWeekView.notifyDatasetChanged();
         }
 
-        mWeekView.notifyDatasetChanged();
+        //mWeekView.notifyDatasetChanged();
         return events;
 
     }
 
     public void onFirstVisibleDayChanged(Calendar calendar, Calendar calendar1) {
-        /*
-        eventList.clear();
 
-        String url1 = GET_EVENTS_URL + "?group='" + group + "'";
-        getData(url1);
 
-        String url2 = GET_USER_URL + "?email='" + contact + "'";
-        getUser(url2);
-        */
         mWeekView.notifyDatasetChanged();
     }
 
@@ -232,7 +214,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         switch (id) {
             case R.id.eventcreate:
                 Intent createEvent = new Intent(this, Event.class);
-                createEvent.putExtra("EmailC", contact);
+                createEvent.putExtra("EmailC", user.getFirstName() + " " + user.getLastName());
                 createEvent.putExtra("GroupC", group);
                 startActivity(createEvent);
                 return true;
