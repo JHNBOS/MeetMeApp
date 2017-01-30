@@ -195,6 +195,17 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
                 @Override
                 public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                     String date = "You picked the following start date: " + dayOfMonth + "/" + (++monthOfYear) + "/" + year;
+
+                    if(monthOfYear < 10){
+                       String month = "0" + String.valueOf(monthOfYear);
+                        monthOfYear = Integer.parseInt(month);
+                    }
+
+                    if(dayOfMonth < 10){
+                        String day = "0" + String.valueOf(dayOfMonth);
+                        dayOfMonth = Integer.parseInt(day);
+                    }
+
                     startDate = year + "-" + monthOfYear + "-" + dayOfMonth;
                 }
             });
@@ -227,6 +238,17 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
                 @Override
                 public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
                     String date = "You picked the following start time: " + hourOfDay + ":" + (++minute);
+
+                    if(hourOfDay < 10){
+                        String hour = "0" + String.valueOf(hourOfDay);
+                        hourOfDay = Integer.parseInt(hour);
+                    }
+
+                    if(minute < 10){
+                        String min = "0" + String.valueOf(minute);
+                        minute = Integer.parseInt(min);
+                    }
+
                     startDate += " " + hourOfDay + ":" + minute;
                 }
             });
@@ -263,6 +285,17 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
                 @Override
                 public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                     String date = "You picked the following end date: " + dayOfMonth + "/" + (++monthOfYear) + "/" + year;
+
+                    if(monthOfYear < 10){
+                        String month = "0" + String.valueOf(monthOfYear);
+                        monthOfYear = Integer.parseInt(month);
+                    }
+
+                    if(dayOfMonth < 10){
+                        String day = "0" + String.valueOf(dayOfMonth);
+                        dayOfMonth = Integer.parseInt(day);
+                    }
+
                     endDate = year + "-" + monthOfYear + "-" + dayOfMonth;
                 }
             });
@@ -295,6 +328,17 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
                 @Override
                 public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
                     String date = "You picked the following end time: " + hourOfDay + ":" + (++minute);
+
+                    if(hourOfDay < 10){
+                        String hour = "0" + String.valueOf(hourOfDay);
+                        hourOfDay = Integer.parseInt(hour);
+                    }
+
+                    if(minute < 10){
+                        String min = "0" + String.valueOf(minute);
+                        minute = Integer.parseInt(min);
+                    }
+
                     endDate += " " + hourOfDay + ":" + minute;
                 }
             });

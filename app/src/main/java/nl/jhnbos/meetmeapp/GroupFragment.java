@@ -4,9 +4,11 @@ package nl.jhnbos.meetmeapp;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -28,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,16 +46,25 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     public static final String DELETE_GROUP_URL = "http://jhnbos.nl/android/deleteGroup.php";
     public static final String DELETE_GROUPMEMBERS_URL = "http://jhnbos.nl/android/deleteGroupMembers.php";
     public static final String DELETE_GROUPMEMBER_URL = "http://jhnbos.nl/android/deleteGroupMember.php";
+    private static final String GET_USER_URL = "http://jhnbos.nl/android/getUser.php";
+
+
     //LISTS
     public ArrayList<String> groupsList;
     public ArrayList<String> memberList;
     public HashMap<String, String> controlList;
+
     //LAYOUT
     public ListView lv;
     public Button createGroup;
+
     //OBJECTS
     public ArrayAdapter<String> adapter;
     public StringRequest stringRequest1;
+    public StringRequest stringRequest2;
+    public User user;
+
+
     //STRINGS
     private String email;
     private HTTP http;
@@ -79,6 +91,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
 
         groupsList = new ArrayList<>();
         controlList = new HashMap<>();
+        user = new User();
 
         http = new HTTP();
 
@@ -198,6 +211,42 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         }
     }
 
+    public void getUser(String url1) {
+        stringRequest2 = new StringRequest(url1, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jArray = new JSONArray(response);
+                    JSONArray ja = jArray.getJSONArray(0);
+
+                    for (int i = 0; i < ja.length(); i++) {
+                        JSONObject jo = ja.getJSONObject(i);
+
+                        user.setID(jo.getInt("id"));
+                        user.setUsername(jo.getString("username"));
+                        user.setFirstName(jo.getString("first_name"));
+                        user.setLastName(jo.getString("last_name"));
+                        user.setEmail(jo.getString("email"));
+                        user.setPassword(jo.getString("password"));
+                        user.setColor(jo.getString("color"));
+
+                        Log.d("Username: ", jo.getString("username"));
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "Error while reading from url", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest2);
+    }
+
 
     //END OF METHODS
     /*-----------------------------------------------------------------------------------------------------*/
@@ -208,6 +257,9 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
 
         String url1 = GET_ALL_GROUPS_URL + "?email='" + email + "'";
         getData(url1);
+
+        String url2 = GET_USER_URL + "?email='" + email + "'";
+        getUser(url2);
 
         adapter.clear();
         adapter.notifyDataSetChanged();
@@ -274,7 +326,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         Intent weekviewIntent = new Intent(getActivity(), Week.class);
 
         weekviewIntent.putExtra("Group", groupsList.get(position));
-        weekviewIntent.putExtra("Email", email);
+        weekviewIntent.putExtra("User", user);
 
         startActivity(weekviewIntent);
     }

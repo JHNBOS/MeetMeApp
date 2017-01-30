@@ -51,7 +51,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     public StringRequest stringRequest2;
     public ArrayList<Event> eventList;
     public List<WeekViewEvent> events;
-    public User user = new User();
+    public User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +67,12 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         StrictMode.setThreadPolicy(policy);
 
         group = getIntent().getExtras().getString("Group");
-        contact = getIntent().getExtras().getString("Email");
+        user = (User) getIntent().getSerializableExtra("User");
+        contact = user.getEmail();
+
 
         eventList = new ArrayList<>();
+
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
@@ -96,10 +99,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         String url1 = GET_EVENTS_URL + "?group='" + group + "'";
         getData(url1);
 
-        String url2 = GET_USER_URL + "?email='" + contact + "'";
-        getUser(url2);
-
-        mWeekView.notifyDatasetChanged();
+        //mWeekView.notifyDatasetChanged();
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
@@ -151,50 +151,41 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         //Create Event
         events = new ArrayList<WeekViewEvent>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-        int idset = 0;
+        Calendar start = Calendar.getInstance();
+        Calendar end = (Calendar) start.clone();
+
+        String Title = null;
+        String Start = null;
+        String End = null;
+        int Colour = Color.parseColor("#" + user.getColor());
+
+        long id = 0;
 
         for (int i = 0; i < eventList.size(); i++) {
-            String Title = eventList.get(i).getEvent_title(user.getFirstName() + " " + user.getLastName()).toString();
-            String Start = eventList.get(i).getStart();
-            String End = eventList.get(i).getEnd();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-            Calendar start = Calendar.getInstance();
-            Calendar end = (Calendar) start.clone();
+            Title = eventList.get(i).getEvent_title(user.getFirstName() + " " + user.getLastName());
+            Start = eventList.get(i).getStart();
+            End = eventList.get(i).getEnd();
 
             try {
-
                 start.setTime(sdf.parse(Start));
                 end.setTime(sdf.parse(End));
 
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            } catch (Exception e){ e.printStackTrace();}
 
-            WeekViewEvent event = new WeekViewEvent(idset++, Title, start, end);
-
-            String color = "#" + user.getColor();
-
-            event.setColor(Color.parseColor(color));
-
-            long eventID = event.getId();
-            String numberAsString = String.valueOf(eventID).toString();
-            int id = Integer.parseInt(numberAsString);
-
-            Log.d("start.get", String.valueOf(start.get(Calendar.MONTH)+1));
-            Log.d("newMonth", String.valueOf(newMonth-1));
+            WeekViewEvent we = new WeekViewEvent(id, Title, start, end);
+            we.setColor(Colour);
 
             if((start.get(Calendar.MONTH)+1) == (newMonth-1) && start.get(Calendar.YEAR) == newYear){
-                events.add(id, event);
+                events.add(we);
             }
 
-            //mWeekView.notifyDatasetChanged();
+            id++;
         }
 
-        //mWeekView.notifyDatasetChanged();
-        return events;
 
+        return events;
     }
 
     public void onFirstVisibleDayChanged(Calendar calendar, Calendar calendar1) {
@@ -320,41 +311,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
     }
 
-    public void getUser(String url1) {
-        stringRequest2 = new StringRequest(url1, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jArray = new JSONArray(response);
-                    JSONArray ja = jArray.getJSONArray(0);
 
-                    for (int i = 0; i < ja.length(); i++) {
-                        JSONObject jo = ja.getJSONObject(i);
-
-                        user.setID(jo.getInt("id"));
-                        user.setUsername(jo.getString("username"));
-                        user.setFirstName(jo.getString("first_name"));
-                        user.setLastName(jo.getString("last_name"));
-                        user.setEmail(jo.getString("email"));
-                        user.setPassword(jo.getString("password"));
-                        user.setColor(jo.getString("color"));
-
-                        Log.d("Username: ", jo.getString("username"));
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Week.this, "Error while reading from url", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        VolleySingleton.getInstance(Week.this).addToRequestQueue(stringRequest2);
-    }
 
 
 

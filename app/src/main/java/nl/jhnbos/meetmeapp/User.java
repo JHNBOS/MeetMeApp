@@ -1,10 +1,12 @@
 package nl.jhnbos.meetmeapp;
 
+import java.io.Serializable;
+
 /**
  * Created by Johan Bos on 28-1-2017.
  */
 
-public class User {
+public class User implements Serializable {
     private int ID;
     private String Username;
     private String FirstName;
