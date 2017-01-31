@@ -65,16 +65,16 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v == createButton) {
-            groupName = groupNameField.getText().toString();
-            String url1 = ADDGROUP_URL + "?name=" + groupName + "&email=" + currentUser + "";
 
-            Log.d("Current user", currentUser);
+            groupName = groupNameField.getText().toString();
+            String url1 = ADDGROUP_URL + "?name=" + groupName + "&email=" + currentUser;
+            String url2 = ADDGROUPMEMBER_URL + "?name=" + groupName + "&email=" + currentUser;
 
             try {
                 if (groupName == "" || groupName.isEmpty()) {
                     Toast.makeText(CreateGroup.this, "Please fill in a name for the group!", Toast.LENGTH_LONG).show();
                 } else {
-                    addGroup(url1, groupName, currentUser);
+                    addGroup(url1, url2, groupName, currentUser);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -120,7 +120,7 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
     }
 
     //ADD GROUP
-    private void addGroup(final String url, final String group, final String email) {
+    private void addGroup(final String url, final String url2, final String group, final String email) {
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
@@ -137,9 +137,22 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
                 params.put("name", group);
                 params.put("email", email);
 
+                HashMap<String,String> params2 = new HashMap<>();
+                params2.put("name", group);
+                params2.put("email", email);
 
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(url, params);
+
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                RequestHandler rh2 = new RequestHandler();
+                String res2 = rh2.sendPostRequest(url2, params2);
+
                 return res;
 
             }
@@ -152,7 +165,8 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
                 if (!s.equals(group)) {
                     Toast.makeText(CreateGroup.this, s, Toast.LENGTH_LONG).show();
                 } else {
-                    addGroupMember(group, email);
+                    CreateGroup.this.onBackPressed();
+                    //addGroupMember(group, email);
                 }
 
             }
