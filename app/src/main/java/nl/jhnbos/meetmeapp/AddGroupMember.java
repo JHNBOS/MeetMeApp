@@ -1,5 +1,7 @@
 package nl.jhnbos.meetmeapp;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -22,24 +24,27 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AddGroupMember extends AppCompatActivity implements View.OnClickListener {
 
     public static final String ADD_GROUPMEMBER_URL = "http://jhnbos.nl/android/addGroupMember.php";
     public static final String GET_ALL_CONTACTS_URL = "http://jhnbos.nl/android/getAllContacts.php";
+
     //LISTS
-    public ArrayList<String> contactsList;
-    public ArrayList<String> selectedList;
+    private ArrayList<String> contactsList;
+    private ArrayList<String> selectedList;
+
     //LAYOUT
-    public ListView lv;
-    public Button addGroupMemberButton;
+    private ListView lv;
+    private Button addGroupMemberButton;
+
     //OBJECTS
-    public ArrayAdapter<String> adapter;
-    public StringRequest stringRequest1;
+    private ArrayAdapter<String> adapter;
+
     //STRINGS
     private String group;
     private String email;
-    private HTTP http;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +58,12 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
         //Instantiating variables
         group = this.getIntent().getStringExtra("Group");
         email = this.getIntent().getStringExtra("Email");
+
         lv = (ListView) findViewById(R.id.gmlist);
         addGroupMemberButton = (Button) findViewById(R.id.addGMButton);
+
         contactsList = new ArrayList<>();
         selectedList = new ArrayList<>();
-
-        http = new HTTP();
 
         //Listeners
         addGroupMemberButton.setOnClickListener(this);
@@ -66,8 +71,6 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
 
         //ADAPTER
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, contactsList);
-
-
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
@@ -90,7 +93,14 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
                     }
                 }
 
-                addGroupMembers(group, selectedList);
+                for (int i = 0; i < selectedList.size(); i++) {
+                    String cEmail = selectedList.get(i);
+                    String url = ADD_GROUPMEMBER_URL + "?name=" + group + "&email=" + cEmail;
+
+                    addGroupMember(url, group, cEmail);
+                }
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -115,57 +125,107 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
         super.onResume();
 
         String url1 = GET_ALL_CONTACTS_URL + "?email='" + email + "'";
-        getData(url1);
+        getContacts(url1);
+
+        adapter.clear();
+        adapter.notifyDataSetChanged();
     }
 
     //END OF LISTENERS
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    public void getData(String url1) {
-        stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jArray = new JSONArray(response);
-                    JSONArray ja = jArray.getJSONArray(0);
-
-                    for (int i = 0; i < ja.length(); i++) {
-                        JSONObject jo = ja.getJSONObject(i);
-
-                        contactsList.add(jo.getString("contact_email"));
-                    }
-
-                    lv.setAdapter(adapter);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(AddGroupMember.this, "Error while reading from url", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest1);
-    }
-
-    //ADD
-    private void addGroupMembers(String group, ArrayList<String> members) {
+    private void showContacts(String response){
         try {
-            for (int i = 0; i < members.size(); i++) {
-                String response = http.sendPost(ADD_GROUPMEMBER_URL + "?name=" + group + "&email=" + members.get(i) + "");
+            JSONArray jArray = new JSONArray(response);
+            JSONArray ja = jArray.getJSONArray(0);
+
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject jo = ja.getJSONObject(i);
+
+                contactsList.add(jo.getString("contact_email"));
             }
 
-            //Go back to main
-            AddGroupMember.this.onBackPressed();
+            lv.setAdapter(adapter);
 
-        } catch (Exception e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+    //ADD GROUPMEMBER(S)
+    private void addGroupMember(final String url, final String group, final String cEmail) {
+        class GetJSON extends AsyncTask<Void, Void, String> {
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(AddGroupMember.this, "Adding groupmember(s)...",null,true,true);
+            }
+
+            @Override
+            protected String doInBackground(Void ... v) {
+
+                HashMap<String,String> parameters = new HashMap<>();
+                parameters.put("name", group);
+                parameters.put("email", cEmail);
+
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendPostRequest(url, parameters);
+
+                return res;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+
+                if (!s.contains(group)) {
+                    Toast.makeText(AddGroupMember.this, s, Toast.LENGTH_LONG).show();
+                } else {
+                    AddGroupMember.this.onBackPressed();
+                }
+            }
+
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+    }
+
+    //GET CONTACTS
+    private void getContacts(final String url) {
+        class GetJSON extends AsyncTask<Void, Void, String> {
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(AddGroupMember.this, "Retrieving contacts...",null,true,true);
+            }
+
+            @Override
+            protected String doInBackground(Void ... v) {
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendGetRequest(url);
+                return res;
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+
+                contactsList.clear();
+                showContacts(s);
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+    }
+
 
     //END OF METHODS
 }

@@ -45,7 +45,6 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
     public ListView lv;
     public Button addContact;
     public ArrayAdapter<String> adapter;
-    public StringRequest stringRequest1;
     private String email;
     private HTTP http;
 
@@ -141,7 +140,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
         }
     }
 
-    //GET GROUPS
+    //GET CONTACTS
     private void getContacts(final String url) {
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
