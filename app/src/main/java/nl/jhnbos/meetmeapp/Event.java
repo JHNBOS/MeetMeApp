@@ -242,10 +242,24 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
                     if(hourOfDay < 10){
                         String hour = "0" + String.valueOf(hourOfDay);
                         hourOfDay = Integer.parseInt(hour);
+                    } else {
+                        String hour = "" + String.valueOf(hourOfDay);
+                        hourOfDay = Integer.parseInt(hour);
                     }
 
                     if(minute < 10){
                         String min = "0" + String.valueOf(minute);
+                        minute = Integer.parseInt(min);
+                    } else{
+                        String min = "" + String.valueOf(minute);
+                        minute = Integer.parseInt(min);
+                    }
+
+                    if(String.valueOf(minute).length() == 1){
+                        String min = String.valueOf(minute) + "0";
+                        minute = Integer.parseInt(min);
+                    } else {
+                        String min = String.valueOf(minute) + "";
                         minute = Integer.parseInt(min);
                     }
 
@@ -336,6 +350,14 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
                     if(minute < 10){
                         String min = "0" + String.valueOf(minute);
+                        minute = Integer.parseInt(min);
+                    }
+
+                    if(String.valueOf(minute).length() == 1){
+                        String min = String.valueOf(minute) + "0";
+                        minute = Integer.parseInt(min);
+                    } else {
+                        String min = String.valueOf(minute) + "";
                         minute = Integer.parseInt(min);
                     }
 

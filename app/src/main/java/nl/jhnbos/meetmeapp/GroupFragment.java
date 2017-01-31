@@ -157,6 +157,32 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         }
     }
 
+    //INITIALIZE USER
+    private void initUser(String response){
+        try {
+            JSONArray jArray = new JSONArray(response);
+            JSONArray ja = jArray.getJSONArray(0);
+
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject jo = ja.getJSONObject(i);
+
+                user.setID(jo.getInt("id"));
+                user.setUsername(jo.getString("username"));
+                user.setFirstName(jo.getString("first_name"));
+                user.setLastName(jo.getString("last_name"));
+                user.setPassword(jo.getString("password"));
+                user.setEmail(jo.getString("email"));
+                user.setColor(jo.getString("color"));
+
+            }
+
+            lv.setAdapter(adapter);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     //REMOVE GROUP
     private void removeGroup(String group) {
@@ -230,6 +256,37 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         gj.execute();
     }
 
+    //GET GROUPS
+    private void getUser(final String url) {
+        class GetJSON extends AsyncTask<Void, Void, String> {
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(getActivity(), "Retrieving user...",null,true,true);
+            }
+
+            @Override
+            protected String doInBackground(Void ... v) {
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendGetRequest(url);
+                return res;
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+
+                initUser(s);
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+    }
+
 
     //END OF METHODS
     /*-----------------------------------------------------------------------------------------------------*/
@@ -240,6 +297,9 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
 
         String url1 = GET_ALL_GROUPS_URL + "?email='" + email + "'";
         getGroups(url1);
+
+        String url2 = GET_USER_URL + "?email='" + email + "'";
+        getUser(url2);
 
         adapter.clear();
         adapter.notifyDataSetChanged();
@@ -306,7 +366,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         Intent weekviewIntent = new Intent(getActivity(), Week.class);
 
         weekviewIntent.putExtra("Group", groupsList.get(position));
-        weekviewIntent.putExtra("User", user);
+        weekviewIntent.putExtra("User",(User) user);
 
         startActivity(weekviewIntent);
     }
