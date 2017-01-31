@@ -6,83 +6,67 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class User implements Serializable {
-
-    @SerializedName("id")
-    @Expose
-    private String id;
-    @SerializedName("username")
-    @Expose
-    private String username;
-    @SerializedName("first_name")
-    @Expose
-    private String firstName;
-    @SerializedName("last_name")
-    @Expose
-    private String lastName;
-    @SerializedName("email")
-    @Expose
-    private String email;
-    @SerializedName("password")
-    @Expose
-    private String password;
-    @SerializedName("color")
-    @Expose
-    private String color;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    private int ID;
+    private String Username;
+    private String FirstName;
+    private String LastName;
+    private String Email;
+    private String Password;
+    private String Color;
 
     public String getUsername() {
-        return username;
+        return Username;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        Username = username;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getFirstName() {
-        return firstName;
+        return FirstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        FirstName = firstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return LastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        LastName = lastName;
     }
 
     public String getEmail() {
-        return email;
+        return Email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        Email = email;
     }
 
     public String getPassword() {
-        return password;
+        return Password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        Password = password;
     }
 
     public String getColor() {
-        return color;
+        return Color;
     }
 
     public void setColor(String color) {
-        this.color = color;
+        Color = color;
     }
-
 }

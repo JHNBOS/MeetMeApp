@@ -1,6 +1,8 @@
 package nl.jhnbos.meetmeapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -18,22 +20,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 
 public class Login extends AppCompatActivity {
+
     //STRINGS
-    public static final String EMAIL = "USER_NAME";
-    public static final String PASSWORD = "PASSWORD";
     private static final String LOGIN_URL = "http://jhnbos.nl/android/login.php";
-    private static final String GET_ALL_USERS_URL = "http://jhnbos.nl/android/getAllUsers.php";
-    public StringRequest stringRequest1;
-    public HashMap<String, String> controlList;
+    private String email;
+    private String password;
+
     //LAYOUT ITEMS
     private Button loginButton;
     private Button registerButton;
     private EditText emailEditText;
     private EditText passwordEditText;
-    private HTTP http;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +54,16 @@ public class Login extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.loginButton);
         registerButton = (Button) findViewById(R.id.registerButton);
 
-        controlList = new HashMap<>();
+        email = emailEditText.getText().toString().trim();
+        password = passwordEditText.getText().toString().trim();
+
+        final String url = LOGIN_URL + "?email=" + email + "&password=" + password;
 
         //Listeners
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                attemptLogin(url);
             }
         });
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -66,89 +73,57 @@ public class Login extends AppCompatActivity {
             }
         });
 
-
-        http = new HTTP();
-
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    //ATTEMPT LOGIN
-    private void attemptLogin() {
-        String email = emailEditText.getText().toString().trim();
-        String password = passwordEditText.getText().toString().trim();
+    private void attemptLogin(final String url) {
+        final String email = emailEditText.getText().toString().trim();
+        final String password = passwordEditText.getText().toString().trim();
 
-        try {
-            String response = http.sendPost(LOGIN_URL + "?email=" + email + "&password=" + password);
+        class GetJSON extends AsyncTask<Void, Void, String> {
+            ProgressDialog loading;
 
-            if (!response.equals(email + password)) {
-                Toast.makeText(this, "Invalid username and/or password!", Toast.LENGTH_LONG).show();
-            } else {
-                Intent intent = new Intent(Login.this, MainActivity.class);
-                intent.putExtra("Email", email);
-
-                Toast.makeText(this, "Login Succeeded!", Toast.LENGTH_LONG).show();
-                startActivity(intent);
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(Login.this, "Logging in...",null,true,true);
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            @Override
+            protected String doInBackground(Void ... v) {
 
-        /*
-        try {
-            String url1 = GET_ALL_USERS_URL;
-            getData(url1);
+                HashMap<String,String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("password", password);
 
-            if(controlList.containsKey(email)) {
-                String response = http.sendPost(LOGIN_URL + "?email=" + email + "&password=" + password);
 
-                if (!response.equals(email)) {
-                    Toast.makeText(this, "Invalid email and/or password!", Toast.LENGTH_LONG).show();
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendPostRequest(url, params);
+                return res;
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+
+                if (!s.equals(email + password)) {
+                    Toast.makeText(Login.this, s, Toast.LENGTH_LONG).show();
                 } else {
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     intent.putExtra("Email", email);
 
-                    Toast.makeText(this, "Login Succeeded!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Login.this, "Login Succeeded!", Toast.LENGTH_LONG).show();
                     startActivity(intent);
                 }
+
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Login Failed!", Toast.LENGTH_LONG).show();
         }
-        */
+        GetJSON gj = new GetJSON();
+        gj.execute();
     }
-
-    public void getData(String url1) {
-        stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jArray = new JSONArray(response);
-                    JSONArray ja = jArray.getJSONArray(0);
-
-                    for (int i = 0; i < ja.length(); i++) {
-                        JSONObject jo = ja.getJSONObject(i);
-                        Log.d("Control User", jo.getString("email"));
-                        Log.d("Control User", jo.getString("password"));
-                        controlList.put(jo.getString("email"), jo.getString("password"));
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Login.this, "Error while reading from url", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        VolleySingleton.getInstance(Login.this).addToRequestQueue(stringRequest1);
-    }
-
     //END OF METHODS
 }

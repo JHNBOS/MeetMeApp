@@ -80,8 +80,6 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
 
         //ADAPTER
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, contactsList);
-        //String url1 = GET_ALL_GROUPS_URL+"?email='"+email+"'";
-        //getData(url1);
 
         // Inflate the layout for this fragment
         return rl;
