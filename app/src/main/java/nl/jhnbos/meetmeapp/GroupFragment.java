@@ -1,8 +1,10 @@
 package nl.jhnbos.meetmeapp;
 
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.StrictMode;
@@ -135,45 +137,30 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         dialog.show();
     }
 
+    //SHOW GROUPS IN LISTVIEW
+    private void showGroups(String response){
+        try {
+            JSONArray jArray = new JSONArray(response);
+            JSONArray ja = jArray.getJSONArray(0);
 
-    //GET GROUPS
-    public void getData(String url1) {
-        stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jArray = new JSONArray(response);
-                    JSONArray ja = jArray.getJSONArray(0);
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject jo = ja.getJSONObject(i);
 
-                    for (int i = 0; i < ja.length(); i++) {
-                        JSONObject jo = ja.getJSONObject(i);
-
-                        groupsList.add(jo.getString("name"));
-                        controlList.put(jo.getString("name"), jo.getString("creator"));
-                    }
-
-                    lv.setAdapter(adapter);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                groupsList.add(jo.getString("name"));
+                controlList.put(jo.getString("name"), jo.getString("creator"));
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "Error while reading from url", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest1);
+            lv.setAdapter(adapter);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
+
 
     //REMOVE GROUP
     private void removeGroup(String group) {
         try {
-            String url1 = GET_ALL_GROUPS_URL;
-            getData(url1);
-
             for (Map.Entry<String, String> entry : controlList.entrySet()) {
                 Object key = entry.getKey();
                 Object value = entry.getValue();
@@ -211,40 +198,36 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         }
     }
 
-    public void getUser(String url1) {
-        stringRequest2 = new StringRequest(url1, new Response.Listener<String>() {
+    //GET GROUPS
+    private void getGroups(final String url) {
+        class GetJSON extends AsyncTask<Void, Void, String> {
+            ProgressDialog loading;
+
             @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jArray = new JSONArray(response);
-                    JSONArray ja = jArray.getJSONArray(0);
-
-                    for (int i = 0; i < ja.length(); i++) {
-                        JSONObject jo = ja.getJSONObject(i);
-
-                        user.setID(jo.getInt("id"));
-                        user.setUsername(jo.getString("username"));
-                        user.setFirstName(jo.getString("first_name"));
-                        user.setLastName(jo.getString("last_name"));
-                        user.setEmail(jo.getString("email"));
-                        user.setPassword(jo.getString("password"));
-                        user.setColor(jo.getString("color"));
-
-                        Log.d("Username: ", jo.getString("username"));
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(getActivity(), "Retrieving groups...",null,true,true);
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "Error while reading from url", Toast.LENGTH_SHORT).show();
-            }
-        });
+            protected String doInBackground(Void ... v) {
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendGetRequest(url);
+                return res;
 
-        VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest2);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+
+                groupsList.clear();
+                showGroups(s);
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
     }
 
 
@@ -256,10 +239,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         super.onResume();
 
         String url1 = GET_ALL_GROUPS_URL + "?email='" + email + "'";
-        getData(url1);
-
-        String url2 = GET_USER_URL + "?email='" + email + "'";
-        getUser(url2);
+        getGroups(url1);
 
         adapter.clear();
         adapter.notifyDataSetChanged();

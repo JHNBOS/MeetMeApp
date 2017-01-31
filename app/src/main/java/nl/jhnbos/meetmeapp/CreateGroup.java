@@ -1,5 +1,7 @@
 package nl.jhnbos.meetmeapp;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CreateGroup extends AppCompatActivity implements View.OnClickListener {
 
@@ -52,11 +55,10 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
 
         createButton.setOnClickListener(this);
 
+        currentUser = getIntent().getStringExtra("Email");
+
         http = new HTTP();
     }
-
-
-
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
 
@@ -64,13 +66,15 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         if (v == createButton) {
             groupName = groupNameField.getText().toString();
-            currentUser = getIntent().getStringExtra("Email");
+            String url1 = ADDGROUP_URL + "?name=" + groupName + "&email=" + currentUser + "";
+
+            Log.d("Current user", currentUser);
 
             try {
                 if (groupName == "" || groupName.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Please fill in a name for the group!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CreateGroup.this, "Please fill in a name for the group!", Toast.LENGTH_LONG).show();
                 } else {
-                    addGroup(groupName, currentUser);
+                    addGroup(url1, groupName, currentUser);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -91,37 +95,11 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        String url1 = GET_ALL_GROUPS_URL + "?email='" + currentUser + "'";
-        ;
-        getData(url1);
-    }
 
 
     //END OF LISTENERS
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
-
-    //ADD GROUP
-    private void addGroup(String name, String email) {
-        try {
-            if (controlList.contains(name)) {
-                Toast.makeText(this, "Group name is already taken!", Toast.LENGTH_LONG).show();
-            } else {
-                String response = http.sendGet(ADDGROUP_URL + "?name=" + name + "&email=" + email);
-
-                if (response.equals(name)) {
-                    addGroupMember(name, email);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 
     //ADD GROUPMEMBER
     private void addGroupMember(String name, String email) {
@@ -141,32 +119,46 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
 
     }
 
-    public void getData(String url1) {
-        stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
+    //ADD GROUP
+    private void addGroup(final String url, final String group, final String email) {
+        class GetJSON extends AsyncTask<Void, Void, String> {
+            ProgressDialog loading;
+
             @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jArray = new JSONArray(response);
-                    JSONArray ja = jArray.getJSONArray(0);
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(CreateGroup.this, "Creating group...",null,true,true);
+            }
 
-                    for (int i = 0; i < ja.length(); i++) {
-                        JSONObject jo = ja.getJSONObject(i);
-                        Log.d("Control Group", jo.getString("name"));
-                        controlList.add(jo.getString("name"));
-                    }
+            @Override
+            protected String doInBackground(Void ... v) {
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                HashMap<String,String> params = new HashMap<>();
+                params.put("name", group);
+                params.put("email", email);
+
+
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendPostRequest(url, params);
+                return res;
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+
+                if (!s.equals(group)) {
+                    Toast.makeText(CreateGroup.this, s, Toast.LENGTH_LONG).show();
+                } else {
+                    addGroupMember(group, email);
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(CreateGroup.this, "Error while reading from url", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        VolleySingleton.getInstance(CreateGroup.this).addToRequestQueue(stringRequest1);
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
     }
 
     //END OF METHODS

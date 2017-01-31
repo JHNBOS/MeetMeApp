@@ -1,8 +1,10 @@
 package nl.jhnbos.meetmeapp;
 
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
@@ -110,34 +112,23 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
         dialog.show();
     }
 
-    public void getData(String url1) {
-        stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jArray = new JSONArray(response);
-                    JSONArray ja = jArray.getJSONArray(0);
+    //SHOW CONTACTS IN LISTVIEW
+    private void showContacts(String response){
+        try {
+            JSONArray jArray = new JSONArray(response);
+            JSONArray ja = jArray.getJSONArray(0);
 
-                    for (int i = 0; i < ja.length(); i++) {
-                        JSONObject jo = ja.getJSONObject(i);
-                        Log.d("Contact", jo.getString("contact_email"));
-                        contactsList.add(jo.getString("contact_email"));
-                    }
-
-                    lv.setAdapter(adapter);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject jo = ja.getJSONObject(i);
+                Log.d("Contact", jo.getString("contact_email"));
+                contactsList.add(jo.getString("contact_email"));
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "Error while reading from url", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest1);
+            lv.setAdapter(adapter);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     //REMOVE CONTACT
@@ -150,6 +141,37 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
         }
     }
 
+    //GET GROUPS
+    private void getContacts(final String url) {
+        class GetJSON extends AsyncTask<Void, Void, String> {
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(getActivity(), "Retrieving contacts...",null,true,true);
+            }
+
+            @Override
+            protected String doInBackground(Void ... v) {
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendGetRequest(url);
+                return res;
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+
+                contactsList.clear();
+                showContacts(s);
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+    }
 
     //END OF METHODS
     /*-----------------------------------------------------------------------------------------------------*/
@@ -160,7 +182,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
         super.onResume();
 
         String url1 = GET_ALL_CONTACTS_URL + "?email='" + email + "'";
-        getData(url1);
+        getContacts(url1);
 
         adapter.clear();
         adapter.notifyDataSetChanged();
