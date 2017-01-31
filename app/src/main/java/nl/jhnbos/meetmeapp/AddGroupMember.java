@@ -111,8 +111,8 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
-    public void onRestart() {
-        super.onRestart();
+    public void onResume() {
+        super.onResume();
 
         String url1 = GET_ALL_CONTACTS_URL + "?email='" + email + "'";
         getData(url1);
@@ -156,7 +156,7 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
     private void addGroupMembers(String group, ArrayList<String> members) {
         try {
             for (int i = 0; i < members.size(); i++) {
-                String response = http.sendGet(ADD_GROUPMEMBER_URL + "?name=" + group + "&email=" + members.get(i) + "");
+                String response = http.sendPost(ADD_GROUPMEMBER_URL + "?name=" + group + "&email=" + members.get(i) + "");
             }
 
             //Go back to main
