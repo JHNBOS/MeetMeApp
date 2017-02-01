@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_week_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="nl.jhnbos.meetmeapp.Week">
+    android:layout_height="match_parent">
 
     <com.alamkanak.weekview.WeekView
         android:id="@+id/weekView"
@@ -14,7 +13,7 @@
         app:eventTextColor="@android:color/white"
         app:textSize="12sp"
         app:dayNameLength="length_short"
-        app:firstDayOfWeek="monday"
+        app:firstDayOfWeek="sunday"
         app:hourHeight="70dp"
         app:headerColumnPadding="10dp"
         app:headerColumnTextColor="#8f000000"

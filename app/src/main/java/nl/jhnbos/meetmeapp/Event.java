@@ -17,14 +17,15 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.net.URLEncoder;
+import java.sql.Timestamp;
 import java.util.Calendar;
 
 public class Event extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     public String event_title;
     public String location;
-    public String start;
-    public String end;
+    public Timestamp start;
+    public Timestamp end;
     public String creator;
     public String group;
 
@@ -146,19 +147,19 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
     public void setLocation(String location) {this.location = location;}
 
-    public String getStart() {
+    public Timestamp getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(Timestamp start) {
         this.start = start;
     }
 
-    public String getEnd() {
+    public Timestamp getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(Timestamp end) {
         this.end = end;
     }
 
