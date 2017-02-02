@@ -110,6 +110,11 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     public void onResume() {
         super.onResume();
 
+        eventList.clear();
+        events.clear();
+        mWeekView.notifyDatasetChanged();
+
+
         getUserJSON getUserJSON = null;
         GetEventJSON getEventJSON = null;
 
@@ -122,10 +127,11 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         getUserJSON.execute();
 
         eventList.clear();
+        events.clear();
         getEventJSON.execute();
 
         try {
-            Thread.sleep(2500);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -133,6 +139,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         mWeekView.notifyDatasetChanged();
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -467,18 +474,21 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                     Log.d("endTime", endTime);
 
                     try{
+                        /*
                         url = DELETE_EVENT_URL
                                 + "?title='" + URLEncoder.encode(event.getName(), "UTF-8") + "'"
                                 + "'&start='" + URLEncoder.encode(startTime, "UTF-8") + "'"
                                 + "'&ends='" + URLEncoder.encode(endTime, "UTF-8") + "'";
+                        */
+
+                        url = DELETE_EVENT_URL
+                                + "?title='" + URLEncoder.encode(event.getName(), "UTF-8") + "'";
                     } catch(Exception e){e.printStackTrace();}
 
                     RequestHandler rh = new RequestHandler();
 
                     HashMap<String,String> params = new HashMap<>();
                     params.put("title", event.getName());
-                    params.put("start", startTime);
-                    params.put("ends", endTime);
 
                     String res = rh.sendPostRequest(url, params);
                     return res;
@@ -492,7 +502,32 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                     Log.d("s", s);
 
                     if(s.equals(event.getName())){
-                        events.remove(event);
+                        eventList.clear();
+                        events.clear();
+                        mWeekView.notifyDatasetChanged();
+
+
+                        getUserJSON getUserJSON = null;
+                        GetEventJSON getEventJSON = null;
+
+                        try {
+                            getUserJSON = new getUserJSON();
+                            getEventJSON = new GetEventJSON();
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        getUserJSON.execute();
+
+                        eventList.clear();
+                        events.clear();
+                        getEventJSON.execute();
+
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
                         mWeekView.notifyDatasetChanged();
                     }
 
