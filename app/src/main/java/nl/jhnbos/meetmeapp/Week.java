@@ -477,8 +477,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
                     HashMap<String,String> params = new HashMap<>();
                     params.put("title", event.getName());
-                    params.put("start", start.substring(0, start.length() - 2));
-                    params.put("ends", end.substring(0, end.length() - 2));
+                    params.put("start", startTime);
+                    params.put("ends", endTime);
 
                     String res = rh.sendPostRequest(url, params);
                     return res;
