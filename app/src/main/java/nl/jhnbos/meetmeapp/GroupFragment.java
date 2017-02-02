@@ -226,15 +226,16 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         }
     }
 
-    //REMOVE GROUPMEMBERS
+    //REMOVE EVENTS
     private void removeEvents(String group) {
         try {
-            http.sendPost(DELETE_EVENTS_URL + "?group='" + URLEncoder.encode(group, "UTF-8") + "'");
+            http.sendPost(DELETE_EVENTS_URL + "?group_name='" + URLEncoder.encode(group, "UTF-8") + "'");
             onResume();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     //GET GROUPS
     private void getGroups(final String url) {
