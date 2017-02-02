@@ -31,6 +31,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 
@@ -133,7 +135,8 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
     //REMOVE CONTACT
     private void removeContact(String contact, String email) {
         try {
-            http.sendPost(DELETE_CONTACT_URL + "?name='" + contact + "'&email='" + email + "'");
+            http.sendPost(DELETE_CONTACT_URL + "?name='" + URLEncoder.encode(contact, "UTF-8")
+                    + "'&email='" + URLEncoder.encode(email, "UTF-8") + "'");
             onResume();
         } catch (Exception e) {
             e.printStackTrace();
@@ -180,7 +183,14 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
     public void onResume() {
         super.onResume();
 
-        String url1 = GET_ALL_CONTACTS_URL + "?email='" + email + "'";
+        String url1 = null;
+
+        try {
+            url1 = GET_ALL_CONTACTS_URL + "?email='" + URLEncoder.encode(email, "UTF-8") + "'";
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         getContacts(url1);
 
         adapter.clear();

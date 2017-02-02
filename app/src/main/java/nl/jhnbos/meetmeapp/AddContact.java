@@ -21,6 +21,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -64,7 +66,14 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         if (v == addContactButton) {
             String contactEmail = contactEmailField.getText().toString();
-            String url = ADDCONTACT_URL + "?name=" + contactEmail + "&email=" + currentUser;
+            String url = null;
+
+            try {
+                url = ADDCONTACT_URL + "?name=" + URLEncoder.encode(contactEmail, "UTF-8")
+                        + "&email=" + URLEncoder.encode(currentUser, "UTF-8") ;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
 
             try {
                 if (contactEmail == "") {

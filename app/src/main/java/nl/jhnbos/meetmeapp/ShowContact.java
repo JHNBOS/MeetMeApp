@@ -21,6 +21,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class ShowContact extends AppCompatActivity implements View.OnClickListener {
@@ -68,7 +70,14 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
         colorBox = (View) findViewById(R.id.colorBox);
         returnButton = (Button) findViewById(R.id.returnContactButton);
 
-        String url1 = GET_USER_URL + "?email='" + contact + "'";
+        String url1 = null;
+
+        try {
+            url1 = GET_USER_URL + "?email='" + URLEncoder.encode(contact, "UTF-8") + "'";
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         getData(url1);
 
         //Listeners

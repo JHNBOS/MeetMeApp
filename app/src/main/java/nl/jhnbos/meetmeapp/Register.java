@@ -70,8 +70,18 @@ public class Register extends AppCompatActivity {
                 String email = editTextEmail.getText().toString().toLowerCase();
                 Email = email;
 
-                String suffix = "?first_name=" + fname + "&last_name=" + lname + "&color=" + color + "&username="
-                        + username + "&password=" + password + "&email=" + email;
+                String suffix = null;
+
+                try {
+                    suffix = "?first_name=" + URLEncoder.encode(fname, "UTF-8")
+                            + "&last_name=" + URLEncoder.encode(lname, "UTF-8")
+                            + "&color=" + URLEncoder.encode(color, "UTF-8")
+                            + "&username=" + URLEncoder.encode(username, "UTF-8")
+                            + "&password=" + URLEncoder.encode(password, "UTF-8")
+                            + "&email=" + URLEncoder.encode(email, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
 
                 String cURL = REGISTER_URL + suffix;
 

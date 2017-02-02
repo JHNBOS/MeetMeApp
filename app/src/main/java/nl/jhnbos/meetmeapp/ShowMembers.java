@@ -23,6 +23,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class ShowMembers extends AppCompatActivity implements View.OnClickListener {
@@ -81,7 +83,14 @@ public class ShowMembers extends AppCompatActivity implements View.OnClickListen
     public void onResume() {
         super.onResume();
 
-        String url1 = GET_ALL_MEMBERS_URL + "?name='" + group + "'";
+        String url1 = null;
+
+        try {
+            url1 = GET_ALL_MEMBERS_URL + "?name='" + URLEncoder.encode(group, "UTF-8") + "'";
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         getData(url1);
 
         adapter.clear();
@@ -180,7 +189,8 @@ public class ShowMembers extends AppCompatActivity implements View.OnClickListen
     //REMOVE GROUPMEMBER
     private void removeGroupMember(String email) {
         try {
-            http.sendPost(DELETE_GROUPMEMBER_URL + "?name='" + group + "'&email='" + email + "'");
+            http.sendPost(DELETE_GROUPMEMBER_URL + "?name='" + URLEncoder.encode(group, "UTF-8")
+                    + "'&email='" + URLEncoder.encode(email, "UTF-8") + "'");
             onResume();
         } catch (Exception e) {
             e.printStackTrace();

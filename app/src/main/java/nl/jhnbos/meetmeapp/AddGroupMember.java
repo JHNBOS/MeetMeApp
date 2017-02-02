@@ -23,6 +23,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -95,7 +97,8 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
 
                 for (int i = 0; i < selectedList.size(); i++) {
                     String cEmail = selectedList.get(i);
-                    String url = ADD_GROUPMEMBER_URL + "?name=" + group + "&email=" + cEmail;
+                    String url = ADD_GROUPMEMBER_URL + "?name=" + URLEncoder.encode(group, "UTF-8")
+                            + "&email=" + URLEncoder.encode(cEmail, "UTF-8");
 
                     addGroupMember(url, group, cEmail);
                 }
@@ -124,7 +127,14 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
     public void onResume() {
         super.onResume();
 
-        String url1 = GET_ALL_CONTACTS_URL + "?email='" + email + "'";
+        String url1 = null;
+
+        try {
+            url1 = GET_ALL_CONTACTS_URL + "?email='" + URLEncoder.encode(email, "UTF-8") + "'";
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         getContacts(url1);
 
         adapter.clear();

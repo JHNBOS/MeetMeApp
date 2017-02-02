@@ -20,6 +20,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -67,8 +69,20 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
         if (v == createButton) {
 
             groupName = groupNameField.getText().toString();
-            String url1 = ADDGROUP_URL + "?name=" + groupName + "&email=" + currentUser;
-            String url2 = ADDGROUPMEMBER_URL + "?name=" + groupName + "&email=" + currentUser;
+            String url1 = null;
+            String url2 = null;
+
+            try {
+                url1 = ADDGROUP_URL + "?name=" + URLEncoder.encode(groupName, "UTF-8")
+                        + "&email=" + URLEncoder.encode(currentUser, "UTF-8");
+
+                url2 = ADDGROUPMEMBER_URL + "?name=" + URLEncoder.encode(groupName, "UTF-8")
+                        + "&email=" + URLEncoder.encode(currentUser, "UTF-8");
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
 
             try {
                 if (groupName == "" || groupName.isEmpty()) {
@@ -104,7 +118,8 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
     //ADD GROUPMEMBER
     private void addGroupMember(String name, String email) {
         try {
-            String response = http.sendGet(ADDGROUPMEMBER_URL + "?name=" + name + "&email=" + email);
+            String response = http.sendGet(ADDGROUPMEMBER_URL + "?name=" + URLEncoder.encode(name, "UTF-8")
+                    + "&email=" + URLEncoder.encode(email, "UTF-8"));
 
             if (response.equals(name)) {
                 //Go back to main

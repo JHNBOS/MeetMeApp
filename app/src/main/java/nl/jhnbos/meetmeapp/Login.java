@@ -22,8 +22,10 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 
 public class Login extends AppCompatActivity {
@@ -57,13 +59,23 @@ public class Login extends AppCompatActivity {
         email = emailEditText.getText().toString().trim();
         password = passwordEditText.getText().toString().trim();
 
-        final String url = LOGIN_URL + "?email=" + email + "&password=" + password;
+        final String URL;
+        String url = null;
+
+        try {
+            url = LOGIN_URL + "?email=" + URLEncoder.encode(email, "UTF-8")
+                    + "&password=" + URLEncoder.encode(password, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        URL = url;
 
         //Listeners
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin(url);
+                attemptLogin(URL);
             }
         });
         registerButton.setOnClickListener(new View.OnClickListener() {

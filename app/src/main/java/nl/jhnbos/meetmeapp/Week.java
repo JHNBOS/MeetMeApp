@@ -25,6 +25,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -108,10 +110,17 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     public void onResume() {
         super.onResume();
 
-        getUserJSON getUserJSON = new getUserJSON();
+        getUserJSON getUserJSON = null;
+        GetEventJSON getEventJSON = null;
+
+        try {
+            getUserJSON = new getUserJSON();
+            getEventJSON = new GetEventJSON();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         getUserJSON.execute();
 
-        GetEventJSON getEventJSON = new GetEventJSON();
         eventList.clear();
         getEventJSON.execute();
 
@@ -371,7 +380,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                 JSONObject jo = ja.getJSONObject(i);
                 e = new Event();
 
-
                 try {
                     start = sdf.parse(jo.get("start").toString());
                     end = sdf.parse(jo.get("end").toString());
@@ -406,8 +414,11 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
     //GET GROUPS
     private class GetEventJSON extends AsyncTask<Void, Void, String> {
-        String url = GET_EVENTS_URL + "?group='" + group + "'";
+        String url = GET_EVENTS_URL + "?group='" + URLEncoder.encode(group, "UTF-8") + "'";
         ProgressDialog loading;
+
+        private GetEventJSON() throws UnsupportedEncodingException {
+        }
 
         @Override
         protected void onPreExecute() {
@@ -434,15 +445,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     //DELETE EVENT
     private void deleteEventJSON(final WeekViewEvent event){
             class deleteEvent extends AsyncTask<Void, Void, String> {
-
-                String start = new Timestamp(event.getStartTime().getTimeInMillis()).toString();
-                String end = new Timestamp(event.getEndTime().getTimeInMillis()).toString();
-
-
-                String url = DELETE_EVENT_URL
-                        + "?title='" + event.getName() + "'"
-                        + "'&start='" + start.substring(0, start.length() - 2) + "'"
-                        + "'$ends='" + end.substring(0, end.length() - 2) + "'";
                 ProgressDialog loading;
 
 
@@ -454,6 +456,21 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
                 @Override
                 protected String doInBackground(Void... v) {
+                    String start = new Timestamp(event.getStartTime().getTimeInMillis()).toString();
+                    String end = new Timestamp(event.getEndTime().getTimeInMillis()).toString();
+                    String url = null;
+
+                    String startTime = start.substring(0, start.length() - 2);
+                    String endTime = end.substring(0, end.length() - 2);
+
+
+                    try{
+                        url = DELETE_EVENT_URL
+                                + "?title='" + URLEncoder.encode(event.getName(), "UTF-8") + "'"
+                                + "'&start='" + URLEncoder.encode(startTime, "UTF-8") + "'"
+                                + "'$ends='" + URLEncoder.encode(endTime, "UTF-8") + "'";
+                    } catch(Exception e){e.printStackTrace();}
+
                     RequestHandler rh = new RequestHandler();
 
                     HashMap<String,String> params = new HashMap<>();
@@ -488,8 +505,11 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
     //GET USER
     private class getUserJSON extends AsyncTask<Void, Void, String> {
-        String url = GET_USER_URL + "?email='" + contact + "'";
+        String url = GET_USER_URL + "?email='" + URLEncoder.encode(contact, "UTF-8") + "'";
         ProgressDialog loading;
+
+        private getUserJSON() throws UnsupportedEncodingException {
+        }
 
         @Override
         protected void onPreExecute() {

@@ -33,6 +33,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -190,7 +192,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
                 Object value = entry.getValue();
 
                 if (value != email) {
-                    http.sendPost(DELETE_GROUP_URL + "?name='" + group + "'");
+                    http.sendPost(DELETE_GROUP_URL + "?name='" + URLEncoder.encode(group, "UTF-8") + "'");
                     removeGroupMembers(group);
                 } else {
                     removeGroupMember(group, email);
@@ -205,7 +207,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     //REMOVE GROUPMEMBERS
     private void removeGroupMembers(String group) {
         try {
-            http.sendPost(DELETE_GROUPMEMBERS_URL + "?name='" + group + "'");
+            http.sendPost(DELETE_GROUPMEMBERS_URL + "?name='" + URLEncoder.encode(group, "UTF-8") + "'");
             removeEvents(group);
             onResume();
         } catch (Exception e) {
@@ -216,7 +218,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     //REMOVE GROUPMEMBER
     private void removeGroupMember(String group, String email) {
         try {
-            http.sendPost(DELETE_GROUPMEMBER_URL + "?name='" + group + "'&email='" + email + "'");
+            http.sendPost(DELETE_GROUPMEMBER_URL + "?name='" + URLEncoder.encode(group, "UTF-8")
+                    + "'&email='" + URLEncoder.encode(email, "UTF-8") + "'");
             onResume();
         } catch (Exception e) {
             e.printStackTrace();
@@ -226,7 +229,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     //REMOVE GROUPMEMBERS
     private void removeEvents(String group) {
         try {
-            http.sendPost(DELETE_EVENTS_URL + "?group='" + group + "'");
+            http.sendPost(DELETE_EVENTS_URL + "?group='" + URLEncoder.encode(group, "UTF-8") + "'");
             onResume();
         } catch (Exception e) {
             e.printStackTrace();
@@ -304,10 +307,17 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     public void onResume() {
         super.onResume();
 
-        String url1 = GET_ALL_GROUPS_URL + "?email='" + email + "'";
-        getGroups(url1);
+        String url1 = null;
+        String url2 = null;
 
-        String url2 = GET_USER_URL + "?email='" + email + "'";
+        try {
+            url1 = GET_ALL_GROUPS_URL + "?email='" + URLEncoder.encode(email, "UTF-8") + "'";
+            url2 = GET_USER_URL + "?email='" + URLEncoder.encode(email, "UTF-8") + "'";
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        getGroups(url1);
         getUser(url2);
 
         adapter.clear();
