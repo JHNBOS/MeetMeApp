@@ -119,8 +119,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     //BEGIN OF LISTENERS
 
     @Override
-    public void onRestart(){
-        super.onRestart();
+    public void onResume(){
+        super.onResume();
 
         GetJSON get = new GetJSON();
         eventList.clear();
@@ -187,6 +187,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     }
 
     public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+        mWeekView.notifyDatasetChanged();
+
         int idset = 0;
 
         Calendar startCal = null;
@@ -196,16 +198,11 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             startCal = Calendar.getInstance();
             endCal = (Calendar) startCal.clone();
 
-            String Title = null;
-
-            if(eventList.get(i).creator == user.getEmail()){
-                Title = user.getFirstName() + " " + user.getLastName()
-                + "\n"
-                + eventList.get(i).getEvent_title()
-                + eventList.get(i).getLocation();
-            } else {
-                Title = eventList.get(i).getEvent_title();
-            }
+            String Title =
+                    user.getFirstName() + " " + user.getLastName()
+                    + "\n"
+                    + eventList.get(i).getEvent_title()
+                    + eventList.get(i).getLocation();
 
             Timestamp Start = eventList.get(i).getStart();
             Timestamp End = eventList.get(i).getEnd();
@@ -246,9 +243,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
             for (WeekViewEvent we: events) {
                 if(eventMatches(we, newYear, newMonth)){
-                    matchedEvents.add(c, we);
+                    matchedEvents.add(c++, we);
                 }
-                c++;
             }
 
             startCal = null;
