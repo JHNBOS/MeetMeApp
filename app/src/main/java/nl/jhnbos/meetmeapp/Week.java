@@ -434,11 +434,17 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     //DELETE EVENT
     private void deleteEventJSON(final WeekViewEvent event){
             class deleteEvent extends AsyncTask<Void, Void, String> {
+
+                String start = new Timestamp(event.getStartTime().getTimeInMillis()).toString();
+                String end = new Timestamp(event.getEndTime().getTimeInMillis()).toString();
+
+
                 String url = DELETE_EVENT_URL
                         + "?title='" + event.getName() + "'"
-                        + "'&start='" + new Timestamp(event.getStartTime().getTimeInMillis()).toString() + "'"
-                        + "'$end='" + new Timestamp(event.getEndTime().getTimeInMillis()).toString() + "'";
+                        + "'&start='" + start.substring(0, start.length() - 2) + "'"
+                        + "'$ends='" + end.substring(0, end.length() - 2) + "'";
                 ProgressDialog loading;
+
 
                 @Override
                 protected void onPreExecute() {
@@ -452,8 +458,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
                     HashMap<String,String> params = new HashMap<>();
                     params.put("title", event.getName());
-                    params.put("start", new Timestamp(event.getStartTime().getTimeInMillis()).toString());
-                    params.put("end", new Timestamp(event.getEndTime().getTimeInMillis()).toString());
+                    params.put("start", start.substring(0, start.length() - 2));
+                    params.put("ends", end.substring(0, end.length() - 2));
 
                     String res = rh.sendPostRequest(url, params);
                     return res;
@@ -463,6 +469,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
+
+                    Log.d("s", s);
 
                     if(s.equals(event.getName())){
                         events.remove(event);
