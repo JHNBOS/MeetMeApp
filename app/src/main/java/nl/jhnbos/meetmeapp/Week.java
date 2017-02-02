@@ -203,9 +203,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
         ShowDialog(event);
-        events.remove(event);
 
-        mWeekView.notifyDatasetChanged();
     }
 
     @Override
@@ -464,9 +462,12 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
+
+                    events.remove(event);
+                    mWeekView.notifyDatasetChanged();
+
                     loading.dismiss();
 
-                    initUser(s);
                 }
             }
 
