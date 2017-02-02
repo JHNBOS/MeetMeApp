@@ -14,7 +14,7 @@
         app:textSize="12sp"
         app:dayNameLength="length_short"
         app:firstDayOfWeek="sunday"
-        app:hourHeight="70dp"
+        app:hourHeight="100dp"
         app:headerColumnPadding="10dp"
         app:headerColumnTextColor="#8f000000"
         app:headerRowPadding="12dp"

@@ -46,9 +46,10 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     private String group;
 
     //OBJECTS
-    public ArrayList<Event> eventList;
-    public List<WeekViewEvent> events;
-    public User user;
+    private ArrayList<Event> eventList;
+    private List<WeekViewEvent> events;
+    private List<WeekViewEvent> matchedEvents;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +64,20 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        //Get objects and strings from intent
         group = getIntent().getExtras().getString("Group");
         user = (User) getIntent().getSerializableExtra("User");
         contact = user.getEmail();
+
+        //Lists
         eventList = new ArrayList<>();
         events = new ArrayList<WeekViewEvent>();
+        matchedEvents = new ArrayList<>();
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
+
+        mWeekView.setShowNowLine(true);
 
         // Set an action when any event is clicked.
         mWeekView.setOnEventClickListener(this);
@@ -91,7 +98,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
         setupDateTimeInterpreter(true);
-
 
         GetJSON get = new GetJSON();
         eventList.clear();
@@ -123,19 +129,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     public void onEmptyViewClicked(Calendar time) {
         Toast.makeText(Week.this, String.valueOf(time.get(Calendar.MONTH)+1), Toast.LENGTH_LONG).show();
 
-        /*
-        GetJSON get = new GetJSON();
-        eventList.clear();
-        get.execute();
-
-        try {
-            Thread.sleep(2500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-*/
         mWeekView.notifyDatasetChanged();
-
     }
 
     /**
@@ -168,6 +162,10 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         });
     }
 
+    private boolean eventMatches(WeekViewEvent event, int year, int month) {
+        return (event.getStartTime().get(Calendar.YEAR) == year && event.getStartTime().get(Calendar.MONTH) == month-1) || (event.getEndTime().get(Calendar.YEAR) == year && event.getEndTime().get(Calendar.MONTH) == month - 1);
+    }
+
     public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         int Colour = Color.parseColor("#" + user.getColor());
         int idset = 0;
@@ -195,16 +193,28 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             WeekViewEvent event = new WeekViewEvent(idset++, Title, startCal, endCal);
             event.setColor(Colour);
 
-            Log.d("Event before if: ", event.getName());
+            boolean month = false;
 
-            Log.d("Event month", String.valueOf(event.getStartTime().get(Calendar.MONTH)));
+            Log.d("startTime Month", String.valueOf(event.getStartTime().get(Calendar.MONTH)));
             Log.d("newMonth", String.valueOf(newMonth));
 
-            if(event.getStartTime().get(Calendar.MONTH) == newMonth
-                    &&event.getStartTime().get(Calendar.YEAR) == newYear
-                    &&!events.contains(event)){
+            if(event.getStartTime().get(Calendar.MONTH) == newMonth && event.getStartTime().get(Calendar.YEAR) == newYear){
+                month = true;
+            }
+
+            Log.d("Boolean", String.valueOf(month));
+
+            if(!events.contains(event) && month == true){
                 Log.d("Event: ", event.getName());
                 events.add(event);
+            }
+
+            matchedEvents = new ArrayList<>();
+
+            for (WeekViewEvent we: events) {
+                if(eventMatches(we, newYear, newMonth)){
+                    matchedEvents.add(we);
+                }
             }
 
             startCal = null;
@@ -213,7 +223,9 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
         }
 
-        return events;
+        mWeekView.notifyDatasetChanged();
+
+        return matchedEvents;
     }
 
 
