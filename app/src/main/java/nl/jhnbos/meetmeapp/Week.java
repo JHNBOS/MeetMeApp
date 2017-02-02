@@ -80,8 +80,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
 
-        mWeekView.setShowNowLine(true);
-
         // Set an action when any event is clicked.
         mWeekView.setOnEventClickListener(this);
 
@@ -471,6 +469,9 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                     initUser(s);
                 }
             }
+
+        deleteEvent de = new deleteEvent();
+        de.execute();
     }
 
     //GET USER
