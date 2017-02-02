@@ -110,8 +110,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     public void onResume() {
         super.onResume();
 
-        eventList.clear();
-        events.clear();
         getUserJSON getUserJSON = null;
         GetEventJSON getEventJSON = null;
 
@@ -121,10 +119,11 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        getUserJSON.execute();
 
         eventList.clear();
         events.clear();
+
+        getUserJSON.execute();
         getEventJSON.execute();
 
         try {
@@ -256,11 +255,13 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         return (event.getStartTime().get(Calendar.YEAR) == year && event.getStartTime().get(Calendar.MONTH) == (month - 1)) || (event.getEndTime().get(Calendar.YEAR) == year && event.getEndTime().get(Calendar.MONTH) == month - 1);
     }
 
-    //Check for events when changing month
-    public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        mWeekView.notifyDatasetChanged();
+    private void showEvents(int month, int year){
+
+
+
 
         int idset = 0;
+        int c = 0;
 
         Calendar startCal = null;
         Calendar endCal = null;
@@ -287,28 +288,18 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             WeekViewEvent event = new WeekViewEvent(idset++, Title, startCal, endCal);
             event.setColor(Colour);
 
-            boolean month = false;
-
             Log.d("startTime Month", String.valueOf(event.getStartTime().get(Calendar.MONTH)));
-            Log.d("newMonth", String.valueOf(newMonth));
+            Log.d("newMonth", String.valueOf(month));
 
-            if (event.getStartTime().get(Calendar.MONTH) == newMonth && event.getStartTime().get(Calendar.YEAR) == newYear) {
-                month = true;
-            }
-
-            Log.d("Boolean", String.valueOf(month));
-
-            if (!events.contains(event) && month == true) {
+            if (!events.contains(event)) {
                 Log.d("Event: ", event.getName());
                 events.add(event);
             }
 
             matchedEvents = new ArrayList<>();
 
-            int c = 0;
-
             for (WeekViewEvent we : events) {
-                if (eventMatches(we, newYear, newMonth)) {
+                if (eventMatches(we, year, month)) {
                     matchedEvents.add(c++, we);
                     mWeekView.notifyDatasetChanged();
                 }
@@ -321,6 +312,12 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         }
 
         mWeekView.notifyDatasetChanged();
+
+    }
+
+    //Check for events when changing month
+    public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+        showEvents(newMonth, newYear);
 
         return matchedEvents;
     }
@@ -504,7 +501,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        Week.this.onResume();
                     }
 
                     loading.dismiss();
@@ -514,6 +510,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
         deleteEvent de = new deleteEvent();
         de.execute();
+        mWeekView.notifyDatasetChanged();
+        Week.this.onResume();
     }
 
     //GET USER
