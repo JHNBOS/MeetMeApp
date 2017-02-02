@@ -297,6 +297,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             for (WeekViewEvent we : events) {
                 if (eventMatches(we, newYear, newMonth)) {
                     matchedEvents.add(c++, we);
+                    mWeekView.notifyDatasetChanged();
                 }
             }
 
@@ -463,8 +464,10 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
 
-                    events.remove(event);
-                    mWeekView.notifyDatasetChanged();
+                    if(s.equals(event.getName())){
+                        events.remove(event);
+                        mWeekView.notifyDatasetChanged();
+                    }
 
                     loading.dismiss();
 
