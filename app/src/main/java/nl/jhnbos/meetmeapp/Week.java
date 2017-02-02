@@ -1,12 +1,14 @@
 package nl.jhnbos.meetmeapp;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
@@ -18,7 +20,6 @@ import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
-import com.alamkanak.weekview.WeekViewLoader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,19 +31,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
-public class Week extends AppCompatActivity implements WeekView.EventClickListener ,WeekView.EventLongPressListener, WeekView.EmptyViewClickListener, WeekView.ScrollListener, MonthLoader.MonthChangeListener {
+public class Week extends AppCompatActivity implements WeekView.EventClickListener, WeekView.EventLongPressListener, WeekView.EmptyViewClickListener, WeekView.ScrollListener, MonthLoader.MonthChangeListener {
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
     private static final int TYPE_WEEK_VIEW = 3;
-    private int mWeekViewType = TYPE_THREE_DAY_VIEW;
-    private WeekView mWeekView;
-
     //STRINGS
     private static final String GET_EVENTS_URL = "http://jhnbos.nl/android/getAllEvents.php";
+    private static final String DELETE_EVENT_URL = "http://jhnbos.nl/android/deleteEvent.php";
     private static final String GET_USER_URL = "http://jhnbos.nl/android/getUser.php";
+    private int mWeekViewType = TYPE_THREE_DAY_VIEW;
+    private WeekView mWeekView;
     private String contact;
     private String group;
 
@@ -105,15 +107,15 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     //BEGIN OF LISTENERS
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
 
-        String url2 = GET_USER_URL + "?email='" + contact + "'";
-        getUser(url2);
+        getUserJSON getUserJSON = new getUserJSON();
+        getUserJSON.execute();
 
-        GetJSON get = new GetJSON();
+        GetEventJSON getEventJSON = new GetEventJSON();
         eventList.clear();
-        get.execute();
+        getEventJSON.execute();
 
         try {
             Thread.sleep(2500);
@@ -123,128 +125,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
         mWeekView.notifyDatasetChanged();
 
-    }
-
-    @Override
-    public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, event.getName(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-    }
-
-    @Override
-    public void onEmptyViewClicked(Calendar time) {
-        Toast.makeText(Week.this, String.valueOf(time.get(Calendar.MONTH)+1), Toast.LENGTH_LONG).show();
-
-        mWeekView.notifyDatasetChanged();
-    }
-
-    /**
-     * Set up a date time interpreter which will show short date values when in week view and long
-     * date values otherwise.
-     *
-     * @param shortDate True if the date values should be short.
-     */
-    private void setupDateTimeInterpreter(final boolean shortDate) {
-        mWeekView.setDateTimeInterpreter(new DateTimeInterpreter() {
-            @Override
-            public String interpretDate(Calendar date) {
-                SimpleDateFormat weekdayNameFormat = new SimpleDateFormat("EEE");
-                String weekday = weekdayNameFormat.format(date.getTime());
-                SimpleDateFormat format = new SimpleDateFormat("d/MM");
-
-                // All android api level do not have a standard way of getting the first letter of
-                // the week day name. Hence we get the first char programmatically.
-                // Details: http://stackoverflow.com/questions/16959502/get-one-letter-abbreviation-of-week-day-of-a-date-in-java#answer-16959657
-                return weekday.toUpperCase() + " " + format.format(date.getTime());
-            }
-
-            @Override
-            public String interpretTime(int hour) {
-                if (hour == 24) hour = 0;
-                if (hour == 0) hour = 0;
-                return hour + ":00";
-            }
-
-        });
-    }
-
-    private boolean eventMatches(WeekViewEvent event, int year, int month) {
-        return (event.getStartTime().get(Calendar.YEAR) == year && event.getStartTime().get(Calendar.MONTH) == (month-1)) || (event.getEndTime().get(Calendar.YEAR) == year && event.getEndTime().get(Calendar.MONTH) == month - 1);
-    }
-
-    public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        mWeekView.notifyDatasetChanged();
-
-        int idset = 0;
-
-        Calendar startCal = null;
-        Calendar endCal = null;
-
-        for (int i = 0; i < eventList.size(); i++) {
-            startCal = Calendar.getInstance();
-            endCal = (Calendar) startCal.clone();
-
-            String Title = eventList.get(i).getEvent_title();
-            Timestamp Start = eventList.get(i).getStart();
-            Timestamp End = eventList.get(i).getEnd();
-
-            startCal.setTime(Start);
-            endCal.setTime(End);
-
-            //+2 is april
-            //+1 is march
-            //+0 is february => correct
-            startCal.set(Calendar.MONTH, (startCal.get(Calendar.MONTH)+0));
-            endCal.set(Calendar.MONTH, (endCal.get(Calendar.MONTH)+0));
-
-            int Colour = Color.parseColor(eventList.get(i).getColor());
-
-            WeekViewEvent event = new WeekViewEvent(idset++, Title, startCal, endCal);
-            event.setColor(Colour);
-
-            boolean month = false;
-
-            Log.d("startTime Month", String.valueOf(event.getStartTime().get(Calendar.MONTH)));
-            Log.d("newMonth", String.valueOf(newMonth));
-
-            if(event.getStartTime().get(Calendar.MONTH) == newMonth && event.getStartTime().get(Calendar.YEAR) == newYear){
-                month = true;
-            }
-
-            Log.d("Boolean", String.valueOf(month));
-
-            if(!events.contains(event) && month == true){
-                Log.d("Event: ", event.getName());
-                events.add(event);
-            }
-
-            matchedEvents = new ArrayList<>();
-
-            int c = 0;
-
-            for (WeekViewEvent we: events) {
-                if(eventMatches(we, newYear, newMonth)){
-                    matchedEvents.add(c++, we);
-                }
-            }
-
-            startCal = null;
-            endCal = null;
-            event = null;
-
-        }
-
-        mWeekView.notifyDatasetChanged();
-
-        return matchedEvents;
-    }
-
-
-    public void onFirstVisibleDayChanged(Calendar calendar, Calendar calendar1) {
-        //mWeekView.notifyDatasetChanged();
     }
 
     @Override
@@ -313,20 +193,149 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         return super.onOptionsItemSelected(item);
     }
 
-    protected String getEventTitle(Calendar time) {
-        return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
+    //END OF LISTENERS
+    /*-----------------------------------------------------------------------------------------------------*/
+    //BEGIN OF ANDROID WEEKVIEW LISTENERS
+
+    @Override
+    public void onEventClick(WeekViewEvent event, RectF eventRect) {
+        Toast.makeText(this, event.getName(), Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
+        ShowDialog(event);
+        events.remove(event);
+
+        mWeekView.notifyDatasetChanged();
+    }
+
+    @Override
+    public void onEmptyViewClicked(Calendar time) {
+        Toast.makeText(Week.this, String.valueOf(time.get(Calendar.MONTH) + 1), Toast.LENGTH_LONG).show();
+
+        mWeekView.notifyDatasetChanged();
+    }
+
+    //Setup date showing
+    private void setupDateTimeInterpreter(final boolean shortDate) {
+        mWeekView.setDateTimeInterpreter(new DateTimeInterpreter() {
+            @Override
+            public String interpretDate(Calendar date) {
+                SimpleDateFormat weekdayNameFormat = new SimpleDateFormat("EEE");
+                String weekday = weekdayNameFormat.format(date.getTime());
+                SimpleDateFormat format = new SimpleDateFormat("d/MM");
+
+                // All android api level do not have a standard way of getting the first letter of
+                // the week day name. Hence we get the first char programmatically.
+                // Details: http://stackoverflow.com/questions/16959502/get-one-letter-abbreviation-of-week-day-of-a-date-in-java#answer-16959657
+                return weekday.toUpperCase() + " " + format.format(date.getTime());
+            }
+
+            @Override
+            public String interpretTime(int hour) {
+                if (hour == 24) hour = 0;
+                if (hour == 0) hour = 0;
+                return hour + ":00";
+            }
+
+        });
+    }
+
+    //Check if event matches onMonthChange parameters
+    private boolean eventMatches(WeekViewEvent event, int year, int month) {
+        return (event.getStartTime().get(Calendar.YEAR) == year && event.getStartTime().get(Calendar.MONTH) == (month - 1)) || (event.getEndTime().get(Calendar.YEAR) == year && event.getEndTime().get(Calendar.MONTH) == month - 1);
+    }
+
+    //Check for events when changing month
+    public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+        mWeekView.notifyDatasetChanged();
+
+        int idset = 0;
+
+        Calendar startCal = null;
+        Calendar endCal = null;
+
+        for (int i = 0; i < eventList.size(); i++) {
+            startCal = Calendar.getInstance();
+            endCal = (Calendar) startCal.clone();
+
+            String Title = eventList.get(i).getEvent_title();
+            Timestamp Start = eventList.get(i).getStart();
+            Timestamp End = eventList.get(i).getEnd();
+
+            startCal.setTime(Start);
+            endCal.setTime(End);
+
+            //+2 is april
+            //+1 is march
+            //+0 is february => correct
+            startCal.set(Calendar.MONTH, (startCal.get(Calendar.MONTH) + 0));
+            endCal.set(Calendar.MONTH, (endCal.get(Calendar.MONTH) + 0));
+
+            int Colour = Color.parseColor(eventList.get(i).getColor());
+
+            WeekViewEvent event = new WeekViewEvent(idset++, Title, startCal, endCal);
+            event.setColor(Colour);
+
+            boolean month = false;
+
+            Log.d("startTime Month", String.valueOf(event.getStartTime().get(Calendar.MONTH)));
+            Log.d("newMonth", String.valueOf(newMonth));
+
+            if (event.getStartTime().get(Calendar.MONTH) == newMonth && event.getStartTime().get(Calendar.YEAR) == newYear) {
+                month = true;
+            }
+
+            Log.d("Boolean", String.valueOf(month));
+
+            if (!events.contains(event) && month == true) {
+                Log.d("Event: ", event.getName());
+                events.add(event);
+            }
+
+            matchedEvents = new ArrayList<>();
+
+            int c = 0;
+
+            for (WeekViewEvent we : events) {
+                if (eventMatches(we, newYear, newMonth)) {
+                    matchedEvents.add(c++, we);
+                }
+            }
+
+            startCal = null;
+            endCal = null;
+            event = null;
+
+        }
+
+        mWeekView.notifyDatasetChanged();
+
+        return matchedEvents;
+    }
+
+
+    public void onFirstVisibleDayChanged(Calendar calendar, Calendar calendar1) {
+        //mWeekView.notifyDatasetChanged();
+    }
+
+
+    protected String getEventTitle(Calendar time) {
+        return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
+    }
+
 
     public WeekView getWeekView() {
         return mWeekView;
     }
 
-
-    //END OF LISTENERS
+    //END OF ANDROID WEEKVIEW LISTENERS
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
+
     //INITIALIZE USER
-    private void initUser(String response){
+    private void initUser(String response) {
         try {
             JSONArray jArray = new JSONArray(response);
             JSONArray ja = jArray.getJSONArray(0);
@@ -350,7 +359,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         }
     }
 
-
+    //Get Events From JSON and create new Event object with the data
     private void addEvents(String response) {
         try {
             JSONArray jArray = new JSONArray(response);
@@ -399,18 +408,18 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
 
     //GET GROUPS
-    private class GetJSON extends AsyncTask<Void, Void, String> {
+    private class GetEventJSON extends AsyncTask<Void, Void, String> {
         String url = GET_EVENTS_URL + "?group='" + group + "'";
         ProgressDialog loading;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading = ProgressDialog.show(Week.this, "Retrieving events...",null,true,true);
+            loading = ProgressDialog.show(Week.this, "Retrieving events...", null, true, true);
         }
 
         @Override
-        protected String doInBackground(Void ... v) {
+        protected String doInBackground(Void... v) {
             RequestHandler rh = new RequestHandler();
             String res = rh.sendGetRequest(url);
             return res;
@@ -425,36 +434,100 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         }
     }
 
-    //GET GROUPS
-    private void getUser(final String url) {
-        class GetJSON2 extends AsyncTask<Void, Void, String> {
-            ProgressDialog loading;
+    //DELETE EVENT
+    private void deleteEventJSON(final WeekViewEvent event){
+            class deleteEvent extends AsyncTask<Void, Void, String> {
+                String url = DELETE_EVENT_URL
+                        + "?title='" + event.getName() + "'"
+                        + "'&start='" + new Timestamp(event.getStartTime().getTimeInMillis()).toString() + "'"
+                        + "'$end='" + new Timestamp(event.getEndTime().getTimeInMillis()).toString() + "'";
+                ProgressDialog loading;
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(Week.this, "Retrieving user...",null,true,true);
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    loading = ProgressDialog.show(Week.this, "Removing event...", null, true, true);
+                }
+
+                @Override
+                protected String doInBackground(Void... v) {
+                    RequestHandler rh = new RequestHandler();
+
+                    HashMap<String,String> params = new HashMap<>();
+                    params.put("title", event.getName());
+                    params.put("start", new Timestamp(event.getStartTime().getTimeInMillis()).toString());
+                    params.put("end", new Timestamp(event.getEndTime().getTimeInMillis()).toString());
+
+                    String res = rh.sendPostRequest(url, params);
+                    return res;
+
+                }
+
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    loading.dismiss();
+
+                    initUser(s);
+                }
             }
-
-            @Override
-            protected String doInBackground(Void ... v) {
-                RequestHandler rh = new RequestHandler();
-                String res = rh.sendGetRequest(url);
-                return res;
-
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-
-                initUser(s);
-            }
-        }
-        GetJSON2 gj = new GetJSON2();
-        gj.execute();
     }
 
+    //GET USER
+    private class getUserJSON extends AsyncTask<Void, Void, String> {
+        String url = GET_USER_URL + "?email='" + contact + "'";
+        ProgressDialog loading;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = ProgressDialog.show(Week.this, "Retrieving user...", null, true, true);
+        }
+
+        @Override
+        protected String doInBackground(Void... v) {
+            RequestHandler rh = new RequestHandler();
+            String res = rh.sendGetRequest(url);
+            return res;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            loading.dismiss();
+
+            initUser(s);
+        }
+    }
+
+    //SHOW DIALOG WHEN DELETING EVENT
+    private void ShowDialog(final WeekViewEvent data) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Week.this);
+        builder.setTitle("Remove Event?");
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //TODO
+                //dialog.dismiss();
+                deleteEventJSON(data);
+
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //TODO
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
     //END OF METHODS
+
+
 }
+
+
+

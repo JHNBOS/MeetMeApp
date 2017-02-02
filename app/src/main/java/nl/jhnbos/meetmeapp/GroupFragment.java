@@ -44,12 +44,11 @@ import java.util.Map;
 public class GroupFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
 
     public static final String GET_ALL_GROUPS_URL = "http://jhnbos.nl/android/getAllGroups.php";
-    public static final String GET_ALL_GROUPSMEMBERS_URL = "http://jhnbos.nl/android/getAllGroupMembers.php";
+    public static final String DELETE_EVENTS_URL = "http://jhnbos.nl/android/deleteEvents.php";
     public static final String DELETE_GROUP_URL = "http://jhnbos.nl/android/deleteGroup.php";
     public static final String DELETE_GROUPMEMBERS_URL = "http://jhnbos.nl/android/deleteGroupMembers.php";
     public static final String DELETE_GROUPMEMBER_URL = "http://jhnbos.nl/android/deleteGroupMember.php";
     private static final String GET_USER_URL = "http://jhnbos.nl/android/getUser.php";
-
 
     //LISTS
     public ArrayList<String> groupsList;
@@ -207,6 +206,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     private void removeGroupMembers(String group) {
         try {
             http.sendPost(DELETE_GROUPMEMBERS_URL + "?name='" + group + "'");
+            removeEvents(group);
             onResume();
         } catch (Exception e) {
             e.printStackTrace();
@@ -217,6 +217,16 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     private void removeGroupMember(String group, String email) {
         try {
             http.sendPost(DELETE_GROUPMEMBER_URL + "?name='" + group + "'&email='" + email + "'");
+            onResume();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //REMOVE GROUPMEMBERS
+    private void removeEvents(String group) {
+        try {
+            http.sendPost(DELETE_EVENTS_URL + "?group='" + group + "'");
             onResume();
         } catch (Exception e) {
             e.printStackTrace();
