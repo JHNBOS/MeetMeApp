@@ -463,12 +463,14 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                     String startTime = start.substring(0, start.length() - 2);
                     String endTime = end.substring(0, end.length() - 2);
 
+                    Log.d("startTime", startTime);
+                    Log.d("endTime", endTime);
 
                     try{
                         url = DELETE_EVENT_URL
                                 + "?title='" + URLEncoder.encode(event.getName(), "UTF-8") + "'"
                                 + "'&start='" + URLEncoder.encode(startTime, "UTF-8") + "'"
-                                + "'$ends='" + URLEncoder.encode(endTime, "UTF-8") + "'";
+                                + "'&ends='" + URLEncoder.encode(endTime, "UTF-8") + "'";
                     } catch(Exception e){e.printStackTrace();}
 
                     RequestHandler rh = new RequestHandler();
