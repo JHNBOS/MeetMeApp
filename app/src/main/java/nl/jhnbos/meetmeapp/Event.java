@@ -109,14 +109,19 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     private void addEvent() {
         try
         {
-            this.setEvent_title(titleField.getText().toString());
-
-            String ev_title = titleField.getText().toString();
             String ev_loc = locField.getText().toString();
             String ev_start = startDate.toString();
             String ev_end = endDate.toString();
             String ev_creator = getIntent().getExtras().getString("EmailC");
             String ev_group = getIntent().getExtras().getString("GroupC");
+            String ev_title =
+                    user.getFirstName() + " " + user.getLastName() + ":"
+                    + "\n"
+                    + titleField.getText().toString()
+                    + "\n"
+                    + "@ " + ev_loc;
+
+
 
             Log.d("Title", ev_title);
             Log.d("Location: ", ev_loc);
