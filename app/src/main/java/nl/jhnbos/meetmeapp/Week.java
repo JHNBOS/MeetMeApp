@@ -99,6 +99,29 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         // the week view. This is optional.
         setupDateTimeInterpreter(true);
 
+        /*
+        GetJSON get = new GetJSON();
+        eventList.clear();
+        get.execute();
+
+        try {
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        mWeekView.notifyDatasetChanged();
+        */
+
+    }
+
+    /*-----------------------------------------------------------------------------------------------------*/
+    //BEGIN OF LISTENERS
+
+    @Override
+    public void onRestart(){
+        super.onRestart();
+
         GetJSON get = new GetJSON();
         eventList.clear();
         get.execute();
@@ -113,12 +136,9 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
     }
 
-    /*-----------------------------------------------------------------------------------------------------*/
-    //BEGIN OF LISTENERS
-
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, event.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -163,11 +183,10 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     }
 
     private boolean eventMatches(WeekViewEvent event, int year, int month) {
-        return (event.getStartTime().get(Calendar.YEAR) == year && event.getStartTime().get(Calendar.MONTH) == month-1) || (event.getEndTime().get(Calendar.YEAR) == year && event.getEndTime().get(Calendar.MONTH) == month - 1);
+        return (event.getStartTime().get(Calendar.YEAR) == year && event.getStartTime().get(Calendar.MONTH) == (month-1)) || (event.getEndTime().get(Calendar.YEAR) == year && event.getEndTime().get(Calendar.MONTH) == month - 1);
     }
 
     public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        int Colour = Color.parseColor("#" + user.getColor());
         int idset = 0;
 
         Calendar startCal = null;
@@ -177,7 +196,17 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             startCal = Calendar.getInstance();
             endCal = (Calendar) startCal.clone();
 
-            String Title = eventList.get(i).getEvent_title("");
+            String Title = null;
+
+            if(eventList.get(i).creator == user.getEmail()){
+                Title = user.getFirstName() + " " + user.getLastName()
+                + "\n"
+                + eventList.get(i).getEvent_title()
+                + eventList.get(i).getLocation();
+            } else {
+                Title = eventList.get(i).getEvent_title();
+            }
+
             Timestamp Start = eventList.get(i).getStart();
             Timestamp End = eventList.get(i).getEnd();
 
@@ -189,6 +218,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             //+0 is february => correct
             startCal.set(Calendar.MONTH, (startCal.get(Calendar.MONTH)+0));
             endCal.set(Calendar.MONTH, (endCal.get(Calendar.MONTH)+0));
+
+            int Colour = Color.parseColor(eventList.get(i).getColor());
 
             WeekViewEvent event = new WeekViewEvent(idset++, Title, startCal, endCal);
             event.setColor(Colour);
@@ -246,7 +277,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         switch (id) {
             case R.id.eventcreate:
                 Intent createEvent = new Intent(this, Event.class);
-                createEvent.putExtra("Name", user.getFirstName() + " " + user.getLastName());
+                createEvent.putExtra("User", user);
                 createEvent.putExtra("GroupC", group);
                 createEvent.putExtra("EmailC", contact);
 
@@ -337,11 +368,14 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                 e.setLocation(jo.getString("location"));
                 e.setStart(new Timestamp(start.getTime()));
                 e.setEnd(new Timestamp(end.getTime()));
+                e.setColor("#" + jo.getString("color"));
 
-                Log.d("Title", e.getEvent_title(""));
+
+                Log.d("Title", e.getEvent_title());
                 Log.d("Location", e.getLocation());
                 Log.d("Start", e.getStart().toString());
                 Log.d("End", e.getEnd().toString());
+                Log.d("Color", e.getColor().toString());
 
                 eventList.add(e);
 

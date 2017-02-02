@@ -163,6 +163,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
             JSONArray jArray = new JSONArray(response);
             JSONArray ja = jArray.getJSONArray(0);
 
+            Log.d("User JSONArray", ja.toString());
+
             for (int i = 0; i < ja.length(); i++) {
                 JSONObject jo = ja.getJSONObject(i);
 
@@ -175,9 +177,6 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
                 user.setColor(jo.getString("color"));
 
             }
-
-            lv.setAdapter(adapter);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -366,7 +365,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         Intent weekviewIntent = new Intent(getActivity(), Week.class);
 
         weekviewIntent.putExtra("Group", groupsList.get(position));
-        weekviewIntent.putExtra("User",(User) user);
+        weekviewIntent.putExtra("User", user);
 
         startActivity(weekviewIntent);
     }

@@ -1,7 +1,9 @@
 package nl.jhnbos.meetmeapp;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +18,13 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.URLEncoder;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Event extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
@@ -28,6 +35,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     public Timestamp end;
     public String creator;
     public String group;
+    public String color;
 
     private Button createEventButton;
     private EditText titleField;
@@ -48,6 +56,8 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     private String endDate;
     public String name;
 
+    private User user;
+
     public Event(){
 
     }
@@ -67,6 +77,10 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
         creator = getIntent().getExtras().getString("EmailC");
         name = getIntent().getExtras().getString("Name");
+        user = (User) getIntent().getSerializableExtra("User");
+
+        Log.d("User ID in Event", String.valueOf(user.getID()));
+        Log.d("User name in Event", String.valueOf(user.getUsername()));
 
         titleField = (EditText) findViewById(R.id.titleField);
         locField = (EditText) findViewById(R.id.locField);
@@ -86,7 +100,6 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
         createEventButton.setOnClickListener(this);
 
         http = new HTTP();
-
     }
 
     /*-------------------------------------------------------------------------*/
@@ -96,10 +109,12 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     private void addEvent() {
         try
         {
+            this.setEvent_title(titleField.getText().toString());
+
             String ev_title = titleField.getText().toString();
             String ev_loc = locField.getText().toString();
-            String ev_start = startDate;
-            String ev_end = endDate;
+            String ev_start = startDate.toString();
+            String ev_end = endDate.toString();
             String ev_creator = getIntent().getExtras().getString("EmailC");
             String ev_group = getIntent().getExtras().getString("GroupC");
 
@@ -117,6 +132,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
                     + "&end=" + URLEncoder.encode(ev_end.toString(), "UTF-8")
                     + "&creator=" + URLEncoder.encode(ev_creator, "UTF-8")
                     + "&group=" + URLEncoder.encode(ev_group, "UTF-8")
+                    + "&color=" + URLEncoder.encode(user.getColor(), "UTF-8")
             );
 
             if (response.equals(ev_title)) {
@@ -129,15 +145,12 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
     }
 
+
     //END OF METHODS
     /*-------------------------------------------------------------------------*/
     //BEGIN OF GETTERS AND SETTERS
 
-    public String getEvent_title(String create) {
-        String event_title = create + "\n" + this.event_title.toString();
-
-        return event_title;
-    }
+    public String getEvent_title() {return event_title;}
 
     public void setEvent_title(String event_title) {
         this.event_title = event_title;
@@ -162,6 +175,10 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     public void setEnd(Timestamp end) {
         this.end = end;
     }
+
+    public String getColor() {return color;}
+
+    public void setColor(String color) {this.color = color;}
 
     //END OF GETTERS AND SETTERS
     /*-------------------------------------------------------------------------*/
