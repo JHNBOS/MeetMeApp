@@ -42,6 +42,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
     //STRINGS
     private static final String GET_EVENTS_URL = "http://jhnbos.nl/android/getAllEvents.php";
+    private static final String GET_USER_URL = "http://jhnbos.nl/android/getUser.php";
     private String contact;
     private String group;
 
@@ -66,8 +67,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
         //Get objects and strings from intent
         group = getIntent().getExtras().getString("Group");
-        user = (User) getIntent().getSerializableExtra("User");
-        contact = user.getEmail();
+        user = new User();
+        contact = getIntent().getExtras().getString("Email");
 
         //Lists
         eventList = new ArrayList<>();
@@ -98,21 +99,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
         setupDateTimeInterpreter(true);
-
-        /*
-        GetJSON get = new GetJSON();
-        eventList.clear();
-        get.execute();
-
-        try {
-            Thread.sleep(2500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        mWeekView.notifyDatasetChanged();
-        */
-
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
@@ -121,6 +107,9 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     @Override
     public void onResume(){
         super.onResume();
+
+        String url2 = GET_USER_URL + "?email='" + contact + "'";
+        getUser(url2);
 
         GetJSON get = new GetJSON();
         eventList.clear();
@@ -342,6 +331,32 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     //END OF LISTENERS
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
+    //INITIALIZE USER
+    private void initUser(String response){
+        try {
+            JSONArray jArray = new JSONArray(response);
+            JSONArray ja = jArray.getJSONArray(0);
+
+            Log.d("User JSONArray", ja.toString());
+
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject jo = ja.getJSONObject(i);
+
+                user.setID(jo.getInt("id"));
+                user.setUsername(jo.getString("username"));
+                user.setFirstName(jo.getString("first_name"));
+                user.setLastName(jo.getString("last_name"));
+                user.setPassword(jo.getString("password"));
+                user.setEmail(jo.getString("email"));
+                user.setColor(jo.getString("color"));
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private void addEvents(String response) {
         try {
             JSONArray jArray = new JSONArray(response);
@@ -414,6 +429,37 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
             addEvents(s);
         }
+    }
+
+    //GET GROUPS
+    private void getUser(final String url) {
+        class GetJSON2 extends AsyncTask<Void, Void, String> {
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(Week.this, "Retrieving user...",null,true,true);
+            }
+
+            @Override
+            protected String doInBackground(Void ... v) {
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendGetRequest(url);
+                return res;
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+
+                initUser(s);
+            }
+        }
+        GetJSON2 gj = new GetJSON2();
+        gj.execute();
     }
 
     //END OF METHODS
