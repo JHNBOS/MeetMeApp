@@ -199,10 +199,11 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             endCal = (Calendar) startCal.clone();
 
             String Title =
-                    user.getFirstName() + " " + user.getLastName()
+                    user.getFirstName() + " " + user.getLastName() + ":"
                     + "\n"
                     + eventList.get(i).getEvent_title()
-                    + eventList.get(i).getLocation();
+                    + "\n"
+                    + "@ " + eventList.get(i).getLocation();
 
             Timestamp Start = eventList.get(i).getStart();
             Timestamp End = eventList.get(i).getEnd();
