@@ -112,9 +112,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
         eventList.clear();
         events.clear();
-        mWeekView.notifyDatasetChanged();
-
-
         getUserJSON getUserJSON = null;
         GetEventJSON getEventJSON = null;
 
@@ -502,33 +499,12 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                     Log.d("s", s);
 
                     if(s.equals(event.getName())){
-                        eventList.clear();
-                        events.clear();
-                        mWeekView.notifyDatasetChanged();
-
-
-                        getUserJSON getUserJSON = null;
-                        GetEventJSON getEventJSON = null;
-
                         try {
-                            getUserJSON = new getUserJSON();
-                            getEventJSON = new GetEventJSON();
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-                        getUserJSON.execute();
-
-                        eventList.clear();
-                        events.clear();
-                        getEventJSON.execute();
-
-                        try {
-                            Thread.sleep(3000);
+                            Thread.sleep(4000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-
-                        mWeekView.notifyDatasetChanged();
+                        Week.this.onResume();
                     }
 
                     loading.dismiss();
