@@ -242,10 +242,13 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
             matchedEvents = new ArrayList<>();
 
+            int c = 0;
+
             for (WeekViewEvent we: events) {
                 if(eventMatches(we, newYear, newMonth)){
-                    matchedEvents.add(we);
+                    matchedEvents.add(c, we);
                 }
+                c++;
             }
 
             startCal = null;
