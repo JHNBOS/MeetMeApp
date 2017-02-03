@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.alamkanak.weekview.WeekView
+    <nl.jhnbos.meetmeapp.WeekView.WeekView
         android:id="@+id/weekView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,13 +14,13 @@
         app:textSize="12sp"
         app:dayNameLength="length_short"
         app:firstDayOfWeek="sunday"
-        app:hourHeight="320dp"
+        app:hourHeight="500dp"
         app:showNowLine="true"
         app:nowLineColor="@color/colorPrimary"
-        app:headerColumnPadding="4dp"
+        app:headerColumnPadding="8dp"
         app:headerColumnTextColor="#8f000000"
         app:headerRowPadding="12dp"
-        app:columnGap="4dp"
+        app:columnGap="8dp"
         app:noOfVisibleDays="3"
         app:headerRowBackgroundColor="#ffefefef"
         app:dayBackgroundColor="#05000000"
