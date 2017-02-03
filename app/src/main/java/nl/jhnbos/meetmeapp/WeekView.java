@@ -144,6 +144,7 @@ public class WeekView extends View {
     private boolean mHorizontalFlingEnabled = true;
     private boolean mVerticalFlingEnabled = true;
     private int mAllDayEventHeight = 100;
+    private boolean showHalfHours = false;
     private int mScrollDuration = 250;
 
     // Listeners.
@@ -354,6 +355,7 @@ public class WeekView extends View {
             mVerticalFlingEnabled = a.getBoolean(R.styleable.WeekView_verticalFlingEnabled, mVerticalFlingEnabled);
             mAllDayEventHeight = a.getDimensionPixelSize(R.styleable.WeekView_allDayEventHeight, mAllDayEventHeight);
             mScrollDuration = a.getInt(R.styleable.WeekView_scrollDuration, mScrollDuration);
+            showHalfHours = a.getBoolean(R.styleable.WeekView_showHalfHours, showHalfHours);
         } finally {
             a.recycle();
         }
@@ -480,7 +482,7 @@ public class WeekView extends View {
         mTimeTextWidth = 0;
         for (int i = 0; i < 24; i++) {
             // Measure time string and get max width.
-            String time = getDateTimeInterpreter().interpretTime(i);
+            String time = getDateTimeInterpreter().interpretTime(i, 0);
             if (time == null)
                 throw new IllegalStateException("A DateTimeInterpreter must not return null time");
             mTimeTextWidth = Math.max(mTimeTextWidth, mTimeTextPaint.measureText(time));
@@ -535,13 +537,43 @@ public class WeekView extends View {
         canvas.clipRect(0, mHeaderHeight + mHeaderRowPadding * 2, mHeaderColumnWidth, getHeight(), Region.Op.REPLACE);
 
         for (int i = 0; i < 24; i++) {
-            float top = mHeaderHeight + mHeaderRowPadding * 2 + mCurrentOrigin.y + mHourHeight * i + mHeaderMarginBottom;
+            //float top = mHeaderHeight + mHeaderRowPadding * 2 + mCurrentOrigin.y + mHourHeight * i + mHeaderMarginBottom;
 
             // Draw the text if its y position is not outside of the visible area. The pivot point of the text is the point at the bottom-right corner.
-            String time = getDateTimeInterpreter().interpretTime(i);
-            if (time == null)
-                throw new IllegalStateException("A DateTimeInterpreter must not return null time");
-            if (top < getHeight()) canvas.drawText(time, mTimeTextWidth + mHeaderColumnPadding, top + mTimeTextHeight, mTimeTextPaint);
+            //String time = getDateTimeInterpreter().interpretTime(i, 0);
+
+            int numPeriodsInDay = showHalfHours ? 48 : 24;
+            for (int j = 0; j < numPeriodsInDay; j++) {
+                // If we are showing half hours (eg. 5:30am), space the times out by half the hour height
+                // and need to provide 30 minutes on each odd period, otherwise, minutes is always 0.
+                int timeSpacing;
+                int minutes;
+                int hour;
+                if (showHalfHours) {
+                    timeSpacing = mHourHeight / 2;
+                    hour = j / 2;
+                    if (j % 2 == 0) {
+                        minutes = 0;
+                    } else {
+                        minutes = 30;
+                    }
+                } else {
+                    timeSpacing = mHourHeight;
+                    hour = i;
+                    minutes = 0;
+                }
+
+                // Calculate the top of the rectangle where the time text will go
+                float top = mHeaderTextHeight + mHeaderRowPadding * 2 + mCurrentOrigin.y + mHourHeight * i + mHeaderMarginBottom;
+
+                // Get the time to be displayed, as a String.
+                String time = getDateTimeInterpreter().interpretTime(hour, minutes);
+
+                if (time == null)
+                    throw new IllegalStateException("A DateTimeInterpreter must not return null time");
+                if (top < getHeight())
+                    canvas.drawText(time, mTimeTextWidth + mHeaderColumnPadding, top + mTimeTextHeight, mTimeTextPaint);
+            }
         }
     }
 
@@ -1311,6 +1343,7 @@ public class WeekView extends View {
                     }
                 }
 
+                /*
                 @Override
                 public String interpretTime(int hour) {
                     Calendar calendar = Calendar.getInstance();
@@ -1325,6 +1358,7 @@ public class WeekView extends View {
                         return "";
                     }
                 }
+                */
 
                 @Override
                 public String interpretTime(int hour, int minute) {
@@ -1333,7 +1367,18 @@ public class WeekView extends View {
                     calendar.set(Calendar.MINUTE, minute);
 
                     try {
-                        SimpleDateFormat sdf = DateFormat.is24HourFormat(getContext()) ? new SimpleDateFormat("HH:mm", Locale.getDefault()) : new SimpleDateFormat("hh a", Locale.getDefault());
+                        //SimpleDateFormat sdf = DateFormat.is24HourFormat(getContext()) ? new SimpleDateFormat("HH:mm", Locale.getDefault()) : new SimpleDateFormat("hh a", Locale.getDefault());
+                        SimpleDateFormat sdf;
+                        if (DateFormat.is24HourFormat(getContext())) {
+                            sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                        } else {
+                            if (showHalfHours) {
+                                sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+                            } else {
+                                sdf = new SimpleDateFormat("hh a", Locale.getDefault());
+                            }
+                        }
+
                         return sdf.format(calendar.getTime());
                     } catch (Exception e) {
                         e.printStackTrace();

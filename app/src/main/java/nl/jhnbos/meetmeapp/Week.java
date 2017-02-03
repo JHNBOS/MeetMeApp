@@ -237,19 +237,21 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                 return weekday.toUpperCase() + " " + format.format(date.getTime());
             }
 
+            /*
             @Override
             public String interpretTime(int hour) {
-                if (hour == 24) hour = 0;
-                if (hour == 0) hour = 0;
+                if (hour == 24) { hour = 0; }
+                if (hour == 0) { hour = 0; }
                 return hour + ":00";
-            }
+            }*/
 
             @Override
             public String interpretTime(int hour, int minute) {
+                String strMinutes = String.format("%02d", minute);
+
                 if (hour == 24) { hour = 0; }
                 if (hour == 0) { hour = 0; }
-                if (minute == 30) { return hour + ":30"; }
-                return hour + ":00";
+                return hour + ":" +  strMinutes;
             }
 
         });
