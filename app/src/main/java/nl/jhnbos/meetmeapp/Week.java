@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -255,11 +256,34 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         return (event.getStartTime().get(Calendar.YEAR) == year && event.getStartTime().get(Calendar.MONTH) == (month - 1)) || (event.getEndTime().get(Calendar.YEAR) == year && event.getEndTime().get(Calendar.MONTH) == month - 1);
     }
 
+    //Check for events when changing month
+    public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+        showEvents(newMonth, newYear);
+
+        return matchedEvents;
+    }
+
+
+    public void onFirstVisibleDayChanged(Calendar calendar, Calendar calendar1) {
+        //mWeekView.notifyDatasetChanged();
+    }
+
+
+    protected String getEventTitle(Calendar time) {
+        return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
+    }
+
+
+    public WeekView getWeekView() {
+        return mWeekView;
+    }
+
+    //END OF ANDROID WEEKVIEW LISTENERS
+    /*-----------------------------------------------------------------------------------------------------*/
+    //BEGIN OF METHODS
+
+    //SHOW EVENTS
     private void showEvents(int month, int year){
-
-
-
-
         int idset = 0;
         int c = 0;
 
@@ -315,31 +339,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
     }
 
-    //Check for events when changing month
-    public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        showEvents(newMonth, newYear);
-
-        return matchedEvents;
-    }
-
-
-    public void onFirstVisibleDayChanged(Calendar calendar, Calendar calendar1) {
-        //mWeekView.notifyDatasetChanged();
-    }
-
-
-    protected String getEventTitle(Calendar time) {
-        return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
-    }
-
-
-    public WeekView getWeekView() {
-        return mWeekView;
-    }
-
-    //END OF ANDROID WEEKVIEW LISTENERS
-    /*-----------------------------------------------------------------------------------------------------*/
-    //BEGIN OF METHODS
 
     //INITIALIZE USER
     private void initUser(String response) {
@@ -497,7 +496,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
                     if(s.equals(event.getName())){
                         try {
-                            Thread.sleep(4000);
+                            Thread.sleep(3200);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
