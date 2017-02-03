@@ -1,29 +1,18 @@
 package nl.jhnbos.meetmeapp;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AddContact extends AppCompatActivity implements View.OnClickListener {
@@ -70,7 +59,7 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
 
             try {
                 url = ADDCONTACT_URL + "?name=" + URLEncoder.encode(contactEmail, "UTF-8")
-                        + "&email=" + URLEncoder.encode(currentUser, "UTF-8") ;
+                        + "&email=" + URLEncoder.encode(currentUser, "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -112,13 +101,13 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(AddContact.this, "Adding contact...",null,true,true);
+                loading = ProgressDialog.show(AddContact.this, "Adding contact...", null, true, true);
             }
 
             @Override
-            protected String doInBackground(Void ... v) {
+            protected String doInBackground(Void... v) {
 
-                HashMap<String,String> params = new HashMap<>();
+                HashMap<String, String> params = new HashMap<>();
                 params.put("contact_email", contact_email);
                 params.put("email", email);
 

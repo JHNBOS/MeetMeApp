@@ -21,11 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -114,7 +109,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
     }
 
     //SHOW CONTACTS IN LISTVIEW
-    private void showContacts(String response){
+    private void showContacts(String response) {
         try {
             JSONArray jArray = new JSONArray(response);
             JSONArray ja = jArray.getJSONArray(0);
@@ -151,11 +146,11 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(getActivity(), "Retrieving contacts...",null,true,true);
+                loading = ProgressDialog.show(getActivity(), "Retrieving contacts...", null, true, true);
             }
 
             @Override
-            protected String doInBackground(Void ... v) {
+            protected String doInBackground(Void... v) {
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendGetRequest(url);
                 return res;
@@ -237,7 +232,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String selected = (String)parent.getItemAtPosition(position);
+        String selected = (String) parent.getItemAtPosition(position);
 
         Intent showContact = new Intent(getActivity(), ShowContact.class);
         showContact.putExtra("Contact", selected);

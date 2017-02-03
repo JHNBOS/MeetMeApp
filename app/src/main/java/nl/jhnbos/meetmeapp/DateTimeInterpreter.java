@@ -7,6 +7,7 @@ import java.util.Calendar;
  */
 public interface DateTimeInterpreter {
     String interpretDate(Calendar date);
+
     //String interpretTime(int hour);
     String interpretTime(int hour, int minute);
 }

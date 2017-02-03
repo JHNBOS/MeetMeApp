@@ -1,7 +1,6 @@
 package nl.jhnbos.meetmeapp;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
@@ -85,7 +80,7 @@ public class Register extends AppCompatActivity {
 
                 String cURL = REGISTER_URL + suffix;
 
-                final HashMap<String,String> parameter = new HashMap<>();
+                final HashMap<String, String> parameter = new HashMap<>();
                 parameter.put("username", username);
                 parameter.put("first_name", fname);
                 parameter.put("last_name", lname);
@@ -133,11 +128,11 @@ public class Register extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(Register.this, "Registering...",null,true,true);
+                loading = ProgressDialog.show(Register.this, "Registering...", null, true, true);
             }
 
             @Override
-            protected String doInBackground(Void ... v) {
+            protected String doInBackground(Void... v) {
 
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(url, parameters);

@@ -1,9 +1,7 @@
 package nl.jhnbos.meetmeapp;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -18,17 +16,13 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.net.URLEncoder;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Event extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
+    private static final String ADDEVENT_URL = "http://jhnbos.nl/android/addEvent.php";
     public String event_title;
     public String location;
     public Timestamp start;
@@ -36,7 +30,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     public String creator;
     public String group;
     public String color;
-
+    public String name;
     private Button createEventButton;
     private EditText titleField;
     private EditText locField;
@@ -44,21 +38,16 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     private Button startTimeButton;
     private Button endDateButton;
     private Button endTimeButton;
-
     private DatePickerDialog startdatepickerdialog;
     private DatePickerDialog enddatepickerdialog;
     private TimePickerDialog starttimepickerdialog;
     private TimePickerDialog endtimepickerdialog;
-
     private HTTP http;
-    private static final String ADDEVENT_URL = "http://jhnbos.nl/android/addEvent.php";
     private String startDate;
     private String endDate;
-    public String name;
-
     private User user;
 
-    public Event(){
+    public Event() {
 
     }
 
@@ -107,8 +96,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
     //ADD GROUP
     private void addEvent() {
-        try
-        {
+        try {
             String ev_loc = locField.getText().toString();
             String ev_start = startDate.toString();
             String ev_end = endDate.toString();
@@ -116,11 +104,10 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
             String ev_group = getIntent().getExtras().getString("GroupC");
             String ev_title =
                     user.getFirstName() + " " + user.getLastName() + ":"
-                    + "\n"
-                    + titleField.getText().toString()
-                    + "\n"
-                    + "@ " + ev_loc;
-
+                            + "\n"
+                            + titleField.getText().toString()
+                            + "\n"
+                            + "@ " + ev_loc;
 
 
             Log.d("Title", ev_title);
@@ -132,12 +119,12 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
 
             String response = http.sendPost(
                     ADDEVENT_URL + "?title=" + URLEncoder.encode(ev_title, "UTF-8")
-                    + "&loc=" + URLEncoder.encode(ev_loc, "UTF-8")
-                    + "&start=" + URLEncoder.encode(ev_start.toString(), "UTF-8")
-                    + "&end=" + URLEncoder.encode(ev_end.toString(), "UTF-8")
-                    + "&creator=" + URLEncoder.encode(ev_creator, "UTF-8")
-                    + "&group=" + URLEncoder.encode(ev_group, "UTF-8")
-                    + "&color=" + URLEncoder.encode(user.getColor(), "UTF-8")
+                            + "&loc=" + URLEncoder.encode(ev_loc, "UTF-8")
+                            + "&start=" + URLEncoder.encode(ev_start.toString(), "UTF-8")
+                            + "&end=" + URLEncoder.encode(ev_end.toString(), "UTF-8")
+                            + "&creator=" + URLEncoder.encode(ev_creator, "UTF-8")
+                            + "&group=" + URLEncoder.encode(ev_group, "UTF-8")
+                            + "&color=" + URLEncoder.encode(user.getColor(), "UTF-8")
             );
 
             if (response.equals(ev_title)) {
@@ -155,15 +142,21 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     /*-------------------------------------------------------------------------*/
     //BEGIN OF GETTERS AND SETTERS
 
-    public String getEvent_title() {return event_title;}
+    public String getEvent_title() {
+        return event_title;
+    }
 
     public void setEvent_title(String event_title) {
         this.event_title = event_title;
     }
 
-    public String getLocation() {return location;}
+    public String getLocation() {
+        return location;
+    }
 
-    public void setLocation(String location) {this.location = location;}
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public Timestamp getStart() {
         return start;
@@ -181,9 +174,13 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
         this.end = end;
     }
 
-    public String getColor() {return color;}
+    public String getColor() {
+        return color;
+    }
 
-    public void setColor(String color) {this.color = color;}
+    public void setColor(String color) {
+        this.color = color;
+    }
 
     //END OF GETTERS AND SETTERS
     /*-------------------------------------------------------------------------*/
@@ -192,16 +189,16 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     @Override
     public void onClick(View v) {
         //IF PRESSED ON CREATE EVENT BUTTON
-        if(v == createEventButton){
+        if (v == createEventButton) {
             addEvent();
 
             super.onBackPressed();
         }
 
         //IF PRESSED ON PICK START DATE
-        if(v == startDateButton){
+        if (v == startDateButton) {
             Calendar now = Calendar.getInstance();
-            startdatepickerdialog =  DatePickerDialog.newInstance(
+            startdatepickerdialog = DatePickerDialog.newInstance(
                     Event.this,
                     now.get(Calendar.YEAR),
                     now.get(Calendar.MONTH),
@@ -219,12 +216,12 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
                 public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                     String date = "You picked the following start date: " + dayOfMonth + "/" + (++monthOfYear) + "/" + year;
 
-                    if(monthOfYear < 10){
-                       String month = "0" + String.valueOf(monthOfYear);
+                    if (monthOfYear < 10) {
+                        String month = "0" + String.valueOf(monthOfYear);
                         monthOfYear = Integer.parseInt(month);
                     }
 
-                    if(dayOfMonth < 10){
+                    if (dayOfMonth < 10) {
                         String day = "0" + String.valueOf(dayOfMonth);
                         dayOfMonth = Integer.parseInt(day);
                     }
@@ -245,7 +242,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
         }
 
         //IF PRESSED ON PICK START TIME
-        if(v == startTimeButton){
+        if (v == startTimeButton) {
             Calendar now = Calendar.getInstance();
             starttimepickerdialog = TimePickerDialog.newInstance(
                     Event.this,
@@ -262,7 +259,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
                 public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
                     String date = "You picked the following start time: " + hourOfDay + ":" + (++minute);
 
-                    if(hourOfDay < 10){
+                    if (hourOfDay < 10) {
                         String hour = "0" + String.valueOf(hourOfDay);
                         hourOfDay = Integer.parseInt(hour);
                     } else {
@@ -270,15 +267,15 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
                         hourOfDay = Integer.parseInt(hour);
                     }
 
-                    if(minute < 10){
+                    if (minute < 10) {
                         String min = "0" + String.valueOf(minute);
                         minute = Integer.parseInt(min);
-                    } else{
+                    } else {
                         String min = "" + String.valueOf(minute);
                         minute = Integer.parseInt(min);
                     }
 
-                    if(String.valueOf(minute).length() == 1){
+                    if (String.valueOf(minute).length() == 1) {
                         String min = String.valueOf(minute) + "0";
                         minute = Integer.parseInt(min);
                     } else {
@@ -303,7 +300,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
         }
 
         //IF PRESSED ON PICK END DATE
-        if(v == endDateButton){
+        if (v == endDateButton) {
             Calendar now = Calendar.getInstance();
             enddatepickerdialog = DatePickerDialog.newInstance(
                     Event.this,
@@ -323,12 +320,12 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
                 public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                     String date = "You picked the following end date: " + dayOfMonth + "/" + (++monthOfYear) + "/" + year;
 
-                    if(monthOfYear < 10){
+                    if (monthOfYear < 10) {
                         String month = "0" + String.valueOf(monthOfYear);
                         monthOfYear = Integer.parseInt(month);
                     }
 
-                    if(dayOfMonth < 10){
+                    if (dayOfMonth < 10) {
                         String day = "0" + String.valueOf(dayOfMonth);
                         dayOfMonth = Integer.parseInt(day);
                     }
@@ -349,7 +346,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
         }
 
         //IF PRESSED ON PICK END TIME
-        if(v == endTimeButton){
+        if (v == endTimeButton) {
             Calendar now = Calendar.getInstance();
             endtimepickerdialog = TimePickerDialog.newInstance(
                     Event.this,
@@ -366,17 +363,17 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
                 public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
                     String date = "You picked the following end time: " + hourOfDay + ":" + (++minute);
 
-                    if(hourOfDay < 10){
+                    if (hourOfDay < 10) {
                         String hour = "0" + String.valueOf(hourOfDay);
                         hourOfDay = Integer.parseInt(hour);
                     }
 
-                    if(minute < 10){
+                    if (minute < 10) {
                         String min = "0" + String.valueOf(minute);
                         minute = Integer.parseInt(min);
                     }
 
-                    if(String.valueOf(minute).length() == 1){
+                    if (String.valueOf(minute).length() == 1) {
                         String min = String.valueOf(minute) + "0";
                         minute = Integer.parseInt(min);
                     } else {

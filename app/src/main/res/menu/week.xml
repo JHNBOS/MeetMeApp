@@ -1,26 +1,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Week" >
+    tools:context=".Week">
 
-    <item android:id="@+id/eventcreate"
-        android:title="Create Event"
+    <item
+        android:id="@+id/eventcreate"
         android:orderInCategory="1"
-        app:showAsAction="always"/>
+        android:title="Create Event"
+        app:showAsAction="always" />
     <group android:checkableBehavior="single">
-        <item android:id="@+id/action_day_view"
-            android:title="Today"
+        <item
+            android:id="@+id/action_day_view"
             android:orderInCategory="2"
-            app:showAsAction="never"/>
-        <item android:id="@+id/action_three_day_view"
-            android:title="3 Days"
-            android:orderInCategory="3"
+            android:title="Today"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_three_day_view"
             android:checked="true"
-            app:showAsAction="never"/>
-        <item android:id="@+id/action_week_view"
-            android:title="7 Days"
+            android:orderInCategory="3"
+            android:title="3 Days"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_week_view"
             android:orderInCategory="4"
-            app:showAsAction="never"
-            />
+            android:title="7 Days"
+            app:showAsAction="never" />
     </group>
 </menu>

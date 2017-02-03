@@ -10,13 +10,11 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -249,9 +247,13 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             public String interpretTime(int hour, int minute) {
                 String strMinutes = String.format("%02d", minute);
 
-                if (hour == 24) { hour = 0; }
-                if (hour == 0) { hour = 0; }
-                return hour + ":" +  strMinutes;
+                if (hour == 24) {
+                    hour = 0;
+                }
+                if (hour == 0) {
+                    hour = 0;
+                }
+                return hour + ":" + strMinutes;
             }
 
         });
@@ -289,7 +291,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     //BEGIN OF METHODS
 
     //SHOW EVENTS
-    private void showEvents(int month, int year){
+    private void showEvents(int month, int year) {
         int idset = 0;
         int c = 0;
 
@@ -417,6 +419,100 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         }
     }
 
+    //DELETE EVENT
+    private void deleteEventJSON(final WeekViewEvent event) {
+        class deleteEvent extends AsyncTask<Void, Void, String> {
+            ProgressDialog loading;
+
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(Week.this, "Removing event...", null, true, true);
+            }
+
+            @Override
+            protected String doInBackground(Void... v) {
+                String start = new Timestamp(event.getStartTime().getTimeInMillis()).toString();
+                String end = new Timestamp(event.getEndTime().getTimeInMillis()).toString();
+                String url = null;
+
+                String startTime = start.substring(0, start.length() - 2);
+                String endTime = end.substring(0, end.length() - 2);
+
+                Log.d("startTime", startTime);
+                Log.d("endTime", endTime);
+
+                try {
+                        /*
+                        url = DELETE_EVENT_URL
+                                + "?title='" + URLEncoder.encode(event.getName(), "UTF-8") + "'"
+                                + "'&start='" + URLEncoder.encode(startTime, "UTF-8") + "'"
+                                + "'&ends='" + URLEncoder.encode(endTime, "UTF-8") + "'";
+                        */
+
+                    url = DELETE_EVENT_URL
+                            + "?title='" + URLEncoder.encode(event.getName(), "UTF-8") + "'";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                RequestHandler rh = new RequestHandler();
+
+                HashMap<String, String> params = new HashMap<>();
+                params.put("title", event.getName());
+
+                String res = rh.sendPostRequest(url, params);
+                return res;
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+
+                Log.d("s", s);
+
+                if (s.equals(event.getName())) {
+                    try {
+                        Thread.sleep(3200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                loading.dismiss();
+
+            }
+        }
+
+        deleteEvent de = new deleteEvent();
+        de.execute();
+        mWeekView.notifyDatasetChanged();
+        Week.this.onResume();
+    }
+
+    //SHOW DIALOG WHEN DELETING EVENT
+    private void ShowDialog(final WeekViewEvent data) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Week.this);
+        builder.setTitle("Remove Event?");
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //TODO
+                //dialog.dismiss();
+                deleteEventJSON(data);
+
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //TODO
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
     //GET GROUPS
     private class GetEventJSON extends AsyncTask<Void, Void, String> {
@@ -448,77 +544,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         }
     }
 
-    //DELETE EVENT
-    private void deleteEventJSON(final WeekViewEvent event){
-            class deleteEvent extends AsyncTask<Void, Void, String> {
-                ProgressDialog loading;
-
-
-                @Override
-                protected void onPreExecute() {
-                    super.onPreExecute();
-                    loading = ProgressDialog.show(Week.this, "Removing event...", null, true, true);
-                }
-
-                @Override
-                protected String doInBackground(Void... v) {
-                    String start = new Timestamp(event.getStartTime().getTimeInMillis()).toString();
-                    String end = new Timestamp(event.getEndTime().getTimeInMillis()).toString();
-                    String url = null;
-
-                    String startTime = start.substring(0, start.length() - 2);
-                    String endTime = end.substring(0, end.length() - 2);
-
-                    Log.d("startTime", startTime);
-                    Log.d("endTime", endTime);
-
-                    try{
-                        /*
-                        url = DELETE_EVENT_URL
-                                + "?title='" + URLEncoder.encode(event.getName(), "UTF-8") + "'"
-                                + "'&start='" + URLEncoder.encode(startTime, "UTF-8") + "'"
-                                + "'&ends='" + URLEncoder.encode(endTime, "UTF-8") + "'";
-                        */
-
-                        url = DELETE_EVENT_URL
-                                + "?title='" + URLEncoder.encode(event.getName(), "UTF-8") + "'";
-                    } catch(Exception e){e.printStackTrace();}
-
-                    RequestHandler rh = new RequestHandler();
-
-                    HashMap<String,String> params = new HashMap<>();
-                    params.put("title", event.getName());
-
-                    String res = rh.sendPostRequest(url, params);
-                    return res;
-
-                }
-
-                @Override
-                protected void onPostExecute(String s) {
-                    super.onPostExecute(s);
-
-                    Log.d("s", s);
-
-                    if(s.equals(event.getName())){
-                        try {
-                            Thread.sleep(3200);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    loading.dismiss();
-
-                }
-            }
-
-        deleteEvent de = new deleteEvent();
-        de.execute();
-        mWeekView.notifyDatasetChanged();
-        Week.this.onResume();
-    }
-
     //GET USER
     private class getUserJSON extends AsyncTask<Void, Void, String> {
         String url = GET_USER_URL + "?email='" + URLEncoder.encode(contact, "UTF-8") + "'";
@@ -548,28 +573,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
             initUser(s);
         }
-    }
-
-    //SHOW DIALOG WHEN DELETING EVENT
-    private void ShowDialog(final WeekViewEvent data) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Week.this);
-        builder.setTitle("Remove Event?");
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //TODO
-                //dialog.dismiss();
-                deleteEventJSON(data);
-
-            }
-        });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //TODO
-                dialog.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
 

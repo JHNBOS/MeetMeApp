@@ -15,10 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -145,7 +141,7 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    private void showContacts(String response){
+    private void showContacts(String response) {
         try {
             JSONArray jArray = new JSONArray(response);
             JSONArray ja = jArray.getJSONArray(0);
@@ -171,13 +167,13 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(AddGroupMember.this, "Adding groupmember(s)...",null,true,true);
+                loading = ProgressDialog.show(AddGroupMember.this, "Adding groupmember(s)...", null, true, true);
             }
 
             @Override
-            protected String doInBackground(Void ... v) {
+            protected String doInBackground(Void... v) {
 
-                HashMap<String,String> parameters = new HashMap<>();
+                HashMap<String, String> parameters = new HashMap<>();
                 parameters.put("name", group);
                 parameters.put("email", cEmail);
 
@@ -212,11 +208,11 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(AddGroupMember.this, "Retrieving contacts...",null,true,true);
+                loading = ProgressDialog.show(AddGroupMember.this, "Retrieving contacts...", null, true, true);
             }
 
             @Override
-            protected String doInBackground(Void ... v) {
+            protected String doInBackground(Void... v) {
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendGetRequest(url);
                 return res;

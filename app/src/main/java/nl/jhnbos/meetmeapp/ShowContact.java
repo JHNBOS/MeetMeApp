@@ -1,15 +1,12 @@
 package nl.jhnbos.meetmeapp;
 
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +20,6 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 
 public class ShowContact extends AppCompatActivity implements View.OnClickListener {
 
@@ -100,7 +96,6 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
 
     //END OF LISTENERS

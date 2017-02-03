@@ -25,7 +25,7 @@ public class RequestHandler {
     //Other is an HashMap with name value pairs containing the data to be send with the request
     public String sendPostRequest(String requestURL,
 
-        HashMap<String, String> postDataParams) {
+                                  HashMap<String, String> postDataParams) {
         //Creating a URL
         URL url;
 
@@ -65,7 +65,7 @@ public class RequestHandler {
                 sb = new StringBuilder();
                 String response;
                 //Reading server response
-                while ((response = br.readLine()) != null){
+                while ((response = br.readLine()) != null) {
                     sb.append(response);
                 }
             }
@@ -76,34 +76,34 @@ public class RequestHandler {
         return sb.toString();
     }
 
-    public String sendGetRequest(String requestURL){
-        StringBuilder sb =new StringBuilder();
+    public String sendGetRequest(String requestURL) {
+        StringBuilder sb = new StringBuilder();
         try {
             URL url = new URL(requestURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
             String s;
-            while((s=bufferedReader.readLine())!=null){
-                sb.append(s+"\n");
+            while ((s = bufferedReader.readLine()) != null) {
+                sb.append(s + "\n");
             }
-        }catch(Exception e){
+        } catch (Exception e) {
         }
         return sb.toString();
     }
 
-    public String sendGetRequestParam(String requestURL, String id){
-        StringBuilder sb =new StringBuilder();
+    public String sendGetRequestParam(String requestURL, String id) {
+        StringBuilder sb = new StringBuilder();
         try {
-            URL url = new URL(requestURL+id);
+            URL url = new URL(requestURL + id);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
             String s;
-            while((s=bufferedReader.readLine())!=null){
-                sb.append(s+"\n");
+            while ((s = bufferedReader.readLine()) != null) {
+                sb.append(s + "\n");
             }
-        }catch(Exception e){
+        } catch (Exception e) {
         }
         return sb.toString();
     }

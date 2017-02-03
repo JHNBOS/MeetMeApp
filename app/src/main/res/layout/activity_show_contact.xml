@@ -21,84 +21,84 @@
         android:textStyle="normal|bold" />
 
     <TextView
+        android:id="@+id/usernameField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/usernameField"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/unameView"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:layout_below="@+id/unameView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textSize="18sp" />
 
     <Space
         android:id="@+id/spacer1"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:layout_below="@+id/usernameField"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/firstnameField"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:layout_below="@+id/fnameView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:id="@+id/spacer2"
-        android:layout_below="@+id/firstnameField"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_height="20dp" />
+        android:layout_below="@+id/usernameField" />
 
     <TextView
+        android:id="@+id/firstnameField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/fnameView"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp" />
+
+    <Space
+        android:id="@+id/spacer2"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/firstnameField" />
+
+    <TextView
         android:id="@+id/lastnameField"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:layout_below="@+id/lnameView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:id="@+id/spacer3"
-        android:layout_below="@+id/lastnameField"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/lnameView"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
-        android:id="@+id/emailField"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:layout_below="@+id/emailView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textSize="18sp" />
 
     <Space
+        android:id="@+id/spacer3"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:id="@+id/spacer4"
-        android:layout_below="@+id/emailField"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/lastnameField" />
+
+    <TextView
+        android:id="@+id/emailField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/emailView"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp" />
+
+    <Space
+        android:id="@+id/spacer4"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/emailField" />
 
     <Button
         android:id="@+id/returnContactButton"
@@ -114,106 +114,106 @@
         android:textStyle="normal|bold" />
 
     <View
-        android:layout_width="50dp"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:layout_marginLeft="22dp"
-        android:background="#3fe1fa"
         android:id="@+id/colorBox"
+        android:layout_width="50dp"
         android:layout_height="25dp"
-        android:layout_marginStart="22dp"
-        android:layout_below="@+id/colorView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="7dp" />
+        android:layout_below="@+id/colorView"
+        android:layout_marginLeft="22dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="7dp"
+        android:background="#3fe1fa"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp" />
 
     <TextView
-        android:text="First Name"
+        android:id="@+id/fnameView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:id="@+id/fnameView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textStyle="normal|bold"
-        android:textSize="18sp"
-        android:layout_below="@+id/spacer1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp" />
+        android:layout_below="@+id/spacer1"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="First Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp"
+        android:textStyle="normal|bold" />
 
     <TextView
         android:id="@+id/unameView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/titleView"
         android:layout_marginTop="49dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
         android:text="Username"
         android:textAlignment="textStart"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="18sp"
-        android:textStyle="normal|bold"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:layout_below="@+id/titleView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textStyle="normal|bold" />
 
     <TextView
-        android:text="Color"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
         android:id="@+id/colorView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textStyle="normal|bold"
-        android:textSize="18sp"
-        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/spacer4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="Email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
+        android:text="Color"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp"
+        android:textStyle="normal|bold" />
+
+    <TextView
         android:id="@+id/emailView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textStyle="normal|bold"
-        android:textSize="18sp"
-        android:layout_marginTop="16dp"
-        android:layout_below="@+id/spacer3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="Last Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lnameView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/spacer3"
+        android:layout_marginTop="16dp"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
+        android:text="Email"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
-        android:textStyle="normal|bold"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textStyle="normal|bold" />
 
     <TextView
+        android:id="@+id/lnameView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/colorField"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="Last Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:id="@+id/colorField"
         android:layout_width="250dp"
-        android:textAlignment="viewStart"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@+id/colorBox"
-        android:layout_toRightOf="@+id/colorBox"
-        android:layout_toEndOf="@+id/colorBox"
         android:layout_marginLeft="22dp"
-        android:layout_marginStart="22dp" />
+        android:layout_marginStart="22dp"
+        android:layout_toEndOf="@+id/colorBox"
+        android:layout_toRightOf="@+id/colorBox"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp" />
 
 
 </RelativeLayout>

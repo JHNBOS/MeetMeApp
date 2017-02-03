@@ -9,193 +9,193 @@
     android:paddingTop="0dp"
     tools:context="nl.jhnbos.meetmeapp.Event">
 
-        <TextView
-            android:id="@+id/titleView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif"
-            android:text="Create Event"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textSize="36sp"
-            android:textStyle="normal|bold" />
-
     <TextView
-            android:text="Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:id="@+id/event_titleView"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp"
-            android:textStyle="normal|bold"
-            android:layout_below="@+id/titleView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:ems="10"
-            android:layout_below="@+id/event_titleView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/titleField"
-            android:inputType="textCapWords"
-            android:textSize="18sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_below="@+id/titleField"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/spacer1" />
-
-    <EditText
+        android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:id="@+id/locField"
-        android:inputType="textCapWords"
-        android:layout_below="@+id/locView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
+        android:text="Create Event"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="36sp"
+        android:textStyle="normal|bold" />
 
     <TextView
-        android:text="Location"
-        android:layout_width="wrap_content"
+        android:id="@+id/event_titleView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spacer1"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/titleView"
+        android:layout_marginTop="56dp"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
-        android:layout_alignParentStart="true"
-        android:id="@+id/locView"
+        android:text="Title"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textStyle="normal|bold"
+        android:textSize="18sp"
+        android:textStyle="normal|bold" />
+
+    <EditText
+        android:id="@+id/titleField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/event_titleView"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:ems="10"
+        android:inputType="textCapWords"
         android:textSize="18sp" />
 
     <Space
+        android:id="@+id/spacer1"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:id="@+id/spacer3"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/titleField" />
 
-    <TextView
-        android:text="Start"
+    <EditText
+        android:id="@+id/locField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/startView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/locView"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:ems="10"
+        android:inputType="textCapWords" />
+
+    <TextView
+        android:id="@+id/locView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/spacer1"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
+        android:text="Location"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
-        android:textStyle="normal|bold"
+        android:textStyle="normal|bold" />
+
+    <Space
+        android:id="@+id/spacer3"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/startView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/startDateButton"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="Start"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp"
+        android:textStyle="normal|bold" />
 
     <Button
-        android:text="Pick Date"
-        android:layout_height="wrap_content"
         android:id="@+id/startDateButton"
         android:layout_width="170dp"
-        android:layout_marginLeft="23dp"
-        android:layout_marginStart="23dp"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/spacer2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="14dp" />
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="23dp"
+        android:layout_marginStart="23dp"
+        android:text="Pick Date" />
 
     <Space
-            android:layout_width="25dp"
-            android:layout_toRightOf="@+id/startDateButton"
-            android:id="@+id/buttonspacer"
-            android:layout_height="40dp"
-            android:layout_below="@+id/startView" />
+        android:id="@+id/buttonspacer"
+        android:layout_width="25dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/startView"
+        android:layout_toRightOf="@+id/startDateButton" />
 
     <Button
-            android:text="Pick Time"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/startTimeButton"
-            android:layout_alignBaseline="@+id/startDateButton"
-            android:layout_alignBottom="@+id/startDateButton"
-            android:layout_toRightOf="@+id/buttonspacer"
-            android:layout_toEndOf="@+id/buttonspacer" />
+        android:id="@+id/startTimeButton"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/startDateButton"
+        android:layout_alignBottom="@+id/startDateButton"
+        android:layout_toEndOf="@+id/buttonspacer"
+        android:layout_toRightOf="@+id/buttonspacer"
+        android:text="Pick Time" />
 
     <Space
+        android:id="@+id/spacer2"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:id="@+id/spacer2"
         android:layout_above="@+id/endView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="26dp" />
 
     <TextView
-            android:text="End"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/endView"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp"
-            android:textStyle="normal|bold"
-            android:layout_above="@+id/endTimeButton"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+        android:id="@+id/endView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/endTimeButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="End"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp"
+        android:textStyle="normal|bold" />
 
     <Button
-            android:text="Pick Date"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/endDateButton"
-            android:layout_marginBottom="38dp"
-            android:layout_above="@+id/addEventButton"
-            android:layout_alignLeft="@+id/startDateButton"
-            android:layout_alignStart="@+id/startDateButton" />
+        android:id="@+id/endDateButton"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/addEventButton"
+        android:layout_alignLeft="@+id/startDateButton"
+        android:layout_alignStart="@+id/startDateButton"
+        android:layout_marginBottom="38dp"
+        android:text="Pick Date" />
 
     <Space
-            android:layout_width="25dp"
-            android:id="@+id/buttonspaver2"
-            android:layout_below="@+id/endView"
-            android:layout_toRightOf="@+id/endDateButton"
-            android:layout_toEndOf="@+id/endDateButton"
-            android:layout_height="45dp" />
-
-        <Button
-            android:text="Pick time"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/endDateButton"
-            android:layout_toRightOf="@+id/buttonspaver2"
-            android:layout_toEndOf="@+id/buttonspaver2"
-            android:id="@+id/endTimeButton" />
+        android:id="@+id/buttonspaver2"
+        android:layout_width="25dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/endView"
+        android:layout_toEndOf="@+id/endDateButton"
+        android:layout_toRightOf="@+id/endDateButton" />
 
     <Button
-            android:id="@+id/addEventButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:text="Add Event"
-            android:textColor="@android:color/white"
-            android:textStyle="normal|bold"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+        android:id="@+id/endTimeButton"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/endDateButton"
+        android:layout_toEndOf="@+id/buttonspaver2"
+        android:layout_toRightOf="@+id/buttonspaver2"
+        android:text="Pick time" />
+
+    <Button
+        android:id="@+id/addEventButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorPrimary"
+        android:text="Add Event"
+        android:textColor="@android:color/white"
+        android:textStyle="normal|bold" />
 
 </RelativeLayout>

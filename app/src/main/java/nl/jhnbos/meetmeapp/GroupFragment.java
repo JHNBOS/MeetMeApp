@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -22,17 +21,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -139,7 +134,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     }
 
     //SHOW GROUPS IN LISTVIEW
-    private void showGroups(String response){
+    private void showGroups(String response) {
         try {
             JSONArray jArray = new JSONArray(response);
             JSONArray ja = jArray.getJSONArray(0);
@@ -159,7 +154,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
     }
 
     //INITIALIZE USER
-    private void initUser(String response){
+    private void initUser(String response) {
         try {
             JSONArray jArray = new JSONArray(response);
             JSONArray ja = jArray.getJSONArray(0);
@@ -245,11 +240,11 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(getActivity(), "Retrieving groups...",null,true,true);
+                loading = ProgressDialog.show(getActivity(), "Retrieving groups...", null, true, true);
             }
 
             @Override
-            protected String doInBackground(Void ... v) {
+            protected String doInBackground(Void... v) {
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendGetRequest(url);
                 return res;
@@ -277,11 +272,11 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(getActivity(), "Retrieving user...",null,true,true);
+                loading = ProgressDialog.show(getActivity(), "Retrieving user...", null, true, true);
             }
 
             @Override
-            protected String doInBackground(Void ... v) {
+            protected String doInBackground(Void... v) {
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendGetRequest(url);
                 return res;

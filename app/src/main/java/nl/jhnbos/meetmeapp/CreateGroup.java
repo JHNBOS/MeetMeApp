@@ -5,20 +5,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -110,7 +103,6 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
     }
 
 
-
     //END OF LISTENERS
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
@@ -142,17 +134,17 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(CreateGroup.this, "Creating group...",null,true,true);
+                loading = ProgressDialog.show(CreateGroup.this, "Creating group...", null, true, true);
             }
 
             @Override
-            protected String doInBackground(Void ... v) {
+            protected String doInBackground(Void... v) {
 
-                HashMap<String,String> params = new HashMap<>();
+                HashMap<String, String> params = new HashMap<>();
                 params.put("name", group);
                 params.put("email", email);
 
-                HashMap<String,String> params2 = new HashMap<>();
+                HashMap<String, String> params2 = new HashMap<>();
                 params2.put("name", group);
                 params2.put("email", email);
 
