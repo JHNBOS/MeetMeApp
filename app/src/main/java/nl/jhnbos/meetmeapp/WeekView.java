@@ -1325,6 +1325,21 @@ public class WeekView extends View {
                         return "";
                     }
                 }
+
+                @Override
+                public String interpretTime(int hour, int minute) {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.HOUR_OF_DAY, hour);
+                    calendar.set(Calendar.MINUTE, minute);
+
+                    try {
+                        SimpleDateFormat sdf = DateFormat.is24HourFormat(getContext()) ? new SimpleDateFormat("HH:mm", Locale.getDefault()) : new SimpleDateFormat("hh a", Locale.getDefault());
+                        return sdf.format(calendar.getTime());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return "";
+                    }
+                }
             };
         }
         return mDateTimeInterpreter;

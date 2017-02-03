@@ -244,6 +244,14 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                 return hour + ":00";
             }
 
+            @Override
+            public String interpretTime(int hour, int minute) {
+                if (hour == 24) { hour = 0; }
+                if (hour == 0) { hour = 0; }
+                if (minute == 30) { return hour + ":30"; }
+                return hour + ":00";
+            }
+
         });
     }
 
