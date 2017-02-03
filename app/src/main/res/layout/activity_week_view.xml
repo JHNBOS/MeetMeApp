@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <nl.jhnbos.meetmeapp.WeekView.WeekView
+    <nl.jhnbos.meetmeapp.WeekView
         android:id="@+id/weekView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
