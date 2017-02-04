@@ -587,7 +587,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
         String start = sdate + "-" + smonth + "-" + syear + " " + shour + ":" + sminute;
         String end = edate + "-" + emonth + "-" + eyear + " " + ehour + ":" + eminute;
-        
+
         input.setText(event.getName() + "\n" + event.getLocation() + "\n" + start + "\n" + end);
 
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
