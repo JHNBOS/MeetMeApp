@@ -172,6 +172,7 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
                 if (!s.equals(group)) {
                     Toast.makeText(CreateGroup.this, s, Toast.LENGTH_LONG).show();
                 } else {
+                    Toast.makeText(CreateGroup.this, s, Toast.LENGTH_LONG).show();
                     CreateGroup.this.onBackPressed();
                     //addGroupMember(group, email);
                 }

@@ -85,9 +85,9 @@ public class WeekView extends View {
     private Direction mCurrentFlingDirection = Direction.NONE;
 
     // Attributes and their default values.
-    private int mHourHeight = 50;
+    private int mHourHeight = 250;
     private int mNewHourHeight = -1;
-    private int mMinHourHeight = 0; //no minimum specified (will be dynamic, based on screen)
+    private int mMinHourHeight = 60; //no minimum specified (will be dynamic, based on screen)
     private int mEffectiveMinHourHeight = mMinHourHeight; //compensates for the fact that you can't keep zooming out.
     private int mMaxHourHeight = 250;
     private int mColumnGap = 10;

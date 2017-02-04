@@ -32,6 +32,12 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
     public Timestamp end;
     private String startDate;
     private String endDate;
+    private String ev_loc;
+    private String ev_start;
+    private String ev_end;
+    private String ev_creator;
+    private String ev_group;
+    private String ev_title;
     //LAYOUT ITEMS
     private Button createEventButton;
     private EditText titleField;
@@ -43,6 +49,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
     //OBJECTS
     private HTTP http;
     private User user;
+
 
     public Event() {
 
@@ -92,12 +99,13 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
     //ADD GROUP
     private void addEvent() {
         try {
-            String ev_loc = locField.getText().toString();
-            String ev_start = startDate.toString();
-            String ev_end = endDate.toString();
-            String ev_creator = getIntent().getExtras().getString("EmailC");
-            String ev_group = getIntent().getExtras().getString("GroupC");
-            String ev_title = titleField.getText().toString();
+
+            ev_loc = locField.getText().toString();
+            ev_start = startDate.toString();
+            ev_end = endDate.toString();
+            ev_creator = getIntent().getExtras().getString("EmailC");
+            ev_group = getIntent().getExtras().getString("GroupC");
+            ev_title = titleField.getText().toString();
 
             String response = http.sendPost(
                     ADDEVENT_URL + "?title=" + URLEncoder.encode(ev_title, "UTF-8")
@@ -109,8 +117,11 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
                             + "&color=" + URLEncoder.encode(user.getColor(), "UTF-8")
             );
 
-            if (response.equals(ev_title)) {
+            if (!response.equals(ev_title)) {
                 Toast.makeText(Event.this, response, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(Event.this, response, Toast.LENGTH_SHORT).show();
+                super.onBackPressed();
             }
 
         } catch (Exception e) {
@@ -195,12 +206,14 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
             startDate = startYear + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute;
             endDate = endYear + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMinute;
 
-            sdf.format(startDate);
-            sdf.format(endDate);
-
-            addEvent();
-
-            super.onBackPressed();
+            try{
+                if(ev_title == ""){
+                    Toast.makeText(Event.this, "Please fill in all fields!", Toast.LENGTH_LONG).show();
+                } else {
+                    addEvent();
+                }
+            } catch (Exception e){e.printStackTrace();}
+            
         }
     }
 
