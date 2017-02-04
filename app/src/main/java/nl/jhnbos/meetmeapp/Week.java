@@ -10,10 +10,12 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -31,7 +33,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class Week extends AppCompatActivity implements WeekView.EventClickListener, WeekView.EventLongPressListener, WeekView.EmptyViewClickListener, WeekView.ScrollListener, MonthLoader.MonthChangeListener {
+public class Week extends AppCompatActivity implements WeekView.EventClickListener, WeekView.EventLongPressListener, WeekView.EmptyViewClickListener, WeekView.ScrollListener, MonthLoader.MonthChangeListener, WeekView.MonthChangeListener {
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
@@ -204,7 +206,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, event.getName(), Toast.LENGTH_SHORT).show();
+        showEventInfo(event);
     }
 
     @Override
@@ -235,26 +237,14 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                 return weekday.toUpperCase() + " " + format.format(date.getTime());
             }
 
-            /*
+
             @Override
             public String interpretTime(int hour) {
                 if (hour == 24) { hour = 0; }
                 if (hour == 0) { hour = 0; }
                 return hour + ":00";
-            }*/
-
-            @Override
-            public String interpretTime(int hour, int minute) {
-                String strMinutes = String.format("%02d", minute);
-
-                if (hour == 24) {
-                    hour = 0;
-                }
-                if (hour == 0) {
-                    hour = 0;
-                }
-                return hour + ":" + strMinutes;
             }
+
 
         });
     }
@@ -303,6 +293,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             endCal = (Calendar) startCal.clone();
 
             String Title = eventList.get(i).getEvent_title();
+            String Location = eventList.get(i).getLocation();
             Timestamp Start = eventList.get(i).getStart();
             Timestamp End = eventList.get(i).getEnd();
 
@@ -318,6 +309,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             int Colour = Color.parseColor(eventList.get(i).getColor());
 
             WeekViewEvent event = new WeekViewEvent(idset++, Title, startCal, endCal);
+            event.setLocation(Location);
             event.setColor(Colour);
 
             Log.d("startTime Month", String.valueOf(event.getStartTime().get(Calendar.MONTH)));
@@ -573,6 +565,40 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
             initUser(s);
         }
+    }
+
+    private void showEventInfo(WeekViewEvent event){
+        AlertDialog.Builder builder = new AlertDialog.Builder(Week.this);
+        builder.setTitle("Event Info");
+        final TextView input = new TextView (this);
+        builder.setView(input);
+
+        String sdate = String.valueOf(event.getStartTime().get(Calendar.DAY_OF_MONTH));
+        String smonth = String.valueOf(event.getStartTime().get(Calendar.MONTH));
+        String syear = String.valueOf(event.getStartTime().get(Calendar.YEAR));
+        String shour = String.valueOf(event.getStartTime().get(Calendar.HOUR_OF_DAY));
+        String sminute = String.valueOf(event.getStartTime().get(Calendar.MINUTE));
+
+        String edate = String.valueOf(event.getEndTime().get(Calendar.DAY_OF_MONTH));
+        String emonth = String.valueOf(event.getEndTime().get(Calendar.MONTH));
+        String eyear = String.valueOf(event.getEndTime().get(Calendar.YEAR));
+        String ehour = String.valueOf(event.getEndTime().get(Calendar.HOUR_OF_DAY));
+        String eminute = String.valueOf(event.getEndTime().get(Calendar.MINUTE));
+
+        String start = sdate + "-" + smonth + "-" + syear + " " + shour + ":" + sminute;
+        String end = edate + "-" + emonth + "-" + eyear + " " + ehour + ":" + eminute;
+        
+        input.setText(event.getName() + "\n" + event.getLocation() + "\n" + start + "\n" + end);
+
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //TODO
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 

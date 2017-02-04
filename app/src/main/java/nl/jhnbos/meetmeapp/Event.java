@@ -22,15 +22,18 @@ import java.util.Calendar;
 
 public class Event extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
+    //STRINGS
     private static final String ADDEVENT_URL = "http://jhnbos.nl/android/addEvent.php";
     public String event_title;
     public String location;
-    public Timestamp start;
-    public Timestamp end;
     public String creator;
     public String group;
     public String color;
     public String name;
+    private String startDate;
+    private String endDate;
+
+    //LAYOUT ITEMS
     private Button createEventButton;
     private EditText titleField;
     private EditText locField;
@@ -42,9 +45,11 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
     private DatePickerDialog enddatepickerdialog;
     private TimePickerDialog starttimepickerdialog;
     private TimePickerDialog endtimepickerdialog;
+
+    //OBJECTS
     private HTTP http;
-    private String startDate;
-    private String endDate;
+    public Timestamp start;
+    public Timestamp end;
     private User user;
 
     public Event() {
@@ -105,9 +110,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
             String ev_title =
                     user.getFirstName() + " " + user.getLastName() + ":"
                             + "\n"
-                            + titleField.getText().toString()
-                            + "\n"
-                            + "@ " + ev_loc;
+                            + titleField.getText().toString();
 
 
             Log.d("Title", ev_title);
