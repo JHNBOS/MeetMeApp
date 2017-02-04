@@ -5,14 +5,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RectF;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -242,8 +239,12 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
             @Override
             public String interpretTime(int hour) {
-                if (hour == 24) { hour = 0; }
-                if (hour == 0) { hour = 0; }
+                if (hour == 24) {
+                    hour = 0;
+                }
+                if (hour == 0) {
+                    hour = 0;
+                }
                 return hour + ":00";
             }
 
@@ -508,6 +509,46 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         dialog.show();
     }
 
+    private void showEventInfo(WeekViewEvent event) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Week.this);
+        builder.setTitle("Event Info");
+
+        float dpi = this.getResources().getDisplayMetrics().density;
+
+        final TextView input = new TextView(this);
+        input.setTextSize(16);
+
+        builder.setView(input, (int) (25 * dpi), (int) (8 * dpi), (int) (14 * dpi), (int) (8 * dpi));
+
+        String sdate = String.valueOf(event.getStartTime().get(Calendar.DAY_OF_MONTH));
+        String smonth = String.valueOf(event.getStartTime().get(Calendar.MONTH));
+        String syear = String.valueOf(event.getStartTime().get(Calendar.YEAR));
+        String shour = String.valueOf(event.getStartTime().get(Calendar.HOUR_OF_DAY));
+        String sminute = String.valueOf(event.getStartTime().get(Calendar.MINUTE));
+
+        String edate = String.valueOf(event.getEndTime().get(Calendar.DAY_OF_MONTH));
+        String emonth = String.valueOf(event.getEndTime().get(Calendar.MONTH));
+        String eyear = String.valueOf(event.getEndTime().get(Calendar.YEAR));
+        String ehour = String.valueOf(event.getEndTime().get(Calendar.HOUR_OF_DAY));
+        String eminute = String.valueOf(event.getEndTime().get(Calendar.MINUTE));
+
+        String start = sdate + "-" + smonth + "-" + syear + " " + shour + ":" + sminute;
+        String end = edate + "-" + emonth + "-" + eyear + " " + ehour + ":" + eminute;
+
+        input.setText("Title: " + event.getName() + "\n" + "Location: "
+                + event.getLocation() + "\n" + "Start: " + start + "\n" + "End: " + end);
+
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //TODO
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     //GET GROUPS
     private class GetEventJSON extends AsyncTask<Void, Void, String> {
         String url = GET_EVENTS_URL + "?group='" + URLEncoder.encode(group, "UTF-8") + "'";
@@ -567,46 +608,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
             initUser(s);
         }
-    }
-
-    private void showEventInfo(WeekViewEvent event){
-        AlertDialog.Builder builder = new AlertDialog.Builder(Week.this);
-        builder.setTitle("Event Info");
-
-        float dpi = this.getResources().getDisplayMetrics().density;
-
-        final TextView input = new TextView (this);
-        input.setTextSize(16);
-
-        builder.setView(input, (int)(25*dpi), (int)(8*dpi), (int)(14*dpi), (int)(8*dpi));
-
-        String sdate = String.valueOf(event.getStartTime().get(Calendar.DAY_OF_MONTH));
-        String smonth = String.valueOf(event.getStartTime().get(Calendar.MONTH));
-        String syear = String.valueOf(event.getStartTime().get(Calendar.YEAR));
-        String shour = String.valueOf(event.getStartTime().get(Calendar.HOUR_OF_DAY));
-        String sminute = String.valueOf(event.getStartTime().get(Calendar.MINUTE));
-
-        String edate = String.valueOf(event.getEndTime().get(Calendar.DAY_OF_MONTH));
-        String emonth = String.valueOf(event.getEndTime().get(Calendar.MONTH));
-        String eyear = String.valueOf(event.getEndTime().get(Calendar.YEAR));
-        String ehour = String.valueOf(event.getEndTime().get(Calendar.HOUR_OF_DAY));
-        String eminute = String.valueOf(event.getEndTime().get(Calendar.MINUTE));
-
-        String start = sdate + "-" + smonth + "-" + syear + " " + shour + ":" + sminute;
-        String end = edate + "-" + emonth + "-" + eyear + " " + ehour + ":" + eminute;
-
-        input.setText("Title: " + event.getName() + "\n" + "Location: "
-                + event.getLocation() + "\n" + "Start: " + start + "\n" + "End: " + end);
-
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //TODO
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
 

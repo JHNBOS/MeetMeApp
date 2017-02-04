@@ -8,13 +8,9 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Region;
 import android.graphics.Typeface;
-import android.os.Build;
-import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.text.Layout;
 import android.text.SpannableStringBuilder;
 import android.text.StaticLayout;
@@ -30,7 +26,6 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.SoundEffectConstants;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.widget.OverScroller;
 import android.widget.Scroller;
 
@@ -41,9 +36,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-
-import static nl.jhnbos.meetmeapp.WeekViewUtil.isSameDay;
-import static nl.jhnbos.meetmeapp.WeekViewUtil.today;
 
 /**
  * Created by Raquib-ul-Alam Kanak on 7/21/2014.
@@ -104,7 +96,7 @@ public class WeekView extends View {
     private int mHeaderColumnPadding = 10;
     private int mHeaderColumnTextColor = Color.BLACK;
     private int mNumberOfVisibleDays = 3;
-    private int mMinEventDurationMillis = 15*60*1000;
+    private int mMinEventDurationMillis = 15 * 60 * 1000;
     private int mHeaderRowPadding = 10;
     private int mHeaderRowBackgroundColor = Color.WHITE;
     private int mDayBackgroundColor = Color.rgb(245, 245, 245);
@@ -126,7 +118,8 @@ public class WeekView extends View {
     private int mDefaultEventColor;
     private boolean mIsFirstDraw = true;
     private boolean mAreDimensionsInvalid = true;
-    @Deprecated private int mDayNameLength = LENGTH_LONG;
+    @Deprecated
+    private int mDayNameLength = LENGTH_LONG;
     private int mOverlappingEventGap = 0;
     private int mEventMarginVertical = 0;
     private float mXScrollingSpeed = 1f;
@@ -144,9 +137,6 @@ public class WeekView extends View {
     private WeekViewLoader mWeekViewLoader;
     private EmptyViewClickListener mEmptyViewClickListener;
     private EmptyViewLongPressListener mEmptyViewLongPressListener;
-    private DateTimeInterpreter mDateTimeInterpreter;
-    private ScrollListener mScrollListener;
-
     private final GestureDetector.SimpleOnGestureListener mGestureListener = new GestureDetector.SimpleOnGestureListener() {
 
         @Override
@@ -158,14 +148,13 @@ public class WeekView extends View {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            if(mIsZooming)
+            if (mIsZooming)
                 return true;
             if (mCurrentScrollDirection == Direction.NONE) {
-                if (Math.abs(distanceX) > Math.abs(distanceY)){
+                if (Math.abs(distanceX) > Math.abs(distanceY)) {
                     mCurrentScrollDirection = Direction.HORIZONTAL;
                     mCurrentFlingDirection = Direction.HORIZONTAL;
-                }
-                else {
+                } else {
                     mCurrentFlingDirection = Direction.VERTICAL;
                     mCurrentScrollDirection = Direction.VERTICAL;
                 }
@@ -180,10 +169,9 @@ public class WeekView extends View {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             mScroller.forceFinished(true);
 
-            if (mCurrentFlingDirection == Direction.HORIZONTAL){
+            if (mCurrentFlingDirection == Direction.HORIZONTAL) {
                 mScroller.fling((int) mCurrentOrigin.x, 0, (int) (velocityX * mXScrollingSpeed), 0, Integer.MIN_VALUE, Integer.MAX_VALUE, 0, 0);
-            }
-            else if (mCurrentFlingDirection == Direction.VERTICAL){
+            } else if (mCurrentFlingDirection == Direction.VERTICAL) {
                 mScroller.fling(0, (int) mCurrentOrigin.y, 0, (int) velocityY, 0, 0, (int) -(mHourHeight * 24 + mHeaderTextHeight + mHeaderRowPadding * 2 - getHeight()), 0);
             }
 
@@ -245,10 +233,8 @@ public class WeekView extends View {
             }
         }
     };
-
-    private enum Direction {
-        NONE, HORIZONTAL, VERTICAL
-    }
+    private DateTimeInterpreter mDateTimeInterpreter;
+    private ScrollListener mScrollListener;
 
     public WeekView(Context context) {
         this(context, null);
@@ -440,7 +426,7 @@ public class WeekView extends View {
         canvas.drawRect(0, 0, mTimeTextWidth + mHeaderColumnPadding * 2, mHeaderTextHeight + mHeaderRowPadding * 2, mHeaderBackgroundPaint);
 
         // Hide anything that is in the bottom margin of the header row.
-        canvas.drawRect(mHeaderColumnWidth, mHeaderTextHeight + mHeaderRowPadding * 2, getWidth(), mHeaderRowPadding * 2 + mHeaderTextHeight + mHeaderMarginBottom + mTimeTextHeight/2, mHeaderColumnBackgroundPaint);
+        canvas.drawRect(mHeaderColumnWidth, mHeaderTextHeight + mHeaderRowPadding * 2, getWidth(), mHeaderRowPadding * 2 + mHeaderTextHeight + mHeaderMarginBottom + mTimeTextHeight / 2, mHeaderColumnBackgroundPaint);
     }
 
     private void drawTimeColumnAndAxes(Canvas canvas) {
@@ -454,38 +440,39 @@ public class WeekView extends View {
             String time = getDateTimeInterpreter().interpretTime(i);
             if (time == null)
                 throw new IllegalStateException("A DateTimeInterpreter must not return null time");
-            if (top < getHeight()) canvas.drawText(time, mTimeTextWidth + mHeaderColumnPadding, top + mTimeTextHeight, mTimeTextPaint);
+            if (top < getHeight())
+                canvas.drawText(time, mTimeTextWidth + mHeaderColumnPadding, top + mTimeTextHeight, mTimeTextPaint);
         }
     }
 
     private void drawHeaderRowAndEvents(Canvas canvas) {
         // Calculate the available width for each day.
-        mHeaderColumnWidth = mTimeTextWidth + mHeaderColumnPadding *2;
+        mHeaderColumnWidth = mTimeTextWidth + mHeaderColumnPadding * 2;
         mWidthPerDay = getWidth() - mHeaderColumnWidth - mColumnGap * (mNumberOfVisibleDays - 1);
-        mWidthPerDay = mWidthPerDay/mNumberOfVisibleDays;
+        mWidthPerDay = mWidthPerDay / mNumberOfVisibleDays;
 
         Calendar today = today();
 
         if (mAreDimensionsInvalid) {
-            mEffectiveMinHourHeight= Math.max(mMinHourHeight, (int) ((getHeight() - mHeaderTextHeight - mHeaderRowPadding * 2 - mHeaderMarginBottom) / 24));
+            mEffectiveMinHourHeight = Math.max(mMinHourHeight, (int) ((getHeight() - mHeaderTextHeight - mHeaderRowPadding * 2 - mHeaderMarginBottom) / 24));
 
             mAreDimensionsInvalid = false;
-            if(mScrollToDay != null)
+            if (mScrollToDay != null)
                 goToDate(mScrollToDay);
 
             mAreDimensionsInvalid = false;
-            if(mScrollToHour >= 0)
+            if (mScrollToHour >= 0)
                 goToHour(mScrollToHour);
 
             mScrollToDay = null;
             mScrollToHour = -1;
             mAreDimensionsInvalid = false;
         }
-        if (mIsFirstDraw){
+        if (mIsFirstDraw) {
             mIsFirstDraw = false;
 
             // If the week view is being drawn for the first time, then consider the first day of the week.
-            if(mNumberOfVisibleDays >= 7 && today.get(Calendar.DAY_OF_WEEK) != mFirstDayOfWeek) {
+            if (mNumberOfVisibleDays >= 7 && today.get(Calendar.DAY_OF_WEEK) != mFirstDayOfWeek) {
                 int difference = 7 + (today.get(Calendar.DAY_OF_WEEK) - mFirstDayOfWeek);
                 mCurrentOrigin.x += (mWidthPerDay + mColumnGap) * difference;
             }
@@ -497,13 +484,13 @@ public class WeekView extends View {
 
 
         //Calculate the new height due to the zooming.
-        if (mNewHourHeight > 0){
-            if(mNewHourHeight < mEffectiveMinHourHeight)
+        if (mNewHourHeight > 0) {
+            if (mNewHourHeight < mEffectiveMinHourHeight)
                 mNewHourHeight = mEffectiveMinHourHeight;
-            else if(mNewHourHeight > mMaxHourHeight)
+            else if (mNewHourHeight > mMaxHourHeight)
                 mNewHourHeight = mMaxHourHeight;
 
-            mCurrentOrigin.y = (mCurrentOrigin.y/mHourHeight)*mNewHourHeight;
+            mCurrentOrigin.y = (mCurrentOrigin.y / mHourHeight) * mNewHourHeight;
             mHourHeight = mNewHourHeight;
             mNewHourHeight = -1;
         }
@@ -512,7 +499,7 @@ public class WeekView extends View {
         if (mCurrentOrigin.y < getHeight() - mHourHeight * 24 - mHeaderTextHeight - mHeaderRowPadding * 2 - mHeaderMarginBottom)
             mCurrentOrigin.y = getHeight() - mHourHeight * 24 - mHeaderTextHeight - mHeaderRowPadding * 2 - mHeaderMarginBottom;
         //Don't put an else if because it will trigger a glitch when completly zoomed out and scrolling vertically.
-        if(mCurrentOrigin.y > 0)
+        if (mCurrentOrigin.y > 0)
             mCurrentOrigin.y = 0;
 
         // Consider scroll offset.
@@ -529,12 +516,12 @@ public class WeekView extends View {
         // Prepare to iterate for each hour to draw the hour lines.
         int lineCount = (int) ((getHeight() - mHeaderTextHeight - mHeaderRowPadding * 2 -
                 mHeaderMarginBottom) / mHourHeight) + 1;
-        lineCount = (lineCount) * (mNumberOfVisibleDays+1);
+        lineCount = (lineCount) * (mNumberOfVisibleDays + 1);
         float[] hourLines = new float[lineCount * 4];
 
         // Clear the cache for event rectangles.
         if (mEventRects != null) {
-            for (EventRect eventRect: mEventRects) {
+            for (EventRect eventRect : mEventRects) {
                 eventRect.rectF = null;
             }
         }
@@ -543,7 +530,7 @@ public class WeekView extends View {
         Calendar oldFirstVisibleDay = mFirstVisibleDay;
         mFirstVisibleDay = (Calendar) today.clone();
         mFirstVisibleDay.add(Calendar.DATE, -(Math.round(mCurrentOrigin.x / (mWidthPerDay + mColumnGap))));
-        if(!mFirstVisibleDay.equals(oldFirstVisibleDay) && mScrollListener != null){
+        if (!mFirstVisibleDay.equals(oldFirstVisibleDay) && mScrollListener != null) {
             mScrollListener.onFirstVisibleDayChanged(mFirstVisibleDay, oldFirstVisibleDay);
         }
         for (int dayNumber = leftDaysWithGaps + 1;
@@ -567,34 +554,34 @@ public class WeekView extends View {
             }
 
             // Draw background color for each day.
-            float start =  (startPixel < mHeaderColumnWidth ? mHeaderColumnWidth : startPixel);
-            if (mWidthPerDay + startPixel - start> 0){
-                if(mUseNewColoring){
+            float start = (startPixel < mHeaderColumnWidth ? mHeaderColumnWidth : startPixel);
+            if (mWidthPerDay + startPixel - start > 0) {
+                if (mUseNewColoring) {
                     boolean isWeekend = (day.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || day.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY);
                     Paint pastPaint = isWeekend ? mPastWeekendBackgroundPaint : mPastBackgroundPaint;
                     Paint futurePaint = isWeekend ? mFutureWeekendBackgroundPaint : mFutureBackgroundPaint;
-                    float startY = mHeaderTextHeight + mHeaderRowPadding * 2 + mTimeTextHeight/2 + mHeaderMarginBottom + mCurrentOrigin.y;
+                    float startY = mHeaderTextHeight + mHeaderRowPadding * 2 + mTimeTextHeight / 2 + mHeaderMarginBottom + mCurrentOrigin.y;
 
-                    if(sameDay){
+                    if (sameDay) {
                         Calendar now = Calendar.getInstance();
-                        float beforeNow = (now.get(Calendar.HOUR_OF_DAY)+now.get(Calendar.MINUTE)/60.0f)*mHourHeight;
-                        canvas.drawRect(start, startY, startPixel + mWidthPerDay, startY+beforeNow, pastPaint);
-                        canvas.drawRect(start, startY+beforeNow, startPixel + mWidthPerDay, getHeight(), futurePaint);
-                    } else if(day.before(today)) {
+                        float beforeNow = (now.get(Calendar.HOUR_OF_DAY) + now.get(Calendar.MINUTE) / 60.0f) * mHourHeight;
+                        canvas.drawRect(start, startY, startPixel + mWidthPerDay, startY + beforeNow, pastPaint);
+                        canvas.drawRect(start, startY + beforeNow, startPixel + mWidthPerDay, getHeight(), futurePaint);
+                    } else if (day.before(today)) {
                         canvas.drawRect(start, startY, startPixel + mWidthPerDay, getHeight(), pastPaint);
                     } else {
                         canvas.drawRect(start, startY, startPixel + mWidthPerDay, getHeight(), futurePaint);
                     }
-                }else{
-                    canvas.drawRect(start, mHeaderTextHeight + mHeaderRowPadding * 2 + mTimeTextHeight/2 + mHeaderMarginBottom, startPixel + mWidthPerDay, getHeight(), sameDay ? mTodayBackgroundPaint : mDayBackgroundPaint);
+                } else {
+                    canvas.drawRect(start, mHeaderTextHeight + mHeaderRowPadding * 2 + mTimeTextHeight / 2 + mHeaderMarginBottom, startPixel + mWidthPerDay, getHeight(), sameDay ? mTodayBackgroundPaint : mDayBackgroundPaint);
                 }
             }
 
             // Prepare the separator lines for hours.
             int i = 0;
             for (int hourNumber = 0; hourNumber < 24; hourNumber++) {
-                float top = mHeaderTextHeight + mHeaderRowPadding * 2 + mCurrentOrigin.y + mHourHeight * hourNumber + mTimeTextHeight/2 + mHeaderMarginBottom;
-                if (top > mHeaderTextHeight + mHeaderRowPadding * 2 + mTimeTextHeight/2 + mHeaderMarginBottom - mHourSeparatorHeight && top < getHeight() && startPixel + mWidthPerDay - start > 0){
+                float top = mHeaderTextHeight + mHeaderRowPadding * 2 + mCurrentOrigin.y + mHourHeight * hourNumber + mTimeTextHeight / 2 + mHeaderMarginBottom;
+                if (top > mHeaderTextHeight + mHeaderRowPadding * 2 + mTimeTextHeight / 2 + mHeaderMarginBottom - mHourSeparatorHeight && top < getHeight() && startPixel + mWidthPerDay - start > 0) {
                     hourLines[i * 4] = start;
                     hourLines[i * 4 + 1] = top;
                     hourLines[i * 4 + 2] = startPixel + mWidthPerDay;
@@ -610,11 +597,11 @@ public class WeekView extends View {
             drawEvents(day, startPixel, canvas);
 
             //Draw the line at the current time
-            if(mUseNewColoring && sameDay){
-                float startY = mHeaderTextHeight + mHeaderRowPadding * 2 + mTimeTextHeight/2 + mHeaderMarginBottom + mCurrentOrigin.y;
+            if (mUseNewColoring && sameDay) {
+                float startY = mHeaderTextHeight + mHeaderRowPadding * 2 + mTimeTextHeight / 2 + mHeaderMarginBottom + mCurrentOrigin.y;
                 Calendar now = Calendar.getInstance();
-                float beforeNow = (now.get(Calendar.HOUR_OF_DAY)+now.get(Calendar.MINUTE)/60.0f)*mHourHeight;
-                canvas.drawLine(start, startY+beforeNow, startPixel + mWidthPerDay, startY+beforeNow, mNowLinePaint);
+                float beforeNow = (now.get(Calendar.HOUR_OF_DAY) + now.get(Calendar.MINUTE) / 60.0f) * mHourHeight;
+                canvas.drawLine(start, startY + beforeNow, startPixel + mWidthPerDay, startY + beforeNow, mNowLinePaint);
             }
 
             // In the next iteration, start from the next day.
@@ -626,7 +613,7 @@ public class WeekView extends View {
 
         // Draw the header row texts.
         startPixel = startFromPixel;
-        for (int dayNumber=leftDaysWithGaps+1; dayNumber <= leftDaysWithGaps + mNumberOfVisibleDays + 1; dayNumber++) {
+        for (int dayNumber = leftDaysWithGaps + 1; dayNumber <= leftDaysWithGaps + mNumberOfVisibleDays + 1; dayNumber++) {
             // Check if the day is today.
             day = (Calendar) today.clone();
             day.add(Calendar.DATE, dayNumber - 1);
@@ -644,25 +631,26 @@ public class WeekView extends View {
 
     /**
      * Get the time and date where the user clicked on.
+     *
      * @param x The x position of the touch event.
      * @param y The y position of the touch event.
      * @return The time and date at the clicked position.
      */
-    private Calendar getTimeFromPoint(float x, float y){
+    private Calendar getTimeFromPoint(float x, float y) {
         int leftDaysWithGaps = (int) -(Math.ceil(mCurrentOrigin.x / (mWidthPerDay + mColumnGap)));
         float startPixel = mCurrentOrigin.x + (mWidthPerDay + mColumnGap) * leftDaysWithGaps +
                 mHeaderColumnWidth;
         for (int dayNumber = leftDaysWithGaps + 1;
              dayNumber <= leftDaysWithGaps + mNumberOfVisibleDays + 1;
              dayNumber++) {
-            float start =  (startPixel < mHeaderColumnWidth ? mHeaderColumnWidth : startPixel);
-            if (mWidthPerDay + startPixel - start> 0
-                    && x>start && x<startPixel + mWidthPerDay){
+            float start = (startPixel < mHeaderColumnWidth ? mHeaderColumnWidth : startPixel);
+            if (mWidthPerDay + startPixel - start > 0
+                    && x > start && x < startPixel + mWidthPerDay) {
                 Calendar day = today();
                 day.add(Calendar.DATE, dayNumber - 1);
                 float pixelsFromZero = y - mCurrentOrigin.y - mHeaderTextHeight
-                        - mHeaderRowPadding * 2 - mTimeTextHeight/2 - mHeaderMarginBottom;
-                int hour = (int)(pixelsFromZero / mHourHeight);
+                        - mHeaderRowPadding * 2 - mTimeTextHeight / 2 - mHeaderMarginBottom;
+                int hour = (int) (pixelsFromZero / mHourHeight);
                 int minute = (int) (60 * (pixelsFromZero - hour * mHourHeight) / mHourHeight);
                 day.add(Calendar.HOUR, hour);
                 day.set(Calendar.MINUTE, minute);
@@ -675,9 +663,10 @@ public class WeekView extends View {
 
     /**
      * Draw all the events of a particular day.
-     * @param date The day.
+     *
+     * @param date           The day.
      * @param startFromPixel The left position of the day area. The events will never go any left from this value.
-     * @param canvas The canvas to draw upon.
+     * @param canvas         The canvas to draw upon.
      */
     private void drawEvents(Calendar date, float startFromPixel, Canvas canvas) {
         if (mEventRects != null && mEventRects.size() > 0) {
@@ -686,11 +675,11 @@ public class WeekView extends View {
                 if (isSameDay(mEventRects.get(i).event.getStartTime(), date)) {
 
                     // Calculate top.
-                    float top = mHourHeight * 24 * mEventRects.get(i).top / 1440 + mCurrentOrigin.y + mHeaderTextHeight + mHeaderRowPadding * 2 + mHeaderMarginBottom + mTimeTextHeight/2 + mEventMarginVertical;
+                    float top = mHourHeight * 24 * mEventRects.get(i).top / 1440 + mCurrentOrigin.y + mHeaderTextHeight + mHeaderRowPadding * 2 + mHeaderMarginBottom + mTimeTextHeight / 2 + mEventMarginVertical;
 
                     // Calculate bottom.
                     float bottom = mEventRects.get(i).bottom;
-                    bottom = mHourHeight * 24 * bottom / 1440 + mCurrentOrigin.y + mHeaderTextHeight + mHeaderRowPadding * 2 + mHeaderMarginBottom + mTimeTextHeight/2 - mEventMarginVertical;
+                    bottom = mHourHeight * 24 * bottom / 1440 + mCurrentOrigin.y + mHeaderTextHeight + mHeaderRowPadding * 2 + mHeaderMarginBottom + mTimeTextHeight / 2 - mEventMarginVertical;
 
                     // Calculate left and right.
                     float left = startFromPixel + mEventRects.get(i).left * mWidthPerDay;
@@ -702,14 +691,14 @@ public class WeekView extends View {
 
                     mEventTextPaint.getTextBounds(mEventRects.get(i).event.getName(), 0, mEventRects.get(i).event.getName().length(), rect);
 
-                    float minTextHeight = rect.height() + 2*mEventPadding;
+                    float minTextHeight = rect.height() + 2 * mEventPadding;
                     if (bottom - top < minTextHeight) {
                         bottom = top + minTextHeight;
                     }
 
                     // Draw the event and the event name on top of it.
                     RectF eventRectF = new RectF(left, top, right, bottom);
-                    if (bottom > mHeaderTextHeight + mHeaderRowPadding * 2 + mHeaderMarginBottom + mTimeTextHeight/2 && left < right &&
+                    if (bottom > mHeaderTextHeight + mHeaderRowPadding * 2 + mHeaderMarginBottom + mTimeTextHeight / 2 && left < right &&
                             eventRectF.right > mHeaderColumnWidth &&
                             eventRectF.left < getWidth() &&
                             eventRectF.bottom > mHeaderTextHeight + mHeaderRowPadding * 2 + mTimeTextHeight / 2 + mHeaderMarginBottom &&
@@ -720,21 +709,20 @@ public class WeekView extends View {
                         mEventBackgroundPaint.setColor(mEventRects.get(i).event.getColor() == 0 ? mDefaultEventColor : mEventRects.get(i).event.getColor());
                         canvas.drawRoundRect(mEventRects.get(i).rectF, mEventCornerRadius, mEventCornerRadius, mEventBackgroundPaint);
                         drawEventTitle(mEventRects.get(i).event, mEventRects.get(i).rectF, canvas, top, left);
-                    }
-                    else
+                    } else
                         mEventRects.get(i).rectF = null;
                 }
             }
         }
     }
 
-
     /**
      * Draw the name of the event on top of the event rectangle.
-     * @param event The event of which the title (and location) should be drawn.
-     * @param rect The rectangle on which the text is to be drawn.
-     * @param canvas The canvas to draw upon.
-     * @param originalTop The original top position of the rectangle. The rectangle may have some of its portion outside of the visible area.
+     *
+     * @param event        The event of which the title (and location) should be drawn.
+     * @param rect         The rectangle on which the text is to be drawn.
+     * @param canvas       The canvas to draw upon.
+     * @param originalTop  The original top position of the rectangle. The rectangle may have some of its portion outside of the visible area.
      * @param originalLeft The original left position of the rectangle. The rectangle may have some of its portion outside of the visible area.
      */
     private void drawEventTitle(WeekViewEvent event, RectF rect, Canvas canvas, float originalTop, float originalLeft) {
@@ -765,8 +753,7 @@ public class WeekView extends View {
             int availableLineCount = (int) Math.floor(lineCount * availableHeight / textLayout.getHeight());
             float widthAvailable = (rect.right - originalLeft - mEventPadding * 2) * availableLineCount;
             textLayout = new StaticLayout(TextUtils.ellipsize(bob, mEventTextPaint, widthAvailable, TextUtils.TruncateAt.END), mEventTextPaint, (int) (rect.right - originalLeft - mEventPadding * 2), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
-        }
-        else if (lineHeight >= availableHeight) {
+        } else if (lineHeight >= availableHeight) {
             int width = (int) (rect.right - originalLeft - mEventPadding * 2);
             textLayout = new StaticLayout(TextUtils.ellipsize(bob, mEventTextPaint, width, TextUtils.TruncateAt.END), mEventTextPaint, width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 1.0f, false);
         }
@@ -778,47 +765,11 @@ public class WeekView extends View {
         canvas.restore();
     }
 
-
-    /**
-     * A class to hold reference to the events and their visual representation. An EventRect is
-     * actually the rectangle that is drawn on the calendar for a given event. There may be more
-     * than one rectangle for a single event (an event that expands more than one day). In that
-     * case two instances of the EventRect will be used for a single event. The given event will be
-     * stored in "originalEvent". But the event that corresponds to rectangle the rectangle
-     * instance will be stored in "event".
-     */
-    private class EventRect {
-        public WeekViewEvent event;
-        public WeekViewEvent originalEvent;
-        public RectF rectF;
-        public float left;
-        public float width;
-        public float top;
-        public float bottom;
-
-        /**
-         * Create a new instance of event rect. An EventRect is actually the rectangle that is drawn
-         * on the calendar for a given event. There may be more than one rectangle for a single
-         * event (an event that expands more than one day). In that case two instances of the
-         * EventRect will be used for a single event. The given event will be stored in
-         * "originalEvent". But the event that corresponds to rectangle the rectangle instance will
-         * be stored in "event".
-         * @param event Represents the event which this instance of rectangle represents.
-         * @param originalEvent The original event that was passed by the user.
-         * @param rectF The rectangle.
-         */
-        public EventRect(WeekViewEvent event, WeekViewEvent originalEvent, RectF rectF) {
-            this.event = event;
-            this.rectF = rectF;
-            this.originalEvent = originalEvent;
-        }
-    }
-
-
     /**
      * Gets more events of one/more month(s) if necessary. This method is called when the user is
      * scrolling the week view. The week view stores the events of three months: the visible month,
      * the previous month, the next month.
+     *
      * @param day The day where the user is currently is.
      */
     private void getMoreEvents(Calendar day) {
@@ -837,32 +788,32 @@ public class WeekView extends View {
             mFetchedPeriod = -1;
         }
 
-        if(mWeekViewLoader != null){
+        if (mWeekViewLoader != null) {
             int periodToFetch = (int) mWeekViewLoader.toWeekViewPeriodIndex(day);
             if (!isInEditMode() && (mFetchedPeriod < 0 || mFetchedPeriod != periodToFetch || mRefreshEvents)) {
                 List<WeekViewEvent> previousPeriodEvents = null;
                 List<WeekViewEvent> currentPeriodEvents = null;
                 List<WeekViewEvent> nextPeriodEvents = null;
 
-                if(mPreviousPeriodEvents != null && mCurrentPeriodEvents != null && mNextPeriodEvents != null){
-                    if(periodToFetch == mFetchedPeriod-1){
+                if (mPreviousPeriodEvents != null && mCurrentPeriodEvents != null && mNextPeriodEvents != null) {
+                    if (periodToFetch == mFetchedPeriod - 1) {
                         currentPeriodEvents = mPreviousPeriodEvents;
                         nextPeriodEvents = mCurrentPeriodEvents;
-                    }else if(periodToFetch == mFetchedPeriod){
+                    } else if (periodToFetch == mFetchedPeriod) {
                         previousPeriodEvents = mPreviousPeriodEvents;
                         currentPeriodEvents = mCurrentPeriodEvents;
                         nextPeriodEvents = mNextPeriodEvents;
-                    }else if(periodToFetch == mFetchedPeriod+1){
+                    } else if (periodToFetch == mFetchedPeriod + 1) {
                         previousPeriodEvents = mCurrentPeriodEvents;
                         currentPeriodEvents = mNextPeriodEvents;
                     }
                 }
-                if(currentPeriodEvents == null)
+                if (currentPeriodEvents == null)
                     currentPeriodEvents = (List<WeekViewEvent>) mWeekViewLoader.onLoad(periodToFetch);
-                if(previousPeriodEvents == null)
-                    previousPeriodEvents = (List<WeekViewEvent>) mWeekViewLoader.onLoad(periodToFetch-1);
-                if(nextPeriodEvents == null)
-                    nextPeriodEvents = (List<WeekViewEvent>) mWeekViewLoader.onLoad(periodToFetch+1);
+                if (previousPeriodEvents == null)
+                    previousPeriodEvents = (List<WeekViewEvent>) mWeekViewLoader.onLoad(periodToFetch - 1);
+                if (nextPeriodEvents == null)
+                    nextPeriodEvents = (List<WeekViewEvent>) mWeekViewLoader.onLoad(periodToFetch + 1);
 
 
                 //clear events
@@ -903,6 +854,7 @@ public class WeekView extends View {
 
     /**
      * Cache the event for smooth scrolling functionality.
+     *
      * @param event The event to cache.
      */
     private void cacheEvent(WeekViewEvent event) {
@@ -919,20 +871,20 @@ public class WeekView extends View {
             event2.setColor(event.getColor());
             mEventRects.add(new EventRect(event1, event, null));
             mEventRects.add(new EventRect(event2, event, null));
-        }
-        else
+        } else
             mEventRects.add(new EventRect(event, event, null));
     }
 
-    private void sortAndCacheEvents(List<WeekViewEvent> events){
+    private void sortAndCacheEvents(List<WeekViewEvent> events) {
         sortEvents(events);
-        for(WeekViewEvent event : events){
+        for (WeekViewEvent event : events) {
             cacheEvent(event);
         }
     }
 
     /**
      * Sorts the events in ascending order.
+     *
      * @param events The events to be sorted.
      */
     private void sortEvents(List<WeekViewEvent> events) {
@@ -955,6 +907,7 @@ public class WeekView extends View {
     /**
      * Calculates the left and right positions of each events. This comes handy specially if events
      * are overlapping.
+     *
      * @param eventRects The events along with their wrapper class.
      */
     private void computePositionOfEvents(List<EventRect> eventRects) {
@@ -987,6 +940,7 @@ public class WeekView extends View {
     /**
      * Expands all the events to maximum possible width. The events will try to occupy maximum
      * space available horizontally.
+     *
      * @param collisionGroup The group of events which overlap with each other.
      */
     private void expandEventsToMaxWidth(List<EventRect> collisionGroup) {
@@ -999,8 +953,7 @@ public class WeekView extends View {
                 if (column.size() == 0) {
                     column.add(eventRect);
                     isPlaced = true;
-                }
-                else if (!isEventsCollide(eventRect.event, column.get(column.size()-1).event)) {
+                } else if (!isEventsCollide(eventRect.event, column.get(column.size() - 1).event)) {
                     column.add(eventRect);
                     isPlaced = true;
                     break;
@@ -1017,14 +970,14 @@ public class WeekView extends View {
         // Calculate left and right position for all the events.
         // Get the maxRowCount by looking in all columns.
         int maxRowCount = 0;
-        for (List<EventRect> column : columns){
+        for (List<EventRect> column : columns) {
             maxRowCount = Math.max(maxRowCount, column.size());
         }
         for (int i = 0; i < maxRowCount; i++) {
             // Set the left and right values of the event.
             float j = 0;
             for (List<EventRect> column : columns) {
-                if (column.size() >= i+1) {
+                if (column.size() >= i + 1) {
                     EventRect eventRect = column.get(i);
                     eventRect.width = 1f / columns.size();
                     eventRect.left = j / columns.size();
@@ -1037,9 +990,9 @@ public class WeekView extends View {
         }
     }
 
-
     /**
      * Checks if two events overlap.
+     *
      * @param event1 The first event.
      * @param event2 The second event.
      * @return true if the events overlap.
@@ -1052,9 +1005,9 @@ public class WeekView extends View {
         return !((start1 >= end2) || (end1 <= start2));
     }
 
-
     /**
      * Checks if time1 occurs after (or at the same time) time2.
+     *
      * @param time1 The time to check.
      * @param time2 The time to check against.
      * @return true if time1 and time2 are equal or if time1 is after time2. Otherwise false.
@@ -1069,13 +1022,7 @@ public class WeekView extends View {
         mAreDimensionsInvalid = true;
     }
 
-    /////////////////////////////////////////////////////////////////
-    //
-    //      Functions related to setting and getting the properties.
-    //
-    /////////////////////////////////////////////////////////////////
-
-    public void setOnEventClickListener (EventClickListener listener) {
+    public void setOnEventClickListener(EventClickListener listener) {
         this.mEventClickListener = listener;
     }
 
@@ -1083,8 +1030,14 @@ public class WeekView extends View {
         return mEventClickListener;
     }
 
+    /////////////////////////////////////////////////////////////////
+    //
+    //      Functions related to setting and getting the properties.
+    //
+    /////////////////////////////////////////////////////////////////
+
     public MonthLoader.MonthChangeListener getMonthChangeListener() {
-        if(mWeekViewLoader instanceof MonthLoader)
+        if (mWeekViewLoader instanceof MonthLoader)
             return ((MonthLoader) mWeekViewLoader).getOnMonthChangeListener();
         return null;
     }
@@ -1093,11 +1046,11 @@ public class WeekView extends View {
         this.mWeekViewLoader = new MonthLoader(monthChangeListener);
     }
 
-    public WeekViewLoader getWeekViewLoader(){
+    public WeekViewLoader getWeekViewLoader() {
         return mWeekViewLoader;
     }
 
-    public void setWeekViewLoader(WeekViewLoader loader){
+    public void setWeekViewLoader(WeekViewLoader loader) {
         this.mWeekViewLoader = loader;
     }
 
@@ -1109,31 +1062,33 @@ public class WeekView extends View {
         this.mEventLongPressListener = eventLongPressListener;
     }
 
-    public void setEmptyViewClickListener(EmptyViewClickListener emptyViewClickListener){
-        this.mEmptyViewClickListener = emptyViewClickListener;
-    }
-
-    public EmptyViewClickListener getEmptyViewClickListener(){
+    public EmptyViewClickListener getEmptyViewClickListener() {
         return mEmptyViewClickListener;
     }
 
-    public void setEmptyViewLongPressListener(EmptyViewLongPressListener emptyViewLongPressListener){
-        this.mEmptyViewLongPressListener = emptyViewLongPressListener;
+    public void setEmptyViewClickListener(EmptyViewClickListener emptyViewClickListener) {
+        this.mEmptyViewClickListener = emptyViewClickListener;
     }
 
-    public EmptyViewLongPressListener getEmptyViewLongPressListener(){
+    public EmptyViewLongPressListener getEmptyViewLongPressListener() {
         return mEmptyViewLongPressListener;
     }
 
-    public void setScrollListener(ScrollListener scrolledListener){
+    public void setEmptyViewLongPressListener(EmptyViewLongPressListener emptyViewLongPressListener) {
+        this.mEmptyViewLongPressListener = emptyViewLongPressListener;
+    }
+
+    public ScrollListener getScrollListener() {
+        return mScrollListener;
+    }
+
+    public void setScrollListener(ScrollListener scrolledListener) {
         this.mScrollListener = scrolledListener;
     }
 
-    public ScrollListener getScrollListener(){
-        return mScrollListener;
-    }
     /**
      * Get the interpreter which provides the text to show in the header column and the header row.
+     *
      * @return The date, time interpreter.
      */
     public DateTimeInterpreter getDateTimeInterpreter() {
@@ -1171,18 +1126,19 @@ public class WeekView extends View {
 
     /**
      * Set the interpreter which provides the text to show in the header column and the header row.
+     *
      * @param dateTimeInterpreter The date, time interpreter.
      */
-    public void setDateTimeInterpreter(DateTimeInterpreter dateTimeInterpreter){
+    public void setDateTimeInterpreter(DateTimeInterpreter dateTimeInterpreter) {
         this.mDateTimeInterpreter = dateTimeInterpreter;
 
         // refresh time column width
         initTextTimeWidth();
     }
 
-
     /**
      * Get the number of visible days in a week.
+     *
      * @return The number of visible days in a week.
      */
     public int getNumberOfVisibleDays() {
@@ -1191,6 +1147,7 @@ public class WeekView extends View {
 
     /**
      * Set the number of visible days in a week.
+     *
      * @param numberOfVisibleDays The number of visible days in a week.
      */
     public void setNumberOfVisibleDays(int numberOfVisibleDays) {
@@ -1226,13 +1183,14 @@ public class WeekView extends View {
      * Set the first day of the week. First day of the week is used only when the week view is first
      * drawn. It does not of any effect after user starts scrolling horizontally.
      * <p>
-     *     <b>Note:</b> This method will only work if the week view is set to display more than 6 days at
-     *     once.
+     * <b>Note:</b> This method will only work if the week view is set to display more than 6 days at
+     * once.
      * </p>
+     *
      * @param firstDayOfWeek The supported values are {@link java.util.Calendar#SUNDAY},
-     * {@link java.util.Calendar#MONDAY}, {@link java.util.Calendar#TUESDAY},
-     * {@link java.util.Calendar#WEDNESDAY}, {@link java.util.Calendar#THURSDAY},
-     * {@link java.util.Calendar#FRIDAY}.
+     *                       {@link java.util.Calendar#MONDAY}, {@link java.util.Calendar#TUESDAY},
+     *                       {@link java.util.Calendar#WEDNESDAY}, {@link java.util.Calendar#THURSDAY},
+     *                       {@link java.util.Calendar#FRIDAY}.
      */
     public void setFirstDayOfWeek(int firstDayOfWeek) {
         mFirstDayOfWeek = firstDayOfWeek;
@@ -1291,8 +1249,8 @@ public class WeekView extends View {
         return mDayBackgroundColor;
     }
 
-    public void setMinEventDurationMillis(int minEventDuration) {
-        mMinEventDurationMillis = minEventDuration;
+    public void setDayBackgroundColor(int dayBackgroundColor) {
+        mDayBackgroundColor = dayBackgroundColor;
         invalidate();
     }
 
@@ -1300,8 +1258,8 @@ public class WeekView extends View {
         return mMinEventDurationMillis;
     }
 
-    public void setDayBackgroundColor(int dayBackgroundColor) {
-        mDayBackgroundColor = dayBackgroundColor;
+    public void setMinEventDurationMillis(int minEventDuration) {
+        mMinEventDurationMillis = minEventDuration;
         invalidate();
     }
 
@@ -1390,6 +1348,7 @@ public class WeekView extends View {
     /**
      * <b>Note:</b> Use {@link #setDateTimeInterpreter(DateTimeInterpreter)} and
      * {@link #getDateTimeInterpreter()} instead.
+     *
      * @return Either long or short day name is being used.
      */
     @Deprecated
@@ -1401,10 +1360,11 @@ public class WeekView extends View {
      * Set the length of the day name displayed in the header row. Example of short day names is
      * 'M' for 'Monday' and example of long day names is 'Mon' for 'Monday'.
      * <p>
-     *     <b>Note:</b> Use {@link #setDateTimeInterpreter(DateTimeInterpreter)} instead.
+     * <b>Note:</b> Use {@link #setDateTimeInterpreter(DateTimeInterpreter)} instead.
      * </p>
+     *
      * @param length Supported values are {@link nl.jhnbos.meetmeapp.WeekView#LENGTH_SHORT} and
-     * {@link nl.jhnbos.meetmeapp.WeekView#LENGTH_LONG}.
+     *               {@link nl.jhnbos.meetmeapp.WeekView#LENGTH_LONG}.
      */
     @Deprecated
     public void setDayNameLength(int length) {
@@ -1420,6 +1380,7 @@ public class WeekView extends View {
 
     /**
      * Set the gap between overlapping events.
+     *
      * @param overlappingEventGap The gap between overlapping events.
      */
     public void setOverlappingEventGap(int overlappingEventGap) {
@@ -1447,6 +1408,7 @@ public class WeekView extends View {
     /**
      * Set the top and bottom margin of the event. The event will release this margin from the top
      * and bottom edge. This margin is useful for differentiation consecutive events.
+     *
      * @param eventMarginVertical The top and bottom margin.
      */
     public void setEventMarginVertical(int eventMarginVertical) {
@@ -1456,6 +1418,7 @@ public class WeekView extends View {
 
     /**
      * Returns the first visible day in the week view.
+     *
      * @return The first visible day in the week view.
      */
     public Calendar getFirstVisibleDay() {
@@ -1464,6 +1427,7 @@ public class WeekView extends View {
 
     /**
      * Returns the last visible day in the week view.
+     *
      * @return The last visible day in the week view.
      */
     public Calendar getLastVisibleDay() {
@@ -1472,6 +1436,7 @@ public class WeekView extends View {
 
     /**
      * Get the scrolling speed factor in horizontal direction.
+     *
      * @return The speed factor in horizontal direction.
      */
     public float getXScrollingSpeed() {
@@ -1480,16 +1445,12 @@ public class WeekView extends View {
 
     /**
      * Sets the speed for horizontal scrolling.
+     *
      * @param xScrollingSpeed The new horizontal scrolling speed.
      */
     public void setXScrollingSpeed(float xScrollingSpeed) {
         this.mXScrollingSpeed = xScrollingSpeed;
     }
-    /////////////////////////////////////////////////////////////////
-    //
-    //      Functions related to scrolling.
-    //
-    /////////////////////////////////////////////////////////////////
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -1503,19 +1464,23 @@ public class WeekView extends View {
         return mGestureDetector.onTouchEvent(event);
     }
 
-    private void goToNearestOrigin(){
+    private void goToNearestOrigin() {
         float leftDays = Math.round(mCurrentOrigin.x / (mWidthPerDay + mColumnGap));
-        if(!mIsZooming){
-            if(mDistanceX > 0)
+        if (!mIsZooming) {
+            if (mDistanceX > 0)
                 leftDays--;
             else
                 leftDays++;
         }
-        int nearestOrigin = (int) (mCurrentOrigin.x - leftDays * (mWidthPerDay+mColumnGap));
-        mStickyScroller.startScroll((int) mCurrentOrigin.x, 0, - nearestOrigin, 0);
+        int nearestOrigin = (int) (mCurrentOrigin.x - leftDays * (mWidthPerDay + mColumnGap));
+        mStickyScroller.startScroll((int) mCurrentOrigin.x, 0, -nearestOrigin, 0);
         ViewCompat.postInvalidateOnAnimation(WeekView.this);
     }
-
+    /////////////////////////////////////////////////////////////////
+    //
+    //      Functions related to scrolling.
+    //
+    /////////////////////////////////////////////////////////////////
 
     @Override
     public void computeScroll() {
@@ -1524,16 +1489,16 @@ public class WeekView extends View {
             if (Math.abs(mScroller.getFinalX() - mScroller.getCurrX()) < mWidthPerDay + mColumnGap && Math.abs(mScroller.getFinalX() - mScroller.getStartX()) != 0) {
                 mScroller.forceFinished(true);
                 float leftDays = Math.round(mCurrentOrigin.x / (mWidthPerDay + mColumnGap));
-                if(mScroller.getFinalX() < mScroller.getCurrX())
+                if (mScroller.getFinalX() < mScroller.getCurrX())
                     leftDays--;
                 else
                     leftDays++;
-                int nearestOrigin = (int) (mCurrentOrigin.x - leftDays * (mWidthPerDay+mColumnGap));
-                mStickyScroller.startScroll((int) mCurrentOrigin.x, 0, - nearestOrigin, 0);
+                int nearestOrigin = (int) (mCurrentOrigin.x - leftDays * (mWidthPerDay + mColumnGap));
+                mStickyScroller.startScroll((int) mCurrentOrigin.x, 0, -nearestOrigin, 0);
                 ViewCompat.postInvalidateOnAnimation(WeekView.this);
-            }
-            else {
-                if (mCurrentFlingDirection == Direction.VERTICAL) mCurrentOrigin.y = mScroller.getCurrY();
+            } else {
+                if (mCurrentFlingDirection == Direction.VERTICAL)
+                    mCurrentOrigin.y = mScroller.getCurrY();
                 else mCurrentOrigin.x = mScroller.getCurrX();
                 ViewCompat.postInvalidateOnAnimation(this);
             }
@@ -1543,13 +1508,6 @@ public class WeekView extends View {
             ViewCompat.postInvalidateOnAnimation(this);
         }
     }
-
-
-    /////////////////////////////////////////////////////////////////
-    //
-    //      Public methods.
-    //
-    /////////////////////////////////////////////////////////////////
 
     /**
      * Show today on the week view.
@@ -1561,6 +1519,7 @@ public class WeekView extends View {
 
     /**
      * Show a specific day on the week view.
+     *
      * @param date The date to show.
      */
     public void goToDate(Calendar date) {
@@ -1570,7 +1529,7 @@ public class WeekView extends View {
         date.set(Calendar.SECOND, 0);
         date.set(Calendar.MILLISECOND, 0);
 
-        if(mAreDimensionsInvalid) {
+        if (mAreDimensionsInvalid) {
             mScrollToDay = date;
             return;
         }
@@ -1586,24 +1545,32 @@ public class WeekView extends View {
         long day = 1000L * 60L * 60L * 24L;
         long dateInMillis = date.getTimeInMillis() + date.getTimeZone().getOffset(date.getTimeInMillis());
         long todayInMillis = today.getTimeInMillis() + today.getTimeZone().getOffset(today.getTimeInMillis());
-        long dateDifference = (dateInMillis/day) - (todayInMillis/day);
-        mCurrentOrigin.x = - dateDifference * (mWidthPerDay + mColumnGap);
+        long dateDifference = (dateInMillis / day) - (todayInMillis / day);
+        mCurrentOrigin.x = -dateDifference * (mWidthPerDay + mColumnGap);
         invalidate();
     }
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    //      Public methods.
+    //
+    /////////////////////////////////////////////////////////////////
 
     /**
      * Refreshes the view and loads the events again.
      */
-    public void notifyDatasetChanged(){
+    public void notifyDatasetChanged() {
         mRefreshEvents = true;
         invalidate();
     }
 
     /**
      * Vertically scroll to a specific hour in the week view.
+     *
      * @param hour The hour to scroll to in 24-hour format. Supported values are 0-24.
      */
-    public void goToHour(double hour){
+    public void goToHour(double hour) {
         if (mAreDimensionsInvalid) {
             mScrollToHour = hour;
             return;
@@ -1616,7 +1583,7 @@ public class WeekView extends View {
             verticalOffset = (int) (mHourHeight * hour);
 
         if (verticalOffset > mHourHeight * 24 - getHeight() + mHeaderTextHeight + mHeaderRowPadding * 2 + mHeaderMarginBottom)
-            verticalOffset = (int)(mHourHeight * 24 - getHeight() + mHeaderTextHeight + mHeaderRowPadding * 2 + mHeaderMarginBottom);
+            verticalOffset = (int) (mHourHeight * 24 - getHeight() + mHeaderTextHeight + mHeaderRowPadding * 2 + mHeaderMarginBottom);
 
         mCurrentOrigin.y = -verticalOffset;
         invalidate();
@@ -1624,12 +1591,38 @@ public class WeekView extends View {
 
     /**
      * Get the first hour that is visible on the screen.
+     *
      * @return The first hour that is visible.
      */
-    public double getFirstVisibleHour(){
+    public double getFirstVisibleHour() {
         return -mCurrentOrigin.y / mHourHeight;
     }
 
+    /**
+     * Checks if an integer array contains a particular value.
+     *
+     * @param list  The haystack.
+     * @param value The needle.
+     * @return True if the array contains the value. Otherwise returns false.
+     */
+    private boolean containsValue(int[] list, int value) {
+        for (int i = 0; i < list.length; i++) {
+            if (list[i] == value)
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if two times are on the same day.
+     *
+     * @param dayOne The first day.
+     * @param dayTwo The second day.
+     * @return Whether the times are on the same day.
+     */
+    private boolean isSameDay(Calendar dayOne, Calendar dayTwo) {
+        return dayOne.get(Calendar.YEAR) == dayTwo.get(Calendar.YEAR) && dayOne.get(Calendar.DAY_OF_YEAR) == dayTwo.get(Calendar.DAY_OF_YEAR);
+    }
 
 
     /////////////////////////////////////////////////////////////////
@@ -1638,10 +1631,29 @@ public class WeekView extends View {
     //
     /////////////////////////////////////////////////////////////////
 
+    /**
+     * Returns a calendar instance at the start of this day
+     *
+     * @return the calendar instance
+     */
+    private Calendar today() {
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+        today.set(Calendar.MILLISECOND, 0);
+        return today;
+    }
+
+    private enum Direction {
+        NONE, HORIZONTAL, VERTICAL
+    }
+
     public interface EventClickListener {
         /**
          * Triggered when clicked on one existing event
-         * @param event: event clicked.
+         *
+         * @param event:     event clicked.
          * @param eventRect: view containing the clicked event.
          */
         public void onEventClick(WeekViewEvent event, RectF eventRect);
@@ -1652,7 +1664,8 @@ public class WeekView extends View {
          * Very important interface, it's the base to load events in the calendar.
          * This method is called three times: once to load the previous month, once to load the next month and once to load the current month.<br/>
          * <strong>That's why you can have three times the same event at the same place if you mess up with the configuration</strong>
-         * @param newYear: year of the events required by the view.
+         *
+         * @param newYear:  year of the events required by the view.
          * @param newMonth: month of the events required by the view <br/><strong>1 based (not like JAVA API) --> January = 1 and December = 12</strong>.
          * @return a list of the events happening <strong>during the specified month</strong>.
          */
@@ -1662,7 +1675,8 @@ public class WeekView extends View {
     public interface EventLongPressListener {
         /**
          * Similar to {@link nl.jhnbos.meetmeapp.WeekView.EventClickListener} but with a long press.
-         * @param event: event clicked.
+         *
+         * @param event:     event clicked.
          * @param eventRect: view containing the clicked event.
          */
         public void onEventLongPress(WeekViewEvent event, RectF eventRect);
@@ -1671,28 +1685,10 @@ public class WeekView extends View {
     public interface EmptyViewClickListener {
         /**
          * Triggered when the users clicks on a empty space of the calendar.
+         *
          * @param time: {@link Calendar} object set with the date and time of the clicked position on the view.
          */
         public void onEmptyViewClicked(Calendar time);
-    }
-
-    public interface EmptyViewLongPressListener {
-        /**
-         * Similar to {@link nl.jhnbos.meetmeapp.WeekView.EmptyViewClickListener} but with long press.
-         * @param time: {@link Calendar} object set with the date and time of the long pressed position on the view.
-         */
-        public void onEmptyViewLongPress(Calendar time);
-    }
-
-    public interface ScrollListener {
-        /**
-         * Called when the first visible day has changed.
-         *
-         * (this will also be called during the first draw of the weekview)
-         * @param newFirstVisibleDay The new first visible day
-         * @param oldFirstVisibleDay The old first visible day (is null on the first call).
-         */
-        public void onFirstVisibleDayChanged(Calendar newFirstVisibleDay, Calendar oldFirstVisibleDay);
     }
 
 
@@ -1702,41 +1698,61 @@ public class WeekView extends View {
     //
     /////////////////////////////////////////////////////////////////
 
+    public interface EmptyViewLongPressListener {
+        /**
+         * Similar to {@link nl.jhnbos.meetmeapp.WeekView.EmptyViewClickListener} but with long press.
+         *
+         * @param time: {@link Calendar} object set with the date and time of the long pressed position on the view.
+         */
+        public void onEmptyViewLongPress(Calendar time);
+    }
+
+    public interface ScrollListener {
+        /**
+         * Called when the first visible day has changed.
+         * <p>
+         * (this will also be called during the first draw of the weekview)
+         *
+         * @param newFirstVisibleDay The new first visible day
+         * @param oldFirstVisibleDay The old first visible day (is null on the first call).
+         */
+        public void onFirstVisibleDayChanged(Calendar newFirstVisibleDay, Calendar oldFirstVisibleDay);
+    }
+
     /**
-     * Checks if an integer array contains a particular value.
-     * @param list The haystack.
-     * @param value The needle.
-     * @return True if the array contains the value. Otherwise returns false.
+     * A class to hold reference to the events and their visual representation. An EventRect is
+     * actually the rectangle that is drawn on the calendar for a given event. There may be more
+     * than one rectangle for a single event (an event that expands more than one day). In that
+     * case two instances of the EventRect will be used for a single event. The given event will be
+     * stored in "originalEvent". But the event that corresponds to rectangle the rectangle
+     * instance will be stored in "event".
      */
-    private boolean containsValue(int[] list, int value) {
-        for (int i = 0; i < list.length; i++){
-            if (list[i] == value)
-                return true;
+    private class EventRect {
+        public WeekViewEvent event;
+        public WeekViewEvent originalEvent;
+        public RectF rectF;
+        public float left;
+        public float width;
+        public float top;
+        public float bottom;
+
+        /**
+         * Create a new instance of event rect. An EventRect is actually the rectangle that is drawn
+         * on the calendar for a given event. There may be more than one rectangle for a single
+         * event (an event that expands more than one day). In that case two instances of the
+         * EventRect will be used for a single event. The given event will be stored in
+         * "originalEvent". But the event that corresponds to rectangle the rectangle instance will
+         * be stored in "event".
+         *
+         * @param event         Represents the event which this instance of rectangle represents.
+         * @param originalEvent The original event that was passed by the user.
+         * @param rectF         The rectangle.
+         */
+        public EventRect(WeekViewEvent event, WeekViewEvent originalEvent, RectF rectF) {
+            this.event = event;
+            this.rectF = rectF;
+            this.originalEvent = originalEvent;
         }
-        return false;
-    }
-
-    /**
-     * Checks if two times are on the same day.
-     * @param dayOne The first day.
-     * @param dayTwo The second day.
-     * @return Whether the times are on the same day.
-     */
-    private boolean isSameDay(Calendar dayOne, Calendar dayTwo) {
-        return dayOne.get(Calendar.YEAR) == dayTwo.get(Calendar.YEAR) && dayOne.get(Calendar.DAY_OF_YEAR) == dayTwo.get(Calendar.DAY_OF_YEAR);
-    }
-
-    /**
-     * Returns a calendar instance at the start of this day
-     * @return the calendar instance
-     */
-    private Calendar today(){
-        Calendar today = Calendar.getInstance();
-        today.set(Calendar.HOUR_OF_DAY, 0);
-        today.set(Calendar.MINUTE, 0);
-        today.set(Calendar.SECOND, 0);
-        today.set(Calendar.MILLISECOND, 0);
-        return today;
     }
 
 }
