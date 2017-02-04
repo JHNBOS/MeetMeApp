@@ -748,6 +748,7 @@ public class WeekView extends View {
             bob.append(' ');
         }
         if (event.getLocation() != null) {
+            bob.append('\n');
             bob.append(event.getLocation());
         }
 

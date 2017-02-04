@@ -5,12 +5,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -570,7 +572,11 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     private void showEventInfo(WeekViewEvent event){
         AlertDialog.Builder builder = new AlertDialog.Builder(Week.this);
         builder.setTitle("Event Info");
+
         final TextView input = new TextView (this);
+        input.setTypeface(Typeface.DEFAULT_BOLD);
+        input.setTextSize(16);
+        
         builder.setView(input);
 
         String sdate = String.valueOf(event.getStartTime().get(Calendar.DAY_OF_MONTH));
@@ -588,7 +594,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         String start = sdate + "-" + smonth + "-" + syear + " " + shour + ":" + sminute;
         String end = edate + "-" + emonth + "-" + eyear + " " + ehour + ":" + eminute;
 
-        input.setText(event.getName() + "\n" + event.getLocation() + "\n" + start + "\n" + end);
+        input.setText("Title: " + event.getName() + "\n" + "Location: "
+                + event.getLocation() + "\n" + "Start: " + start + "\n" + "End: " + end);
 
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

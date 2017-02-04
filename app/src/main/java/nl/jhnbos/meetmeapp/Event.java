@@ -108,7 +108,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener, Da
             String ev_creator = getIntent().getExtras().getString("EmailC");
             String ev_group = getIntent().getExtras().getString("GroupC");
             String ev_title = titleField.getText().toString();
-            
+
             Log.d("Title", ev_title);
             Log.d("Location: ", ev_loc);
             Log.d("Start: ", ev_start.toString());
