@@ -1,7 +1,9 @@
 package nl.jhnbos.meetmeapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -43,8 +45,22 @@ public class Login extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.loginButton);
         registerButton = (Button) findViewById(R.id.registerButton);
 
-        email = emailEditText.getText().toString().trim();
-        password = passwordEditText.getText().toString().trim();
+        SharedPreferences sharedPref = Login.this.getPreferences(Context.MODE_PRIVATE);
+        String emailValue = getResources().getString(R.string.username);
+        String passwordValue = getResources().getString(R.string.password);
+
+        if(emailValue != "" || !emailValue.isEmpty()){
+            email = emailValue;
+        } else{
+            email = emailEditText.getText().toString().trim();
+        }
+
+        if(passwordValue != "" || !passwordValue.isEmpty()){
+            password = passwordValue;
+        } else{
+            password = passwordEditText.getText().toString().trim();
+        }
+
 
         final String URL;
         String url = null;
@@ -112,6 +128,13 @@ public class Login extends AppCompatActivity {
                 if (!s.equals(email + password)) {
                     Toast.makeText(Login.this, s, Toast.LENGTH_LONG).show();
                 } else {
+
+                    SharedPreferences sharedPref = Login.this.getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString(getString(R.string.username), email);
+                    editor.putString(getString(R.string.password), password);
+                    editor.commit();
+
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     intent.putExtra("Email", email);
 

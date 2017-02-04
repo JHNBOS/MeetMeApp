@@ -54,5 +54,7 @@
         <attr name="verticalFlingEnabled" format="boolean" />
         <attr name="allDayEventHeight" format="dimension" />
         <attr name="scrollDuration" format="integer" />
+        <attr name="username" format="string" />
+        <attr name="password" format="string" />
     </declare-styleable>
 </resources>
