@@ -439,15 +439,11 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                 Log.d("endTime", endTime);
 
                 try {
-                        /*
-                        url = DELETE_EVENT_URL
-                                + "?title='" + URLEncoder.encode(event.getName(), "UTF-8") + "'"
-                                + "'&start='" + URLEncoder.encode(startTime, "UTF-8") + "'"
-                                + "'&ends='" + URLEncoder.encode(endTime, "UTF-8") + "'";
-                        */
 
                     url = DELETE_EVENT_URL
                             + "?title='" + URLEncoder.encode(event.getName(), "UTF-8") + "'";
+                    //url = DELETE_EVENT_URL
+                    //       + "?title='" + URLEncoder.encode(event.getName(), "UTF-8") + "'";
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -531,6 +527,37 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         String eyear = String.valueOf(event.getEndTime().get(Calendar.YEAR));
         String ehour = String.valueOf(event.getEndTime().get(Calendar.HOUR_OF_DAY));
         String eminute = String.valueOf(event.getEndTime().get(Calendar.MINUTE));
+
+        if (sdate.length() < 2) {
+            sdate = "0" + sdate;
+        }
+
+        if (edate.length() < 2) {
+            edate = "0" + edate;
+        }
+
+        if (smonth.length() < 2) {
+            smonth = "0" + smonth;
+        }
+
+        if (emonth.length() < 2) {
+            emonth = "0" + emonth;
+        }
+
+        if (shour.length() < 2) {
+            shour = "0" + shour;
+        }
+
+        if (ehour.length() < 2) {
+            ehour = "0" + ehour;
+        }
+        if (sminute.length() < 2) {
+            sminute = "0" + sminute;
+        }
+
+        if (eminute.length() < 2) {
+            eminute = "0" + eminute;
+        }
 
         String start = sdate + "-" + smonth + "-" + syear + " " + shour + ":" + sminute;
         String end = edate + "-" + emonth + "-" + eyear + " " + ehour + ":" + eminute;

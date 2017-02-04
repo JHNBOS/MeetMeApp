@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.net.URLEncoder;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class Event extends AppCompatActivity implements View.OnClickListener {
 
@@ -174,23 +175,28 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
         //IF PRESSED ON CREATE EVENT BUTTON
         if (v == createEventButton) {
             //Start date and time
-            String startDay = String.valueOf(startdatepickerdialog.getDayOfMonth());
-            String startMonth = String.valueOf(startdatepickerdialog.getMonth()+1);
-            String startYear = String.valueOf(startdatepickerdialog.getYear());
+            int startDay = startdatepickerdialog.getDayOfMonth();
+            int startMonth = (startdatepickerdialog.getMonth());
+            int startYear = startdatepickerdialog.getYear();
 
-            String startHour = String.valueOf(starttimepickerdialog.getHour());
-            String startMinute = String.valueOf(starttimepickerdialog.getMinute());
+            int startHour = starttimepickerdialog.getHour();
+            int startMinute = starttimepickerdialog.getMinute();
 
             //End date and time
-            String endDay = String.valueOf(enddatepickerdialog.getDayOfMonth());
-            String endMonth = String.valueOf(enddatepickerdialog.getMonth()+1);
-            String endYear = String.valueOf(enddatepickerdialog.getYear());
+            int endDay = enddatepickerdialog.getDayOfMonth();
+            int endMonth = (enddatepickerdialog.getMonth());
+            int endYear = enddatepickerdialog.getYear();
 
-            String endHour = String.valueOf(endtimepickerdialog.getHour());
-            String endMinute = String.valueOf(endtimepickerdialog.getMinute());
+            int endHour = endtimepickerdialog.getHour();
+            int endMinute = endtimepickerdialog.getMinute();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             startDate = startYear + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute;
             endDate = endYear + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMinute;
+
+            sdf.format(startDate);
+            sdf.format(endDate);
 
             addEvent();
 
