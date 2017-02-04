@@ -743,14 +743,16 @@ public class WeekView extends View {
         SpannableStringBuilder bob = new SpannableStringBuilder();
         if (event.getName() != null) {
             //bob.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, event.getName().split("\\:")[0].length(), 0);
-            bob.append(event.getName());
+            bob.append(event.getName() + "\n");
             bob.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, event.getName().split("\\:")[0].length(), 0);
             bob.append(' ');
         }
+
+        /*
         if (event.getLocation() != null) {
-            bob.append('\n');
             bob.append(event.getLocation());
         }
+        */
 
         // Get text dimensions
         StaticLayout textLayout = new StaticLayout(bob, mEventTextPaint, (int) (rect.right - originalLeft - mEventPadding * 2), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);

@@ -573,11 +573,12 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         AlertDialog.Builder builder = new AlertDialog.Builder(Week.this);
         builder.setTitle("Event Info");
 
+        float dpi = this.getResources().getDisplayMetrics().density;
+
         final TextView input = new TextView (this);
-        input.setTypeface(Typeface.DEFAULT_BOLD);
         input.setTextSize(16);
-        
-        builder.setView(input);
+
+        builder.setView(input, (int)(25*dpi), (int)(8*dpi), (int)(14*dpi), (int)(8*dpi));
 
         String sdate = String.valueOf(event.getStartTime().get(Calendar.DAY_OF_MONTH));
         String smonth = String.valueOf(event.getStartTime().get(Calendar.MONTH));
