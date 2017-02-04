@@ -206,14 +206,16 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
             startDate = startYear + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute;
             endDate = endYear + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMinute;
 
-            try{
-                if(ev_title == ""){
+            try {
+                if (ev_title == "") {
                     Toast.makeText(Event.this, "Please fill in all fields!", Toast.LENGTH_LONG).show();
                 } else {
                     addEvent();
                 }
-            } catch (Exception e){e.printStackTrace();}
-            
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
