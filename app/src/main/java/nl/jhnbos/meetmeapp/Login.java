@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,21 +46,32 @@ public class Login extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.loginButton);
         registerButton = (Button) findViewById(R.id.registerButton);
 
-        SharedPreferences sharedPref = Login.this.getPreferences(Context.MODE_PRIVATE);
-        String emailValue = getResources().getString(R.string.username);
-        String passwordValue = getResources().getString(R.string.password);
+        SharedPreferences sharedPref = Login.this.getSharedPreferences("LoginPrefs", 0);
 
-        if(emailValue != "" || !emailValue.isEmpty()){
-            email = emailValue;
+        if(sharedPref != null){
+            String emailValue = sharedPref.getString("username", "");
+            String passwordValue = sharedPref.getString("password", "");
+
+            if(emailValue != "" || !emailValue.isEmpty()){
+                email = emailValue;
+                emailEditText.setText(emailValue);
+            } else{
+                email = emailEditText.getText().toString().trim();
+            }
+
+            if(passwordValue != "" || !passwordValue.isEmpty()){
+                password = passwordValue;
+                passwordEditText.setText(passwordValue);
+            } else{
+                password = passwordEditText.getText().toString().trim();
+            }
         } else{
             email = emailEditText.getText().toString().trim();
-        }
-
-        if(passwordValue != "" || !passwordValue.isEmpty()){
-            password = passwordValue;
-        } else{
             password = passwordEditText.getText().toString().trim();
         }
+
+        Log.d("EMAIL", email);
+        Log.d("PASSWORD", password);
 
 
         final String URL;
@@ -129,10 +141,10 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this, s, Toast.LENGTH_LONG).show();
                 } else {
 
-                    SharedPreferences sharedPref = Login.this.getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences sharedPref = Login.this.getSharedPreferences("LoginPrefs", 0);
                     SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString(getString(R.string.username), email);
-                    editor.putString(getString(R.string.password), password);
+                    editor.putString("username", email);
+                    editor.putString("password", password);
                     editor.commit();
 
                     Intent intent = new Intent(Login.this, MainActivity.class);
