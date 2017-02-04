@@ -100,13 +100,6 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
     private void addEvent() {
         try {
 
-            ev_loc = locField.getText().toString();
-            ev_start = startDate.toString();
-            ev_end = endDate.toString();
-            ev_creator = getIntent().getExtras().getString("EmailC");
-            ev_group = getIntent().getExtras().getString("GroupC");
-            ev_title = titleField.getText().toString();
-
             String response = http.sendPost(
                     ADDEVENT_URL + "?title=" + URLEncoder.encode(ev_title, "UTF-8")
                             + "&loc=" + URLEncoder.encode(ev_loc, "UTF-8")
@@ -201,19 +194,22 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
             int endHour = endtimepickerdialog.getHour();
             int endMinute = endtimepickerdialog.getMinute();
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
             startDate = startYear + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute;
             endDate = endYear + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMinute;
 
-            try {
-                if (ev_title == "") {
-                    Toast.makeText(Event.this, "Please fill in all fields!", Toast.LENGTH_LONG).show();
-                } else {
-                    addEvent();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            //Set event info
+            ev_loc = locField.getText().toString();
+            ev_start = startDate.toString();
+            ev_end = endDate.toString();
+            ev_creator = getIntent().getExtras().getString("EmailC");
+            ev_group = getIntent().getExtras().getString("GroupC");
+            ev_title = titleField.getText().toString();
+
+
+            if (ev_title == "" || ev_title.isEmpty()) {
+                Toast.makeText(Event.this, "Please fill in all fields!", Toast.LENGTH_LONG).show();
+            } else {
+                addEvent();
             }
 
         }
