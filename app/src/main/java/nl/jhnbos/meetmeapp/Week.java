@@ -296,6 +296,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             endCal = (Calendar) startCal.clone();
 
             String Title = eventList.get(i).getEvent_title();
+            String User = user.getFirstName() + " " + user.getLastName();
             String Location = eventList.get(i).getLocation();
             Timestamp Start = eventList.get(i).getStart();
             Timestamp End = eventList.get(i).getEnd();
@@ -311,7 +312,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
             int Colour = Color.parseColor(eventList.get(i).getColor());
 
-            WeekViewEvent event = new WeekViewEvent(idset++, Title, startCal, endCal);
+            WeekViewEvent event = new WeekViewEvent(idset++, Title, User, startCal, endCal);
             event.setLocation(Location);
             event.setColor(Colour);
 
@@ -562,7 +563,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         String start = sdate + "-" + smonth + "-" + syear + " " + shour + ":" + sminute;
         String end = edate + "-" + emonth + "-" + eyear + " " + ehour + ":" + eminute;
 
-        input.setText("Title: " + event.getName() + "\n" + "Location: "
+        input.setText("User: " + event.getUser() + "\n" + "Title: " + event.getName() + "\n" + "Location: "
                 + event.getLocation() + "\n" + "Start: " + start + "\n" + "End: " + end);
 
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
