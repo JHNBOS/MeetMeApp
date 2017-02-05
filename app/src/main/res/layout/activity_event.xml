@@ -8,7 +8,6 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    android:scrollY="10000dp"
     tools:context="nl.jhnbos.meetmeapp.Event">
 
     <RelativeLayout
