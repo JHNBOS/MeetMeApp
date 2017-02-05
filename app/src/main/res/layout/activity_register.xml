@@ -22,53 +22,53 @@
             android:id="@+id/fnameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/fnameTextView"
-            android:layout_alignStart="@+id/fnameTextView"
             android:layout_below="@+id/fnameTextView"
             android:capitalize="words"
             android:ems="10"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:inputType="textCapWords|textPersonName" />
+            android:inputType="textCapWords|textPersonName"
+            android:layout_alignLeft="@+id/unameEditText"
+            android:layout_alignStart="@+id/unameEditText"
+            android:layout_alignRight="@+id/unameEditText"
+            android:layout_alignEnd="@+id/unameEditText" />
 
         <EditText
             android:id="@+id/unameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/usernameTextView"
-            android:layout_alignStart="@+id/usernameTextView"
             android:layout_below="@+id/usernameTextView"
             android:capitalize="words"
             android:ems="10"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
             android:inputType="textCapWords|textPersonName"
-            android:selectAllOnFocus="false" />
+            android:selectAllOnFocus="false"
+            android:layout_alignLeft="@+id/colorButton"
+            android:layout_alignStart="@+id/colorButton"
+            android:layout_alignRight="@+id/colorEditText"
+            android:layout_alignEnd="@+id/colorEditText" />
 
         <EditText
             android:id="@+id/lnameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/lnameTextView"
-            android:layout_alignStart="@+id/lnameTextView"
             android:layout_below="@+id/lnameTextView"
             android:capitalize="words"
             android:ems="10"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:inputType="textCapWords|textPersonName" />
+            android:inputType="textCapWords|textPersonName"
+            android:layout_alignLeft="@+id/fnameEditText"
+            android:layout_alignStart="@+id/fnameEditText"
+            android:layout_alignRight="@+id/fnameEditText"
+            android:layout_alignEnd="@+id/fnameEditText" />
 
         <EditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/emailTextView"
             android:ems="10"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:layout_alignLeft="@+id/lnameEditText"
+            android:layout_alignStart="@+id/lnameEditText"
+            android:layout_alignRight="@+id/lnameEditText"
+            android:layout_alignEnd="@+id/lnameEditText" />
 
         <TextView
             android:id="@+id/lnameTextView"
@@ -130,17 +130,17 @@
             android:id="@+id/passEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/passTextView"
             android:ems="10"
             android:fontFamily="sans-serif"
             android:inputType="textPassword"
             android:singleLine="false"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
             android:textAlignment="viewStart"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_alignLeft="@+id/emailEditText"
+            android:layout_alignStart="@+id/emailEditText"
+            android:layout_alignRight="@+id/emailEditText"
+            android:layout_alignEnd="@+id/emailEditText" />
 
         <TextView
             android:id="@+id/colorTextView"
@@ -195,8 +195,6 @@
             android:singleLine="true"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
             android:textStyle="normal|bold"
             android:layout_alignTop="@+id/colorButton"
             android:layout_alignParentRight="true"
