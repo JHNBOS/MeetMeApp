@@ -296,7 +296,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             endCal = (Calendar) startCal.clone();
 
             String Title = eventList.get(i).getEvent_title();
-            String User = user.getFirstName() + " " + user.getLastName();
+            String User = eventList.get(i).creator;
             String Location = eventList.get(i).getLocation();
             Timestamp Start = eventList.get(i).getStart();
             Timestamp End = eventList.get(i).getEnd();
@@ -396,13 +396,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                 e.setStart(new Timestamp(start.getTime()));
                 e.setEnd(new Timestamp(end.getTime()));
                 e.setColor("#" + jo.getString("color"));
-
-
-                Log.d("Title", e.getEvent_title());
-                Log.d("Location", e.getLocation());
-                Log.d("Start", e.getStart().toString());
-                Log.d("End", e.getEnd().toString());
-                Log.d("Color", e.getColor().toString());
+                e.setCreator(jo.getString("creator"));
 
                 eventList.add(e);
 
@@ -435,9 +429,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
                 String startTime = start.substring(0, start.length() - 2);
                 String endTime = end.substring(0, end.length() - 2);
-
-                Log.d("startTime", startTime);
-                Log.d("endTime", endTime);
 
                 try {
 

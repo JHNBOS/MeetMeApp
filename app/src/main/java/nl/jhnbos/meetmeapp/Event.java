@@ -167,6 +167,22 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
         this.color = color;
     }
 
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
     //END OF GETTERS AND SETTERS
     /*-------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
@@ -179,7 +195,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
         if (v == createEventButton) {
             //Start date and time
             int startDay = startdatepickerdialog.getDayOfMonth();
-            int startMonth = (startdatepickerdialog.getMonth());
+            int startMonth = (startdatepickerdialog.getMonth()+1);
             int startYear = startdatepickerdialog.getYear();
 
             int startHour = starttimepickerdialog.getHour();
@@ -187,7 +203,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
 
             //End date and time
             int endDay = enddatepickerdialog.getDayOfMonth();
-            int endMonth = (enddatepickerdialog.getMonth());
+            int endMonth = (enddatepickerdialog.getMonth()+1);
             int endYear = enddatepickerdialog.getYear();
 
             int endHour = endtimepickerdialog.getHour();
