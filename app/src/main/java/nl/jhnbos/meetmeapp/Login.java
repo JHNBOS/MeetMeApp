@@ -1,7 +1,6 @@
 package nl.jhnbos.meetmeapp;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -46,34 +45,9 @@ public class Login extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.loginButton);
         registerButton = (Button) findViewById(R.id.registerButton);
 
-        SharedPreferences sharedPref = Login.this.getSharedPreferences("LoginPrefs", 0);
+        checkCredentials();
 
-        if(sharedPref != null){
-            String emailValue = sharedPref.getString("username", "");
-            String passwordValue = sharedPref.getString("password", "");
-
-            if(emailValue != "" || !emailValue.isEmpty()){
-                email = emailValue;
-                emailEditText.setText(emailValue);
-            } else{
-                email = emailEditText.getText().toString().trim();
-            }
-
-            if(passwordValue != "" || !passwordValue.isEmpty()){
-                password = passwordValue;
-                passwordEditText.setText(passwordValue);
-            } else{
-                password = passwordEditText.getText().toString().trim();
-            }
-        } else{
-            email = emailEditText.getText().toString().trim();
-            password = passwordEditText.getText().toString().trim();
-        }
-
-        Log.d("EMAIL", email);
-        Log.d("PASSWORD", password);
-
-
+        //API URL
         final String URL;
         String url = null;
 
@@ -104,6 +78,54 @@ public class Login extends AppCompatActivity {
 
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
+
+    //Save username and password
+    private void saveCredentials() {
+        SharedPreferences sharedPref = Login.this.getSharedPreferences("LoginPrefs", 0);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("username", email);
+        editor.putString("password", password);
+        editor.commit();
+
+    }
+
+    //Check username and password
+    private void checkCredentials() {
+        SharedPreferences sharedPref = Login.this.getSharedPreferences("LoginPrefs", 0);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        if (sharedPref != null) {
+            String emailValue = sharedPref.getString("username", "");
+            String passwordValue = sharedPref.getString("password", "");
+
+            if (emailValue != "" || !emailValue.isEmpty()) {
+                email = emailValue;
+                emailEditText.setText(emailValue);
+            } else {
+                email = emailEditText.getText().toString().trim();
+            }
+
+            if (passwordValue != "" || !passwordValue.isEmpty()) {
+                password = passwordValue;
+                passwordEditText.setText(passwordValue);
+            } else {
+                password = passwordEditText.getText().toString().trim();
+            }
+
+            if (!emailValue.equals(emailEditText.getText().toString().trim())
+                    && !passwordValue.equals(passwordEditText.getText().toString().trim())) {
+                editor.remove("username");
+                editor.remove("password");
+                editor.commit();
+            }
+        } else {
+            email = emailEditText.getText().toString().trim();
+            password = passwordEditText.getText().toString().trim();
+        }
+
+        Log.d("EMAIL", email);
+        Log.d("PASSWORD", password);
+    }
 
     private void attemptLogin(final String url) {
         final String email = emailEditText.getText().toString().trim();
@@ -140,12 +162,7 @@ public class Login extends AppCompatActivity {
                 if (!s.equals(email + password)) {
                     Toast.makeText(Login.this, s, Toast.LENGTH_LONG).show();
                 } else {
-
-                    SharedPreferences sharedPref = Login.this.getSharedPreferences("LoginPrefs", 0);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("username", email);
-                    editor.putString("password", password);
-                    editor.commit();
+                    saveCredentials();
 
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     intent.putExtra("Email", email);
@@ -159,5 +176,7 @@ public class Login extends AppCompatActivity {
         GetJSON gj = new GetJSON();
         gj.execute();
     }
+
+
     //END OF METHODS
 }

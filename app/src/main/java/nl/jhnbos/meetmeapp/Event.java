@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import java.net.URLEncoder;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 
 public class Event extends AppCompatActivity implements View.OnClickListener {
 
