@@ -21,19 +21,6 @@
         android:paddingTop="0dp">
 
         <TextView
-            android:id="@+id/titleView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textSize="36sp"
-            android:textStyle="normal|bold" />
-
-        <TextView
             android:id="@+id/event_titleView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
