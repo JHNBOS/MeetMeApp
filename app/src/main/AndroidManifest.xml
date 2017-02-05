@@ -71,22 +71,23 @@
             android:label="Contact Info">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".Week"
             android:label="Agenda">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".Event"
             android:label="Create Event">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Week"/>
+                android:value=".Week" />
         </activity>
+        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>

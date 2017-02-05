@@ -1,11 +1,14 @@
 package nl.jhnbos.meetmeapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -84,7 +87,28 @@ public class MainActivity extends AppCompatActivity {
     //END OF METHODS
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.settings:
+                Intent settingsIntent = new Intent(MainActivity.this, Settings.class);
+                settingsIntent.putExtra("Email", email);
+
+                startActivity(settingsIntent);
+                return true;
+            case R.id.home:
+                super.onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     //END OF LISTENERS
 }
