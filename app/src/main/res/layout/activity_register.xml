@@ -25,11 +25,9 @@
             android:layout_below="@+id/fnameTextView"
             android:capitalize="words"
             android:ems="10"
-            android:inputType="textCapWords|textPersonName"
-            android:layout_alignLeft="@+id/unameEditText"
-            android:layout_alignStart="@+id/unameEditText"
-            android:layout_alignRight="@+id/unameEditText"
-            android:layout_alignEnd="@+id/unameEditText" />
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:inputType="textCapWords|textPersonName" />
 
         <EditText
             android:id="@+id/lnameEditText"
