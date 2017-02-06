@@ -41,7 +41,7 @@ public class Login extends AppCompatActivity {
 
         //Instantiating variables
         emailEditText = (EditText) findViewById(R.id.emailEditText);
-        passwordEditText = (EditText) findViewById(R.id.oldPasswordEditText);
+        passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         loginButton = (Button) findViewById(R.id.loginButton);
         registerButton = (Button) findViewById(R.id.registerButton);
 

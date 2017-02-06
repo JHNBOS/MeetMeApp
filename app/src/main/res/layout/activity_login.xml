@@ -17,7 +17,7 @@
         android:paddingBottom="0dp"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:paddingTop="0dp">
 
         <ImageView
             android:layout_width="match_parent"
@@ -30,6 +30,21 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:contentDescription="Logo" />
+
+        <TextView
+            android:id="@+id/emailtextView"
+            android:layout_height="wrap_content"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:layout_marginTop="96dp"
+            android:text="Email"
+            android:textAlignment="textStart"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp"
+            android:layout_below="@+id/imageView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_width="160dp" />
 
         <EditText
             android:id="@+id/emailEditText"
@@ -56,7 +71,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/oldPasswordEditText"
+            android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -68,61 +83,38 @@
             android:inputType="textPassword"
             android:textSize="18sp" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:id="@+id/spacer"
-            android:layout_below="@+id/oldPasswordEditText"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_height="145dp" />
-
-        <Button
-            android:id="@+id/loginButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:text="Login"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="normal|bold"
-            android:layout_marginTop="15dp"
-            android:layout_below="@+id/spacer"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:id="@+id/spacer2"
-            android:layout_below="@+id/loginButton"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_height="10dp" />
-
         <Button
             android:id="@+id/registerButton"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:text="Register"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="normal|bold"
-            android:layout_below="@+id/spacer2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_width="150dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/passwordEditText"
+            android:layout_alignEnd="@+id/passwordEditText" />
 
-        <TextView
-            android:id="@+id/emailtextView"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/loginButton"
             android:layout_height="wrap_content"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:layout_marginTop="96dp"
-            android:text="Email"
-            android:textAlignment="textStart"
-            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:background="@color/colorPrimary"
+            android:text="Login"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:layout_below="@+id/imageView"
+            android:textStyle="normal|bold"
+            android:layout_width="150dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/passwordEditText"
+            android:layout_alignStart="@+id/passwordEditText" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:id="@+id/spacer2"
+            android:layout_height="200dp"
+            android:layout_marginTop="82dp"
+            android:layout_below="@+id/passwordEditText"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 

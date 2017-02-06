@@ -26,7 +26,7 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class Settings extends AppCompatActivity implements View.OnClickListener {
 
     //STRINGS
-    private static String USER_UPDATE_URL = "http://jhnbos.nl/android/updateUser.php";
+    private static final String USER_UPDATE_URL = "http://jhnbos.nl/android/updateUser.php";
     private static final String GET_USER_URL = "http://jhnbos.nl/android/getUser.php";
     private String email;
 
@@ -56,11 +56,11 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         email = getIntent().getStringExtra("Email");
         user = new User();
 
-        colorBox = (EditText) findViewById(R.id.colorEditText);
+        colorBox = (EditText) findViewById(R.id.colorEditText2);
         oldPasswordBox = (EditText) findViewById(R.id.oldPasswordEditText);
         newPasswordBox = (EditText) findViewById(R.id.newPasswordEditText);
 
-        colorButton = (Button) findViewById(R.id.colorButton);
+        colorButton = (Button) findViewById(R.id.colorButton2);
         updateButton = (Button) findViewById(R.id.updateButton);
 
         //LISTENERS
@@ -90,7 +90,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         }
 
         if(v == updateButton){
-            if(colorBox.getText().toString().isEmpty() || oldPasswordBox.getText().toString().isEmpty()){
+            if(colorBox.getText().toString().isEmpty() && oldPasswordBox.getText().toString().isEmpty()){
                 Toast.makeText(Settings.this, "Please fill in a field to update!", Toast.LENGTH_LONG).show();
             } else{
                 runUpdate();
@@ -166,6 +166,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         String fname = user.getFirstName();
         String lname = user.getLastName();
         String email = user.getEmail();
+        int id = user.getID();
 
         String color = null;
         String password = null;
@@ -177,7 +178,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         }
 
         if((oldPasswordBox.getText().toString().isEmpty() || oldPasswordBox.getText().toString() == "")
-                || (newPasswordBox.getText().toString().isEmpty() || newPasswordBox.getText().toString() == "")){
+                && (newPasswordBox.getText().toString().isEmpty() || newPasswordBox.getText().toString() == "")){
             password = user.getPassword();
 
         } else{
@@ -187,16 +188,19 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         String suffix = null;
 
         try {
-            suffix = "?first_name=" + URLEncoder.encode(fname, "UTF-8")
-                    + "&last_name=" + URLEncoder.encode(lname, "UTF-8")
-                    + "&color=" + URLEncoder.encode(color, "UTF-8")
-                    + "&password=" + URLEncoder.encode(password, "UTF-8")
-                    + "&email=" + URLEncoder.encode(email, "UTF-8");
+            suffix = "?first_name='" + URLEncoder.encode(fname, "UTF-8") + "'"
+                    + "&last_name='" + URLEncoder.encode(lname, "UTF-8") + "'"
+                    + "&color='" + URLEncoder.encode(color, "UTF-8") + "'"
+                    + "&password='" + URLEncoder.encode(password, "UTF-8") + "'"
+                    + "&email='" + URLEncoder.encode(email, "UTF-8") + "'"
+                    + "&id='" + URLEncoder.encode(String.valueOf(id), "UTF-8") + "'";
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         String cURL = USER_UPDATE_URL + suffix;
+
+        Log.d("", cURL);
 
         final HashMap<String, String> parameter = new HashMap<>();
         parameter.put("first_name", fname);
@@ -204,6 +208,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         parameter.put("color", color);
         parameter.put("password", password);
         parameter.put("email", email);
+        parameter.put("id", String.valueOf(id));
 
         updateUser(cURL, parameter);
 
