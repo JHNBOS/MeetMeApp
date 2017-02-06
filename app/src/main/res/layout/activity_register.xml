@@ -203,14 +203,6 @@
             android:layout_alignRight="@+id/passEditText"
             android:layout_alignEnd="@+id/passEditText" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_below="@+id/colorButton"
-            android:layout_alignLeft="@+id/spacer4"
-            android:layout_alignStart="@+id/spacer4"
-            android:id="@+id/spacer6"
-            android:layout_height="65dp" />
-
         <Button
             android:id="@+id/registerButton"
             android:layout_width="match_parent"
@@ -223,6 +215,14 @@
             android:layout_below="@+id/spacer6"
             android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:id="@+id/spacer6"
+            android:layout_below="@+id/colorButton"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_height="60dp" />
 
     </RelativeLayout>
 </ScrollView>
