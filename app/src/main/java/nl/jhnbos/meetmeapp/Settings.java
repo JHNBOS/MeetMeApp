@@ -22,6 +22,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
+import yuku.ambilwarna.widget.AmbilWarnaPreference;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener {
 
@@ -149,8 +150,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
                 String hex = numbers.substring(Math.max(0, numbers.length() - 6));
 
-                TextView colorView = (TextView) findViewById(R.id.colorEditText2);
-                colorView.setText(hex.toUpperCase());
+                colorBox.setText(hex.toUpperCase());
             }
 
             @Override
