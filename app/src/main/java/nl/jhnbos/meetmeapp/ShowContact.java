@@ -116,14 +116,12 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
                         JSONObject jo = ja.getJSONObject(i);
 
                         user.setID(jo.getInt("id"));
-                        user.setUsername(jo.getString("username"));
                         user.setFirstName(jo.getString("first_name"));
                         user.setLastName(jo.getString("last_name"));
                         user.setEmail(jo.getString("email"));
                         user.setPassword(jo.getString("password"));
                         user.setColor(jo.getString("color"));
 
-                        usernameField.setText(user.getUsername());
                         firstnameField.setText(user.getFirstName());
                         lastnameField.setText(user.getLastName());
                         emailField.setText(user.getEmail());

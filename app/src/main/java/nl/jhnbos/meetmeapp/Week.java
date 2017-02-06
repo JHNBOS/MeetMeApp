@@ -356,7 +356,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
                 JSONObject jo = ja.getJSONObject(i);
 
                 user.setID(jo.getInt("id"));
-                user.setUsername(jo.getString("username"));
                 user.setFirstName(jo.getString("first_name"));
                 user.setLastName(jo.getString("last_name"));
                 user.setPassword(jo.getString("password"));

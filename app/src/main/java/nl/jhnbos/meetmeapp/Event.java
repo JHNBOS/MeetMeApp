@@ -71,9 +71,6 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
         name = getIntent().getExtras().getString("Name");
         user = (User) getIntent().getSerializableExtra("User");
 
-        Log.d("User ID in Event", String.valueOf(user.getID()));
-        Log.d("User name in Event", String.valueOf(user.getUsername()));
-
         titleField = (EditText) findViewById(R.id.titleField);
         locField = (EditText) findViewById(R.id.locField);
         startdatepickerdialog = (DatePicker) findViewById(R.id.startDatePicker);

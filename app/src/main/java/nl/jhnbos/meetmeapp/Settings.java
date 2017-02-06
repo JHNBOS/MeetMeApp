@@ -13,6 +13,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -23,6 +27,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
     //STRINGS
     private static String USER_UPDATE_URL = "http://jhnbos.nl/android/updateUser.php";
+    private static final String GET_USER_URL = "http://jhnbos.nl/android/getUser.php";
+    private String email;
 
     //LAYOUT ITEMS
     private EditText colorBox;
@@ -47,7 +53,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         StrictMode.setThreadPolicy(policy);
 
         //INITIALIZING VARIABLES
-        user = (User) getIntent().getSerializableExtra("User");
+        email = getIntent().getStringExtra("Email");
+        user = new User();
 
         colorBox = (EditText) findViewById(R.id.colorEditText);
         oldPasswordBox = (EditText) findViewById(R.id.oldPasswordEditText);
@@ -59,6 +66,18 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         //LISTENERS
         colorButton.setOnClickListener(this);
         updateButton.setOnClickListener(this);
+
+        //GetUser
+        getUserJSON getUserJSON = null;
+
+        try {
+            getUserJSON = new getUserJSON();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        getUserJSON.execute();
+
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
@@ -188,6 +207,59 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
         updateUser(cURL, parameter);
 
+    }
+
+    //GET USER
+    private class getUserJSON extends AsyncTask<Void, Void, String> {
+        String url = GET_USER_URL + "?email='" + URLEncoder.encode(email, "UTF-8") + "'";
+        ProgressDialog loading;
+
+        private getUserJSON() throws UnsupportedEncodingException {
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = ProgressDialog.show(Settings.this, "Retrieving user...", null, true, true);
+        }
+
+        @Override
+        protected String doInBackground(Void... v) {
+            RequestHandler rh = new RequestHandler();
+            String res = rh.sendGetRequest(url);
+            return res;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            loading.dismiss();
+
+            initUser(s);
+        }
+    }
+
+    //INITIALIZE USER
+    private void initUser(String response) {
+        try {
+            JSONArray jArray = new JSONArray(response);
+            JSONArray ja = jArray.getJSONArray(0);
+
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject jo = ja.getJSONObject(i);
+
+                user.setID(jo.getInt("id"));
+                user.setFirstName(jo.getString("first_name"));
+                user.setLastName(jo.getString("last_name"));
+                user.setPassword(jo.getString("password"));
+                user.setEmail(jo.getString("email"));
+                user.setColor(jo.getString("color"));
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     //END OF METHODS
