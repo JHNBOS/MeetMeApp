@@ -87,7 +87,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Week" />
         </activity>
-        <activity android:name=".Settings"></activity>
+        <activity
+            android:name=".Settings"
+            android:label="Settings">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
     </application>
 
 </manifest>

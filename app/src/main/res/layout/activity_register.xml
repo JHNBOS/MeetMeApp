@@ -32,20 +32,6 @@
             android:layout_alignEnd="@+id/unameEditText" />
 
         <EditText
-            android:id="@+id/unameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/usernameTextView"
-            android:capitalize="words"
-            android:ems="10"
-            android:inputType="textCapWords|textPersonName"
-            android:selectAllOnFocus="false"
-            android:layout_alignLeft="@+id/colorButton"
-            android:layout_alignStart="@+id/colorButton"
-            android:layout_alignRight="@+id/colorEditText"
-            android:layout_alignEnd="@+id/colorEditText" />
-
-        <EditText
             android:id="@+id/lnameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,20 +67,6 @@
             android:paddingRight="25dp"
             android:layout_marginTop="11dp"
             android:text="Last Name"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/fnameTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/unameEditText"
-            android:layout_marginTop="11dp"
-            android:text="First Name"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="18sp" />
 
@@ -156,20 +128,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/usernameTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="28dp"
-            android:text="Username"
-            android:textAlignment="textStart"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp" />
-
         <Button
             android:id="@+id/registerButton"
             android:layout_width="match_parent"
@@ -180,7 +138,7 @@
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="normal|bold"
-            android:layout_below="@+id/colorButton"
+            android:layout_below="@+id/spacerend"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -216,6 +174,28 @@
             android:layout_toStartOf="@+id/colorEditText"
             android:layout_marginRight="14dp"
             android:layout_marginEnd="14dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_below="@+id/colorEditText"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/spacerend"
+            android:layout_height="45dp" />
+
+        <TextView
+            android:id="@+id/fnameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="51dp"
+            android:text="First Name"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
 
     </RelativeLayout>

@@ -30,7 +30,6 @@ public class Register extends AppCompatActivity {
     private EditText editTextFirst;
     private EditText editTextLast;
     private EditText editTextColor;
-    private EditText editTextUsername;
     private EditText editTextPassword;
     private EditText editTextEmail;
     private Button buttonRegister;
@@ -46,7 +45,6 @@ public class Register extends AppCompatActivity {
         editTextFirst = (EditText) findViewById(R.id.fnameEditText);
         editTextLast = (EditText) findViewById(R.id.lnameEditText);
         editTextColor = (EditText) findViewById(R.id.colorEditText);
-        editTextUsername = (EditText) findViewById(R.id.unameEditText);
         editTextPassword = (EditText) findViewById(R.id.passEditText);
         editTextEmail = (EditText) findViewById(R.id.emailEditText);
         buttonRegister = (Button) findViewById(R.id.registerButton);
@@ -60,7 +58,6 @@ public class Register extends AppCompatActivity {
                 String fname = editTextFirst.getText().toString();
                 String lname = editTextLast.getText().toString();
                 String color = editTextColor.getText().toString().toUpperCase();
-                String username = editTextUsername.getText().toString();
                 String password = editTextPassword.getText().toString();
                 String email = editTextEmail.getText().toString().toLowerCase();
                 Email = email;
@@ -71,7 +68,6 @@ public class Register extends AppCompatActivity {
                     suffix = "?first_name=" + URLEncoder.encode(fname, "UTF-8")
                             + "&last_name=" + URLEncoder.encode(lname, "UTF-8")
                             + "&color=" + URLEncoder.encode(color, "UTF-8")
-                            + "&username=" + URLEncoder.encode(username, "UTF-8")
                             + "&password=" + URLEncoder.encode(password, "UTF-8")
                             + "&email=" + URLEncoder.encode(email, "UTF-8");
                 } catch (UnsupportedEncodingException e) {
@@ -81,7 +77,6 @@ public class Register extends AppCompatActivity {
                 String cURL = REGISTER_URL + suffix;
 
                 final HashMap<String, String> parameter = new HashMap<>();
-                parameter.put("username", username);
                 parameter.put("first_name", fname);
                 parameter.put("last_name", lname);
                 parameter.put("color", color);
