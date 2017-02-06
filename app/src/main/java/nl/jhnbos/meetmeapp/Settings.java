@@ -7,6 +7,7 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -79,6 +80,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
         getUserJSON.execute();
 
+
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
@@ -96,6 +98,22 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             } else{
                 runUpdate();
             }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                Intent intent = new Intent(Settings.this, MainActivity.class);
+                intent.putExtra("Email", email);
+
+                startActivity(intent);
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

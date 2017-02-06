@@ -103,6 +103,12 @@ public class MainActivity extends AppCompatActivity {
 
                 startActivity(settingsIntent);
                 return true;
+            case R.id.details:
+                Intent infoIntent = new Intent(MainActivity.this, ShowInfo.class);
+                infoIntent.putExtra("Email", email);
+
+                startActivity(infoIntent);
+                return true;
             case R.id.home:
                 super.onBackPressed();
                 return true;

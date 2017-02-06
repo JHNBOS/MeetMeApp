@@ -28,7 +28,6 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
     private String contact;
 
     //Textviews
-    private TextView usernameField;
     private TextView firstnameField;
     private TextView lastnameField;
     private TextView emailField;
@@ -58,7 +57,6 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
         contact = this.getIntent().getStringExtra("Contact");
 
         //Instantiating variables
-        usernameField = (TextView) findViewById(R.id.usernameField);
         firstnameField = (TextView) findViewById(R.id.firstnameField);
         lastnameField = (TextView) findViewById(R.id.lastnameField);
         emailField = (TextView) findViewById(R.id.emailField);

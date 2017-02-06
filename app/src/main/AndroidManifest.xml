@@ -92,6 +92,13 @@
             android:label="Settings">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".ShowInfo"
+            android:label="My Details">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
         </activity>
     </application>
