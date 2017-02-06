@@ -31,21 +31,6 @@
             android:layout_centerHorizontal="true"
             android:contentDescription="Logo" />
 
-        <TextView
-            android:id="@+id/emailtextView"
-            android:layout_height="wrap_content"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:layout_marginTop="96dp"
-            android:text="Email"
-            android:textAlignment="textStart"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp"
-            android:layout_below="@+id/imageView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_width="160dp" />
-
         <EditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
@@ -91,10 +76,10 @@
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="normal|bold"
-            android:layout_width="150dp"
             android:layout_alignParentBottom="true"
             android:layout_alignRight="@+id/passwordEditText"
-            android:layout_alignEnd="@+id/passwordEditText" />
+            android:layout_alignEnd="@+id/passwordEditText"
+            android:layout_width="175dp" />
 
         <Button
             android:id="@+id/loginButton"
@@ -104,16 +89,31 @@
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="normal|bold"
-            android:layout_width="150dp"
             android:layout_alignParentBottom="true"
             android:layout_alignLeft="@+id/passwordEditText"
-            android:layout_alignStart="@+id/passwordEditText" />
+            android:layout_alignStart="@+id/passwordEditText"
+            android:layout_width="175dp" />
+
+        <TextView
+            android:id="@+id/emailtextView"
+            android:layout_height="wrap_content"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:layout_marginTop="160dp"
+            android:text="Email"
+            android:textAlignment="textStart"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp"
+            android:layout_width="160dp"
+            android:layout_below="@+id/imageView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <Space
             android:layout_width="match_parent"
             android:id="@+id/spacer2"
             android:layout_height="200dp"
-            android:layout_marginTop="82dp"
+            android:layout_marginTop="14dp"
             android:layout_below="@+id/passwordEditText"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />

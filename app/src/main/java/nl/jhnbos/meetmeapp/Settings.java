@@ -149,7 +149,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
                 String hex = numbers.substring(Math.max(0, numbers.length() - 6));
 
-                TextView colorView = (TextView) findViewById(R.id.colorEditText);
+                TextView colorView = (TextView) findViewById(R.id.colorEditText2);
                 colorView.setText(hex.toUpperCase());
             }
 
