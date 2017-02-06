@@ -130,6 +130,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                     Toast.makeText(Settings.this, s, Toast.LENGTH_LONG).show();
                 } else {
                     Intent intent = new Intent(Settings.this, MainActivity.class);
+                    intent.putExtra("Email", email);
 
                     Toast.makeText(Settings.this, "Updated user!", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
