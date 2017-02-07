@@ -74,8 +74,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".Week"
-            android:label="Agenda">
+            android:name=".Week">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

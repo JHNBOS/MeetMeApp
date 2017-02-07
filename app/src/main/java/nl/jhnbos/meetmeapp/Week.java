@@ -56,6 +56,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_view);
+        setTitle(group);
 
         //BACK BUTTON
         getSupportActionBar().setHomeButtonEnabled(true);
