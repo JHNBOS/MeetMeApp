@@ -74,7 +74,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         //Lists
         eventList = new ArrayList<>();
         events = new ArrayList<WeekViewEvent>();
-        matchedEvents = new ArrayList<>();
+
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
@@ -124,7 +124,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         getEventJSON.execute();
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(6000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -289,6 +289,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         int idset = 0;
         int c = 0;
 
+        matchedEvents = new ArrayList<>();
+
         Calendar startCal = null;
         Calendar endCal = null;
 
@@ -317,20 +319,17 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             event.setLocation(Location);
             event.setColor(Colour);
 
-            Log.d("startTime Month", String.valueOf(event.getStartTime().get(Calendar.MONTH)));
-            Log.d("newMonth", String.valueOf(month));
-
             if (!events.contains(event)) {
                 Log.d("Event: ", event.getName());
                 events.add(event);
             }
 
-            matchedEvents = new ArrayList<>();
-
             for (WeekViewEvent we : events) {
                 if (eventMatches(we, year, month)) {
-                    matchedEvents.add(c++, we);
-                    mWeekView.notifyDatasetChanged();
+                    if (!matchedEvents.contains(we)){
+                        Log.d("we: ", we.getName());
+                        matchedEvents.add(we);
+                    }
                 }
             }
 
@@ -414,7 +413,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         class deleteEvent extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
-
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -471,8 +469,9 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
         deleteEvent de = new deleteEvent();
         de.execute();
-        mWeekView.notifyDatasetChanged();
         Week.this.onResume();
+        mWeekView.notifyDatasetChanged();
+
     }
 
     //SHOW DIALOG WHEN DELETING EVENT
