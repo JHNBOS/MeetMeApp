@@ -84,6 +84,7 @@ public class Register extends AppCompatActivity {
                 parameter.put("email", email);
 
                 attemptRegister(cURL, parameter);
+
             }
         });
         btnPick.setOnClickListener(new View.OnClickListener() {

@@ -206,8 +206,8 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
             int endHour = endtimepickerdialog.getHour();
             int endMinute = endtimepickerdialog.getMinute();
 
-            startDate = startYear + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute;
-            endDate = endYear + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMinute;
+            startDate = startYear + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute + ":00";
+            endDate = endYear + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMinute + ":00";
 
             //Set event info
             ev_loc = locField.getText().toString();
