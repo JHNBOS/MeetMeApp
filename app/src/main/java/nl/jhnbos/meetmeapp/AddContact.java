@@ -65,7 +65,7 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
             }
 
             try {
-                if (contactEmail == "") {
+                if (contactEmail == "" || contactEmail.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please enter a existing email!", Toast.LENGTH_LONG).show();
                 } else {
                     addContact(url, contactEmail, currentUser);

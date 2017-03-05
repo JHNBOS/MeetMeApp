@@ -19,70 +19,70 @@
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <Space
+            android:id="@+id/spacerbegin"
             android:layout_width="match_parent"
-            android:layout_alignParentTop="true"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:layout_marginLeft="6dp"
-            android:layout_marginStart="6dp"
-            android:id="@+id/spacerbegin"
-            android:layout_height="40dp" />
+            android:layout_marginStart="6dp" />
 
         <EditText
             android:id="@+id/fnameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:capitalize="words"
-            android:ems="10"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:inputType="textCapWords|textPersonName"
-            android:layout_below="@+id/fnameTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:id="@+id/spacer1"
-            android:layout_below="@+id/fnameEditText"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_height="20dp" />
+            android:layout_below="@+id/fnameTextView"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:capitalize="words"
+            android:ems="10"
+            android:inputType="textCapWords|textPersonName" />
+
+        <Space
+            android:id="@+id/spacer1"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/fnameEditText" />
 
         <TextView
             android:id="@+id/lnameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/spacer1"
+            android:layout_marginTop="6dp"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
-            android:layout_marginTop="6dp"
             android:text="Last Name"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp"
-            android:layout_below="@+id/spacer1"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/lnameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:capitalize="words"
-            android:ems="10"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/lnameTextView"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
-            android:inputType="textCapWords|textPersonName"
-            android:layout_below="@+id/lnameTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:capitalize="words"
+            android:ems="10"
+            android:inputType="textCapWords|textPersonName" />
 
         <Space
+            android:id="@+id/spacer3"
             android:layout_width="match_parent"
-            android:layout_below="@+id/lnameEditText"
+            android:layout_height="20dp"
             android:layout_alignLeft="@+id/spacerbegin"
             android:layout_alignStart="@+id/spacerbegin"
-            android:id="@+id/spacer3"
-            android:layout_height="20dp" />
+            android:layout_below="@+id/lnameEditText" />
 
         <TextView
             android:id="@+id/emailTextView"
@@ -92,9 +92,9 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/spacer3"
             android:layout_marginTop="8dp"
-            android:text="Email"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
+            android:text="Email"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="18sp" />
 
@@ -103,18 +103,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/emailTextView"
-            android:ems="10"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
+            android:ems="10"
             android:inputType="textEmailAddress" />
 
         <Space
+            android:id="@+id/spacer4"
             android:layout_width="match_parent"
-            android:layout_below="@+id/emailEditText"
+            android:layout_height="20dp"
             android:layout_alignLeft="@+id/spacer3"
             android:layout_alignStart="@+id/spacer3"
-            android:id="@+id/spacer4"
-            android:layout_height="20dp" />
+            android:layout_below="@+id/emailEditText" />
 
         <TextView
             android:id="@+id/passTextView"
@@ -124,9 +124,9 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/spacer4"
             android:layout_marginTop="10dp"
-            android:text="Password"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
+            android:text="Password"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="18sp" />
 
@@ -135,9 +135,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/passTextView"
-            android:ems="10"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
+            android:ems="10"
             android:fontFamily="sans-serif"
             android:inputType="textPassword"
             android:textSize="18sp" />
@@ -146,83 +146,83 @@
             android:id="@+id/fnameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="First Name"
+            android:layout_alignLeft="@+id/spacerbegin"
+            android:layout_alignStart="@+id/spacerbegin"
+            android:layout_below="@+id/spacerbegin"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
+            android:text="First Name"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp"
-            android:layout_below="@+id/spacerbegin"
-            android:layout_alignLeft="@+id/spacerbegin"
-            android:layout_alignStart="@+id/spacerbegin" />
+            android:textSize="18sp" />
 
         <Space
+            android:id="@+id/spacer5"
             android:layout_width="match_parent"
-            android:layout_below="@+id/passTextView"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="34dp"
-            android:id="@+id/spacer5"
-            android:layout_height="25dp" />
+            android:layout_below="@+id/passTextView"
+            android:layout_marginTop="34dp" />
 
         <TextView
             android:id="@+id/colorTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Color"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/spacer5"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
+            android:text="Color"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp"
-            android:layout_below="@+id/spacer5"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/colorButton"
             android:layout_width="170dp"
             android:layout_height="40dp"
+            android:layout_alignLeft="@+id/passEditText"
+            android:layout_alignStart="@+id/passEditText"
+            android:layout_below="@+id/colorTextView"
             android:background="@color/colorPrimary"
             android:text="Pick Color"
-            android:textColor="@android:color/white"
-            android:layout_below="@+id/colorTextView"
-            android:layout_alignLeft="@+id/passEditText"
-            android:layout_alignStart="@+id/passEditText" />
+            android:textColor="@android:color/white" />
 
         <EditText
             android:id="@+id/colorEditText"
             style="@style/Widget.AppCompat.EditText"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/colorButton"
+            android:layout_alignEnd="@+id/passEditText"
+            android:layout_alignRight="@+id/passEditText"
             android:capitalize="characters"
             android:ems="10"
             android:inputType="text|textCapCharacters"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:textStyle="normal|bold"
-            android:layout_alignBottom="@+id/colorButton"
-            android:layout_alignRight="@+id/passEditText"
-            android:layout_alignEnd="@+id/passEditText" />
+            android:textStyle="normal|bold" />
 
         <Button
             android:id="@+id/registerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/spacer6"
             android:background="@color/colorPrimary"
             android:text="Register"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="normal|bold"
-            android:layout_below="@+id/spacer6"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentEnd="true" />
+            android:textStyle="normal|bold" />
 
         <Space
-            android:layout_width="match_parent"
             android:id="@+id/spacer6"
-            android:layout_below="@+id/colorButton"
-            android:layout_alignParentRight="true"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
             android:layout_alignParentEnd="true"
-            android:layout_height="60dp" />
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/colorButton" />
 
     </RelativeLayout>
 </ScrollView>

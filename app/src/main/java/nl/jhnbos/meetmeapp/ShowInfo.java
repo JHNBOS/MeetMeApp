@@ -4,9 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -99,7 +99,7 @@ public class ShowInfo extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if(v == returnButton){
+        if (v == returnButton) {
             Intent intent = new Intent(ShowInfo.this, MainActivity.class);
             intent.putExtra("Email", email);
 
@@ -111,37 +111,6 @@ public class ShowInfo extends AppCompatActivity implements View.OnClickListener 
     //END OF LISTENERS
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
-
-    //GET USER
-    private class getUserJSON extends AsyncTask<Void, Void, String> {
-        String url = GET_USER_URL + "?email='" + URLEncoder.encode(email, "UTF-8") + "'";
-        ProgressDialog loading;
-
-        private getUserJSON() throws UnsupportedEncodingException {
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            loading = ProgressDialog.show(ShowInfo.this, "Retrieving user...", null, true, true);
-        }
-
-        @Override
-        protected String doInBackground(Void... v) {
-            RequestHandler rh = new RequestHandler();
-            String res = rh.sendGetRequest(url);
-            return res;
-
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            loading.dismiss();
-
-            initUser(s);
-        }
-    }
 
     //INITIALIZE USER
     private void initUser(String response) {
@@ -172,6 +141,37 @@ public class ShowInfo extends AppCompatActivity implements View.OnClickListener 
             colorBox.setBackgroundColor(colorInt);
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    //GET USER
+    private class getUserJSON extends AsyncTask<Void, Void, String> {
+        String url = GET_USER_URL + "?email='" + URLEncoder.encode(email, "UTF-8") + "'";
+        ProgressDialog loading;
+
+        private getUserJSON() throws UnsupportedEncodingException {
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = ProgressDialog.show(ShowInfo.this, "Retrieving user...", null, true, true);
+        }
+
+        @Override
+        protected String doInBackground(Void... v) {
+            RequestHandler rh = new RequestHandler();
+            String res = rh.sendGetRequest(url);
+            return res;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            loading.dismiss();
+
+            initUser(s);
         }
     }
 

@@ -1,11 +1,11 @@
 package nl.jhnbos.meetmeapp;
 
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -192,7 +192,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
         if (v == createEventButton) {
             //Start date and time
             int startDay = startdatepickerdialog.getDayOfMonth();
-            int startMonth = (startdatepickerdialog.getMonth()+1);
+            int startMonth = (startdatepickerdialog.getMonth() + 1);
             int startYear = startdatepickerdialog.getYear();
 
             int startHour = starttimepickerdialog.getHour();
@@ -200,7 +200,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
 
             //End date and time
             int endDay = enddatepickerdialog.getDayOfMonth();
-            int endMonth = (enddatepickerdialog.getMonth()+1);
+            int endMonth = (enddatepickerdialog.getMonth() + 1);
             int endYear = enddatepickerdialog.getYear();
 
             int endHour = endtimepickerdialog.getHour();
@@ -208,6 +208,7 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
 
             startDate = startYear + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute + ":00";
             endDate = endYear + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMinute + ":00";
+
 
             //Set event info
             ev_loc = locField.getText().toString();
@@ -220,7 +221,15 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
 
             if (ev_title == "" || ev_title.isEmpty()) {
                 Toast.makeText(Event.this, "Please fill in all fields!", Toast.LENGTH_LONG).show();
-            } else {
+            }
+            else if(startDate == endDate){
+                Toast.makeText(Event.this, "Start and end cannot be the same time!", Toast.LENGTH_LONG).show();
+            }
+            else if(startDay == endDay && startMonth == endMonth && startYear == endYear
+                    && startHour == endHour && startMinute > endMinute){
+                Toast.makeText(Event.this, "End time cannot be before start time!", Toast.LENGTH_LONG).show();
+            }
+            else {
                 addEvent();
             }
 

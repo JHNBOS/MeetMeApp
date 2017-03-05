@@ -3,15 +3,14 @@ package nl.jhnbos.meetmeapp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -23,7 +22,6 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
-import yuku.ambilwarna.widget.AmbilWarnaPreference;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener {
 
@@ -88,14 +86,14 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if(v == colorButton){
+        if (v == colorButton) {
             openDialog(false);
         }
 
-        if(v == updateButton){
-            if(colorBox.getText().toString().isEmpty() && oldPasswordBox.getText().toString().isEmpty()){
+        if (v == updateButton) {
+            if (colorBox.getText().toString().isEmpty() && oldPasswordBox.getText().toString().isEmpty()) {
                 Toast.makeText(Settings.this, "Please fill in a field to update!", Toast.LENGTH_LONG).show();
-            } else{
+            } else {
                 runUpdate();
             }
         }
@@ -121,7 +119,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    private void updateUser(final String url, final HashMap<String, String> parameters){
+    private void updateUser(final String url, final HashMap<String, String> parameters) {
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
@@ -181,7 +179,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
     }
 
     //Run updateUser
-    private void runUpdate(){
+    private void runUpdate() {
         String fname = user.getFirstName();
         String lname = user.getLastName();
         String email = user.getEmail();
@@ -190,17 +188,17 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         String color = null;
         String password = null;
 
-        if(colorBox.getText().toString() == "" || colorBox.getText().toString().isEmpty()){
+        if (colorBox.getText().toString() == "" || colorBox.getText().toString().isEmpty()) {
             color = user.getColor();
-        } else{
+        } else {
             color = colorBox.getText().toString();
         }
 
-        if((oldPasswordBox.getText().toString().isEmpty() || oldPasswordBox.getText().toString() == "")
-                && (newPasswordBox.getText().toString().isEmpty() || newPasswordBox.getText().toString() == "")){
+        if ((oldPasswordBox.getText().toString().isEmpty() || oldPasswordBox.getText().toString() == "")
+                && (newPasswordBox.getText().toString().isEmpty() || newPasswordBox.getText().toString() == "")) {
             password = user.getPassword();
 
-        } else{
+        } else {
             password = newPasswordBox.getText().toString();
         }
 
@@ -233,6 +231,28 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
     }
 
+    //INITIALIZE USER
+    private void initUser(String response) {
+        try {
+            JSONArray jArray = new JSONArray(response);
+            JSONArray ja = jArray.getJSONArray(0);
+
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject jo = ja.getJSONObject(i);
+
+                user.setID(jo.getInt("id"));
+                user.setFirstName(jo.getString("first_name"));
+                user.setLastName(jo.getString("last_name"));
+                user.setPassword(jo.getString("password"));
+                user.setEmail(jo.getString("email"));
+                user.setColor(jo.getString("color"));
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     //GET USER
     private class getUserJSON extends AsyncTask<Void, Void, String> {
         String url = GET_USER_URL + "?email='" + URLEncoder.encode(email, "UTF-8") + "'";
@@ -261,28 +281,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             loading.dismiss();
 
             initUser(s);
-        }
-    }
-
-    //INITIALIZE USER
-    private void initUser(String response) {
-        try {
-            JSONArray jArray = new JSONArray(response);
-            JSONArray ja = jArray.getJSONArray(0);
-
-            for (int i = 0; i < ja.length(); i++) {
-                JSONObject jo = ja.getJSONObject(i);
-
-                user.setID(jo.getInt("id"));
-                user.setFirstName(jo.getString("first_name"));
-                user.setLastName(jo.getString("last_name"));
-                user.setPassword(jo.getString("password"));
-                user.setEmail(jo.getString("email"));
-                user.setColor(jo.getString("color"));
-
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 

@@ -51,6 +51,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     private List<WeekViewEvent> events;
     private List<WeekViewEvent> matchedEvents;
     private User user;
+    private HTTP http;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         //Lists
         eventList = new ArrayList<>();
         events = new ArrayList<WeekViewEvent>();
-
+        http = new HTTP();
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
@@ -123,14 +124,13 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         getUserJSON.execute();
         getEventJSON.execute();
 
+        mWeekView.notifyDatasetChanged();
+
         try {
-            Thread.sleep(6000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        mWeekView.notifyDatasetChanged();
-
     }
 
 
@@ -212,14 +212,13 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
         ShowDialog(event);
-
     }
 
     @Override
     public void onEmptyViewClicked(Calendar time) {
         Toast.makeText(Week.this, String.valueOf(time.get(Calendar.MONTH) + 1), Toast.LENGTH_LONG).show();
 
-        mWeekView.notifyDatasetChanged();
+        //mWeekView.notifyDatasetChanged();
     }
 
     //Setup date showing
@@ -326,7 +325,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
             for (WeekViewEvent we : events) {
                 if (eventMatches(we, year, month)) {
-                    if (!matchedEvents.contains(we)){
+                    if (!matchedEvents.contains(we)) {
                         Log.d("we: ", we.getName());
                         matchedEvents.add(we);
                     }
@@ -421,31 +420,23 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
             @Override
             protected String doInBackground(Void... v) {
-                String start = new Timestamp(event.getStartTime().getTimeInMillis()).toString();
-                String end = new Timestamp(event.getEndTime().getTimeInMillis()).toString();
                 String url = null;
 
-                String startTime = start.substring(0, start.length() - 2);
-                String endTime = end.substring(0, end.length() - 2);
-
                 try {
-
                     url = DELETE_EVENT_URL
                             + "?title='" + URLEncoder.encode(event.getName(), "UTF-8") + "'";
-                    //url = DELETE_EVENT_URL
-                    //       + "?title='" + URLEncoder.encode(event.getName(), "UTF-8") + "'";
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 RequestHandler rh = new RequestHandler();
-
                 HashMap<String, String> params = new HashMap<>();
                 params.put("title", event.getName());
-
                 String res = rh.sendPostRequest(url, params);
-                return res;
 
+                matchedEvents.remove(event);
+
+                return res;
             }
 
             @Override
@@ -454,24 +445,23 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
                 Log.d("s", s);
 
+                matchedEvents = null;
+
                 if (s.equals(event.getName())) {
                     try {
-                        Thread.sleep(3200);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-
+                onResume();
                 loading.dismiss();
-
             }
         }
 
         deleteEvent de = new deleteEvent();
         de.execute();
-        Week.this.onResume();
-        mWeekView.notifyDatasetChanged();
-
+        onResume();
     }
 
     //SHOW DIALOG WHEN DELETING EVENT

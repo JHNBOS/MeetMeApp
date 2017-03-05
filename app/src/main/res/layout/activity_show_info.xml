@@ -13,9 +13,9 @@
     <Space
         android:id="@+id/spacer1"
         android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_height="40dp" />"
+        android:layout_alignParentStart="true" />"
     android:layout_height="40dp" />
 
     <TextView
@@ -37,135 +37,135 @@
         android:id="@+id/firstnameField2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/colorField3"
+        android:layout_alignLeft="@+id/colorBox3"
+        android:layout_alignRight="@+id/colorField3"
+        android:layout_alignStart="@+id/colorBox3"
         android:layout_below="@+id/fnameView2"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:layout_alignLeft="@+id/colorBox3"
-        android:layout_alignStart="@+id/colorBox3"
-        android:layout_alignRight="@+id/colorField3"
-        android:layout_alignEnd="@+id/colorField3" />
+        android:textSize="18sp" />
 
     <Space
         android:id="@+id/spacer2"
         android:layout_width="match_parent"
+        android:layout_height="30dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/firstnameField2"
-        android:layout_height="30dp" />
+        android:layout_below="@+id/firstnameField2" />
 
     <TextView
         android:id="@+id/lnameView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/spacer2"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:text="Last Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
-        android:textStyle="normal|bold"
-        android:layout_below="@+id/spacer2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textStyle="normal|bold" />
 
     <TextView
         android:id="@+id/lastnameField2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/colorField3"
+        android:layout_alignLeft="@+id/firstnameField2"
+        android:layout_alignRight="@+id/colorField3"
+        android:layout_alignStart="@+id/firstnameField2"
         android:layout_below="@+id/lnameView2"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:layout_alignLeft="@+id/firstnameField2"
-        android:layout_alignStart="@+id/firstnameField2"
-        android:layout_alignRight="@+id/colorField3"
-        android:layout_alignEnd="@+id/colorField3" />
+        android:textSize="18sp" />
 
     <Space
         android:id="@+id/spacer3"
         android:layout_width="match_parent"
+        android:layout_height="30dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/lastnameField2"
-        android:layout_height="30dp" />
+        android:layout_below="@+id/lastnameField2" />
 
     <TextView
         android:id="@+id/emailView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/spacer3"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:text="Email"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
-        android:textStyle="normal|bold"
-        android:layout_below="@+id/spacer3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textStyle="normal|bold" />
 
     <TextView
         android:id="@+id/emailField2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/colorField3"
+        android:layout_alignLeft="@+id/lastnameField2"
+        android:layout_alignRight="@+id/colorField3"
+        android:layout_alignStart="@+id/lastnameField2"
         android:layout_below="@+id/emailView2"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:layout_alignLeft="@+id/lastnameField2"
-        android:layout_alignStart="@+id/lastnameField2"
-        android:layout_alignRight="@+id/colorField3"
-        android:layout_alignEnd="@+id/colorField3" />
+        android:textSize="18sp" />
 
     <Space
         android:id="@+id/spacer4"
         android:layout_width="match_parent"
+        android:layout_height="30dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/emailField2"
-        android:layout_height="30dp" />
+        android:layout_below="@+id/emailField2" />
 
     <TextView
         android:id="@+id/colorView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/spacer4"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:text="Color"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
-        android:textStyle="normal|bold"
-        android:layout_below="@+id/spacer4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textStyle="normal|bold" />
 
     <View
         android:id="@+id/colorBox3"
+        android:layout_width="120dp"
         android:layout_height="25dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/colorView3"
         android:layout_marginLeft="26dp"
         android:layout_marginStart="26dp"
         android:background="#3fe1fa"
         android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:layout_below="@+id/colorView3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_width="120dp" />
+        android:paddingRight="25dp" />
 
     <TextView
         android:id="@+id/colorField3"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/colorBox3"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:layout_alignBottom="@+id/colorBox3"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_width="200dp" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/returnMainButton"
