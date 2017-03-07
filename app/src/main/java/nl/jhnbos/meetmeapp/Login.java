@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
@@ -27,9 +28,9 @@ public class Login extends AppCompatActivity {
 
     //LAYOUT ITEMS
     private Button loginButton;
-    private Button registerButton;
-    private EditText emailEditText;
-    private EditText passwordEditText;
+    private TextView signUpLink;
+    private EditText emailInput;
+    private EditText passwordInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +46,10 @@ public class Login extends AppCompatActivity {
         );
 
         //Instantiating variables
-        emailEditText = (EditText) findViewById(R.id.emailEditText);
-        passwordEditText = (EditText) findViewById(R.id.passwordEditText);
-        loginButton = (Button) findViewById(R.id.loginButton);
-        registerButton = (Button) findViewById(R.id.registerButton);
+        emailInput = (EditText) findViewById(R.id.input_email);
+        passwordInput = (EditText) findViewById(R.id.input_password);
+        loginButton = (Button) findViewById(R.id.btn_login);
+        signUpLink = (TextView) findViewById(R.id.link_signup);
 
         checkCredentials();
 
@@ -72,7 +73,7 @@ public class Login extends AppCompatActivity {
                 attemptLogin(URL);
             }
         });
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        signUpLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Login.this, Register.class));
@@ -105,27 +106,27 @@ public class Login extends AppCompatActivity {
 
             if (emailValue != "" || !emailValue.isEmpty()) {
                 email = emailValue;
-                emailEditText.setText(emailValue);
+                emailInput.setText(emailValue);
             } else {
-                email = emailEditText.getText().toString().trim();
+                email = emailInput.getText().toString().trim();
             }
 
             if (passwordValue != "" || !passwordValue.isEmpty()) {
                 password = passwordValue;
-                passwordEditText.setText(passwordValue);
+                passwordInput.setText(passwordValue);
             } else {
-                password = passwordEditText.getText().toString().trim();
+                password = passwordInput.getText().toString().trim();
             }
 
-            if (!emailValue.equals(emailEditText.getText().toString().trim())
-                    && !passwordValue.equals(passwordEditText.getText().toString().trim())) {
+            if (!emailValue.equals(emailInput.getText().toString().trim())
+                    && !passwordValue.equals(passwordInput.getText().toString().trim())) {
                 editor.remove("username");
                 editor.remove("password");
                 editor.commit();
             }
         } else {
-            email = emailEditText.getText().toString().trim();
-            password = passwordEditText.getText().toString().trim();
+            email = emailInput.getText().toString().trim();
+            password = passwordInput.getText().toString().trim();
         }
 
         Log.d("EMAIL", email);
@@ -133,8 +134,8 @@ public class Login extends AppCompatActivity {
     }
 
     private void attemptLogin(final String url) {
-        final String email = emailEditText.getText().toString().trim();
-        final String password = passwordEditText.getText().toString().trim();
+        final String email = emailInput.getText().toString().trim();
+        final String password = passwordInput.getText().toString().trim();
 
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;

@@ -22,18 +22,18 @@ public class Register extends AppCompatActivity {
     //Strings
     private static final String REGISTER_URL = "http://jhnbos.nl/android/register.php";
     private String Email;
+    private String chosenColor;
 
     //Integers
     private int currentColor;
 
     //Layout items
-    private EditText editTextFirst;
-    private EditText editTextLast;
-    private EditText editTextColor;
-    private EditText editTextPassword;
-    private EditText editTextEmail;
-    private Button buttonRegister;
-    private Button btnPick;
+    private EditText inputFirstName;
+    private EditText inputLastName;
+    private EditText inputPassword;
+    private EditText inputEmail;
+    private Button btnSignUp;
+    private Button btnColorPick;
 
 
     @Override
@@ -42,24 +42,23 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         //Instantiating variables
-        editTextFirst = (EditText) findViewById(R.id.fnameEditText);
-        editTextLast = (EditText) findViewById(R.id.lnameEditText);
-        editTextColor = (EditText) findViewById(R.id.colorEditText);
-        editTextPassword = (EditText) findViewById(R.id.passEditText);
-        editTextEmail = (EditText) findViewById(R.id.emailEditText);
-        buttonRegister = (Button) findViewById(R.id.registerButton);
-        btnPick = (Button) findViewById(R.id.colorButton);
+        inputFirstName = (EditText) findViewById(R.id.input_firstName);
+        inputLastName = (EditText) findViewById(R.id.input_lastName);
+        inputPassword = (EditText) findViewById(R.id.input_password);
+        inputEmail = (EditText) findViewById(R.id.input_email);
+        btnSignUp = (Button) findViewById(R.id.btn_signUp);
+        btnColorPick = (Button) findViewById(R.id.btn_color);
 
         //Listeners
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String fname = editTextFirst.getText().toString();
-                String lname = editTextLast.getText().toString();
-                String color = editTextColor.getText().toString().toUpperCase();
-                String password = editTextPassword.getText().toString();
-                String email = editTextEmail.getText().toString().toLowerCase();
+                String fname = inputFirstName.getText().toString();
+                String lname = inputLastName.getText().toString();
+                String color = chosenColor.toUpperCase();
+                String password = inputPassword.getText().toString();
+                String email = inputEmail.getText().toString().toLowerCase();
                 Email = email;
 
                 String suffix = null;
@@ -87,7 +86,7 @@ public class Register extends AppCompatActivity {
 
             }
         });
-        btnPick.setOnClickListener(new View.OnClickListener() {
+        btnColorPick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openDialog(false);
@@ -162,17 +161,11 @@ public class Register extends AppCompatActivity {
                 currentColor = color;
                 String numbers = String.format("%x", color);
 
-                String hex = numbers.substring(Math.max(0, numbers.length() - 6));
-
-                Log.i("ColorTest", "Color: " + hex);
-
-                TextView colorView = (TextView) findViewById(R.id.colorEditText);
-                colorView.setText(hex.toUpperCase());
+                chosenColor = numbers.substring(Math.max(0, numbers.length() - 6));
             }
 
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
-                Toast.makeText(getApplicationContext(), "Action canceled!", Toast.LENGTH_SHORT).show();
             }
         });
         dialog.show();

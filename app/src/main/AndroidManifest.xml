@@ -15,9 +15,9 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Meet Me"
+        android:label="Let's Meet"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
             android:name=".Register"
             android:label="Register">
@@ -27,7 +27,7 @@
         </activity>
         <activity
             android:name=".Login"
-            android:label="Meet Me">
+            android:label="Let's Meet">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
