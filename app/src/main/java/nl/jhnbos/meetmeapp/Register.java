@@ -48,6 +48,7 @@ public class Register extends AppCompatActivity {
         inputEmail = (EditText) findViewById(R.id.input_email);
         btnSignUp = (Button) findViewById(R.id.btn_signUp);
         btnColorPick = (Button) findViewById(R.id.btn_color);
+        chosenColor = new String();
 
         //Listeners
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +124,10 @@ public class Register extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(Register.this, "Registering...", null, true, true);
+                loading = new ProgressDialog(Register.this, R.style.AppTheme_Dark_Dialog);
+                loading.setIndeterminate(true);
+                loading.setMessage("Creating Account...");
+                loading.show();
             }
 
             @Override

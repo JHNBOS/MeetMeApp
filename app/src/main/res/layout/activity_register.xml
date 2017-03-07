@@ -116,7 +116,7 @@
 
         <Button
             android:id="@+id/btn_color"
-            android:layout_width="194dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="45dp"
             android:layout_marginTop="8dp"
@@ -130,9 +130,12 @@
             android:id="@+id/btn_signUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="8dp"
             android:background="@color/colorPrimaryDark"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
             android:text="Sign Up"
-            android:padding="12dp"
             android:textColor="@color/colorAccent"
             tools:ignore="HardcodedText" />
 

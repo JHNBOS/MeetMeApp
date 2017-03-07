@@ -143,8 +143,10 @@ public class Login extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(Login.this, "Logging in...", null, true, true);
-            }
+                loading = new ProgressDialog(Login.this, R.style.AppTheme_Dark_Dialog);
+                loading.setIndeterminate(true);
+                loading.setMessage("Authenticating...");
+                loading.show();            }
 
             @Override
             protected String doInBackground(Void... v) {
