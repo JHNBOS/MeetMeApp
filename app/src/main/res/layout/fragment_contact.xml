@@ -24,9 +24,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryDark"
         android:text="Add Contact"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorAccent"
         android:textStyle="normal|bold" />
 
     <!-- TODO: Update blank fragment layout -->
