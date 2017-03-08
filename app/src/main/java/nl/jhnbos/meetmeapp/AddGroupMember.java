@@ -34,8 +34,8 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
     private ArrayList<String> selectedList;
 
     //LAYOUT
-    private ListView lv;
-    private Button addGroupMemberButton;
+    private ListView listView;
+    private Button btnAddMember;
 
     //OBJECTS
     private ArrayAdapter<String> adapter;
@@ -53,19 +53,19 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        //Instantiating variables
+        //INITIALIZING VARIABLES
         group = this.getIntent().getStringExtra("Group");
         email = this.getIntent().getStringExtra("Email");
 
-        lv = (ListView) findViewById(R.id.gmlist);
-        addGroupMemberButton = (Button) findViewById(R.id.addGMButton);
+        listView = (ListView) findViewById(R.id.gmlist);
+        btnAddMember = (Button) findViewById(R.id.btnAddMember);
 
         contactsList = new ArrayList<>();
         selectedList = new ArrayList<>();
 
-        //Listeners
-        addGroupMemberButton.setOnClickListener(this);
-        lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        //LISTENERS
+        btnAddMember.setOnClickListener(this);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         //ADAPTER
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, contactsList);
@@ -76,18 +76,18 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        if (v == addGroupMemberButton) {
+        if (v == btnAddMember) {
             try {
 
-                SparseBooleanArray checked = lv.getCheckedItemPositions();
+                SparseBooleanArray checked = listView.getCheckedItemPositions();
 
                 for (int i = 0; i < checked.size(); i++) {
                     int position = checked.keyAt(i);
 
                     if (checked.valueAt(i)) {
-                        String mail = ((TextView) lv.getChildAt(position)).getText().toString();
+                        String mail = ((TextView) listView.getChildAt(position)).getText().toString();
                         Log.d("Mail: ", mail);
-                        selectedList.add(((TextView) lv.getChildAt(position)).getText().toString());
+                        selectedList.add(((TextView) listView.getChildAt(position)).getText().toString());
                     }
                 }
 
@@ -152,7 +152,7 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
                 contactsList.add(jo.getString("contact_email"));
             }
 
-            lv.setAdapter(adapter);
+            listView.setAdapter(adapter);
 
         } catch (JSONException e) {
             e.printStackTrace();

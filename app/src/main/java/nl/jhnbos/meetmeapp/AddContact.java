@@ -34,9 +34,9 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        //INITIALIZING VARIABLES
         inputContact = (EditText) findViewById(R.id.input_contact);
         btnAddContact = (Button) findViewById(R.id.btn_addContact);
-
         currentUser = getIntent().getExtras().getString("Email");
 
         //Listeners

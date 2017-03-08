@@ -2,245 +2,149 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_event"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:fillViewport="true"
-    android:paddingBottom="0dp"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:paddingTop="0dp"
+    android:background="@color/colorPrimary"
     tools:context="nl.jhnbos.meetmeapp.Event">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:orientation="vertical"
-        android:paddingBottom="0dp"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:paddingTop="0dp">
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="56dp">
+
+        <ImageView
+            android:id="@+id/logoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="35dp"
+            android:contentDescription="Logo"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:src="@drawable/logo"
+            tools:ignore="HardcodedText" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_title"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="8dp"
+            android:textColorHint="@android:color/white"
+            android:theme="@style/EditTextTheme"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/input_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Title"
+                android:inputType="text"
+                android:textColor="@android:color/white"
+                android:textColorLink="@color/colorAccent"
+                tools:ignore="HardcodedText" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_location"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="8dp"
+            android:textColorHint="@android:color/white"
+            android:theme="@style/EditTextTheme"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/input_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Location"
+                android:inputType="text"
+                android:textColor="@android:color/white"
+                android:textColorLink="@color/colorAccent"
+                tools:ignore="HardcodedText" />
+        </android.support.design.widget.TextInputLayout>
 
         <TextView
-            android:id="@+id/event_titleView"
+            android:id="@+id/text_start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/titleView"
-            android:layout_marginTop="56dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:text="Title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:text="Start"
+            android:textColor="@color/colorAccent"
             android:textSize="18sp"
-            android:textStyle="normal|bold" />
-
-        <EditText
-            android:id="@+id/titleField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/event_titleView"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:ems="10"
-            android:inputType="textCapWords"
-            android:textSize="18sp" />
-
-        <Space
-            android:id="@+id/spacer1"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/titleField" />
-
-
-        <TextView
-            android:id="@+id/locView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/spacer1"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:text="Location"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp"
-            android:textStyle="normal|bold" />
-
-        <EditText
-            android:id="@+id/locField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/locView"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:ems="10"
-            android:inputType="textCapWords" />
-
-        <Space
-            android:id="@+id/spacer2"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/locField" />
-
-        <TextView
-            android:id="@+id/startDateView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/spacer2"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:text="Start Date"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp"
-            android:textStyle="normal|bold" />
+            tools:ignore="HardcodedText" />
 
         <DatePicker
-            android:id="@+id/startDatePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="140dp"
-            android:layout_below="@+id/startDateView"
-            android:layout_centerHorizontal="true"
+            android:id="@+id/input_startDate"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="8dp"
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
-            android:saveEnabled="true"
-            android:spinnersShown="true" />
-
-        <Space
-            android:id="@+id/spacer3"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/startDatePicker" />
-
-        <TextView
-            android:id="@+id/startTimeView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/spacer3"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:text="Start Time"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp"
-            android:textStyle="normal|bold" />
+            android:fitsSystemWindows="false"
+            android:spinnersShown="true"
+            tools:ignore="UnusedAttribute" />
 
         <TimePicker
-            android:id="@+id/startTimePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="140dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/startTimeView"
-            android:saveEnabled="true"
-            android:timePickerMode="spinner" />
-
-        <Space
-            android:id="@+id/spacer4"
+            android:id="@+id/input_startTime"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/startTimePicker" />
+            android:layout_height="100dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="8dp"
+            android:timePickerMode="spinner"
+            tools:ignore="UnusedAttribute" />
 
         <TextView
-            android:id="@+id/endDateView"
+            android:id="@+id/text_end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/spacer4"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:text="End Date"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:text="End"
+            android:textColor="@color/colorAccent"
             android:textSize="18sp"
-            android:textStyle="normal|bold" />
+            tools:ignore="HardcodedText" />
 
         <DatePicker
-            android:id="@+id/endDatePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="140dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/endDateView"
+            android:id="@+id/input_endDate"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="8dp"
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
-            android:saveEnabled="true"
-            android:spinnersShown="true" />
-
-        <Space
-            android:id="@+id/spacer5"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/endDatePicker" />
-
-        <TextView
-            android:id="@+id/endTimeView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/spacer5"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:text="End Time"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp"
-            android:textStyle="normal|bold" />
+            android:fitsSystemWindows="false"
+            android:spinnersShown="true"
+            tools:ignore="UnusedAttribute" />
 
         <TimePicker
-            android:id="@+id/endTimePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="140dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/endTimeView"
-            android:saveEnabled="true"
-            android:timePickerMode="spinner" />
-
-        <Space
-            android:id="@+id/spacer6"
+            android:id="@+id/input_endTime"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/endTimePicker" />
+            android:layout_height="100dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="8dp"
+            android:timePickerMode="spinner"
+            tools:ignore="UnusedAttribute" />
 
         <Button
-            android:id="@+id/addEventButton"
+            android:id="@+id/btn_createEvent"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/spacer6"
-            android:background="@color/colorPrimary"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorPrimaryDark"
+            android:padding="12dp"
             android:text="Create Event"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="normal|bold" />
+            tools:ignore="HardcodedText" />
 
 
-    </RelativeLayout>
+    </LinearLayout>
+
 </ScrollView>

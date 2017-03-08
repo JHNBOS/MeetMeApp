@@ -37,14 +37,16 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
     private String ev_creator;
     private String ev_group;
     private String ev_title;
+
     //LAYOUT ITEMS
-    private Button createEventButton;
-    private EditText titleField;
-    private EditText locField;
-    private DatePicker startdatepickerdialog;
-    private DatePicker enddatepickerdialog;
-    private TimePicker starttimepickerdialog;
-    private TimePicker endtimepickerdialog;
+    private Button btn_createEvent;
+    private EditText inputTitle;
+    private EditText inputLocation;
+    private DatePicker input_startDate;
+    private DatePicker input_endDate;
+    private TimePicker input_startTime;
+    private TimePicker input_endTime;
+
     //OBJECTS
     private HTTP http;
     private User user;
@@ -59,34 +61,31 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        //BACK BUTTON
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         //ALLOW HTTP
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        //INITIALIZING VARIABLES
         creator = getIntent().getExtras().getString("EmailC");
         name = getIntent().getExtras().getString("Name");
         user = (User) getIntent().getSerializableExtra("User");
-
-        titleField = (EditText) findViewById(R.id.titleField);
-        locField = (EditText) findViewById(R.id.locField);
-        startdatepickerdialog = (DatePicker) findViewById(R.id.startDatePicker);
-        enddatepickerdialog = (DatePicker) findViewById(R.id.endDatePicker);
-        starttimepickerdialog = (TimePicker) findViewById(R.id.startTimePicker);
-        endtimepickerdialog = (TimePicker) findViewById(R.id.endTimePicker);
-        createEventButton = (Button) findViewById(R.id.addEventButton);
-
-        //Set 24 hour
-        starttimepickerdialog.setIs24HourView(true);
-        endtimepickerdialog.setIs24HourView(true);
-
-        //Listeners
-        createEventButton.setOnClickListener(this);
-
         http = new HTTP();
+
+        inputTitle = (EditText) findViewById(R.id.input_title);
+        inputLocation = (EditText) findViewById(R.id.input_location);
+        input_startDate = (DatePicker) findViewById(R.id.input_startDate);
+        input_endDate = (DatePicker) findViewById(R.id.input_endDate);
+        input_startTime = (TimePicker) findViewById(R.id.input_startTime);
+        input_endTime = (TimePicker) findViewById(R.id.input_endTime);
+        btn_createEvent = (Button) findViewById(R.id.btn_createEvent);
+
+        //SET 24 HOUR
+        input_startTime.setIs24HourView(true);
+        input_endTime.setIs24HourView(true);
+
+        //LISTNERERS
+        btn_createEvent.setOnClickListener(this);
+
     }
 
     /*-------------------------------------------------------------------------*/
@@ -189,34 +188,33 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         //IF PRESSED ON CREATE EVENT BUTTON
-        if (v == createEventButton) {
+        if (v == btn_createEvent) {
             //Start date and time
-            int startDay = startdatepickerdialog.getDayOfMonth();
-            int startMonth = (startdatepickerdialog.getMonth() + 1);
-            int startYear = startdatepickerdialog.getYear();
+            int startDay = input_startDate.getDayOfMonth();
+            int startMonth = (input_startDate.getMonth() + 1);
+            int startYear = input_startDate.getYear();
 
-            int startHour = starttimepickerdialog.getHour();
-            int startMinute = starttimepickerdialog.getMinute();
+            int startHour = input_startTime.getHour();
+            int startMinute = input_startTime.getMinute();
 
             //End date and time
-            int endDay = enddatepickerdialog.getDayOfMonth();
-            int endMonth = (enddatepickerdialog.getMonth() + 1);
-            int endYear = enddatepickerdialog.getYear();
+            int endDay = input_endDate.getDayOfMonth();
+            int endMonth = (input_endDate.getMonth() + 1);
+            int endYear = input_endDate.getYear();
 
-            int endHour = endtimepickerdialog.getHour();
-            int endMinute = endtimepickerdialog.getMinute();
+            int endHour = input_endTime.getHour();
+            int endMinute = input_endTime.getMinute();
 
             startDate = startYear + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute + ":00";
             endDate = endYear + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMinute + ":00";
 
-
             //Set event info
-            ev_loc = locField.getText().toString();
+            ev_loc = inputLocation.getText().toString();
             ev_start = startDate.toString();
             ev_end = endDate.toString();
             ev_creator = getIntent().getExtras().getString("EmailC");
             ev_group = getIntent().getExtras().getString("GroupC");
-            ev_title = titleField.getText().toString();
+            ev_title = inputTitle.getText().toString();
 
 
             if (ev_title == "" || ev_title.isEmpty()) {

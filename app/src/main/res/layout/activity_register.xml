@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@color/colorPrimary"
-    android:theme="@style/Theme.AppCompat.NoActionBar"
     tools:context="nl.jhnbos.meetmeapp.Register">
 
     <LinearLayout
@@ -20,7 +19,6 @@
 
         <ImageView
             android:id="@+id/logoView"
-            android:src="@drawable/logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -28,6 +26,7 @@
             android:contentDescription="Logo"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
+            android:src="@drawable/logo"
             tools:ignore="HardcodedText" />
 
         <android.support.design.widget.TextInputLayout
@@ -118,12 +117,13 @@
             android:id="@+id/btn_color"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginBottom="45dp"
             android:layout_marginTop="8dp"
             android:background="@color/colorPrimaryDark"
-            android:layout_gravity="center"
             android:padding="12dp"
             android:text="Pick Color"
+            android:textColor="@color/colorAccent"
             tools:ignore="HardcodedText" />
 
         <Button

@@ -7,7 +7,6 @@
     android:layout_height="fill_parent"
     android:background="@color/colorPrimary"
     android:fillViewport="true"
-    android:theme="@style/Theme.AppCompat.NoActionBar"
     tools:context="nl.jhnbos.meetmeapp.Login">
 
     <LinearLayout

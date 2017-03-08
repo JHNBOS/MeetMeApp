@@ -29,13 +29,12 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
     private static final String USER_UPDATE_URL = "http://jhnbos.nl/android/updateUser.php";
     private static final String GET_USER_URL = "http://jhnbos.nl/android/getUser.php";
     private String email;
+    private String chosenColor;
 
     //LAYOUT ITEMS
-    private EditText colorBox;
-    private EditText oldPasswordBox;
-    private EditText newPasswordBox;
-    private Button colorButton;
-    private Button updateButton;
+    private EditText inputNewPassword;
+    private Button btnColorPicker;
+    private Button btnUpdate;
 
     //INTEGERS
     private int currentColor;
@@ -56,16 +55,14 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         email = getIntent().getStringExtra("Email");
         user = new User();
 
-        colorBox = (EditText) findViewById(R.id.colorEditText2);
-        oldPasswordBox = (EditText) findViewById(R.id.oldPasswordEditText);
-        newPasswordBox = (EditText) findViewById(R.id.newPasswordEditText);
+        inputNewPassword = (EditText) findViewById(R.id.input_newPassword);
 
-        colorButton = (Button) findViewById(R.id.colorButton2);
-        updateButton = (Button) findViewById(R.id.updateButton);
+        btnColorPicker = (Button) findViewById(R.id.btn_newColor);
+        btnUpdate = (Button) findViewById(R.id.btn_changeSettings);
 
         //LISTENERS
-        colorButton.setOnClickListener(this);
-        updateButton.setOnClickListener(this);
+        btnColorPicker.setOnClickListener(this);
+        btnUpdate.setOnClickListener(this);
 
         //GetUser
         getUserJSON getUserJSON = null;
@@ -77,8 +74,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         }
 
         getUserJSON.execute();
-
-
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
@@ -86,16 +81,12 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if (v == colorButton) {
+        if (v == btnColorPicker) {
             openDialog(false);
         }
 
-        if (v == updateButton) {
-            if (colorBox.getText().toString().isEmpty() && oldPasswordBox.getText().toString().isEmpty()) {
-                Toast.makeText(Settings.this, "Please fill in a field to update!", Toast.LENGTH_LONG).show();
-            } else {
-                runUpdate();
-            }
+        if (v == btnUpdate) {
+            runUpdate();
         }
     }
 
@@ -170,12 +161,11 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
                 String hex = numbers.substring(Math.max(0, numbers.length() - 6));
 
-                colorBox.setText(hex.toUpperCase());
+                chosenColor = hex.toUpperCase();
             }
 
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
-                Toast.makeText(getApplicationContext(), "Action canceled!", Toast.LENGTH_SHORT).show();
             }
         });
         dialog.show();
@@ -188,49 +178,55 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         String email = user.getEmail();
         int id = user.getID();
 
-        String color = null;
-        String password = null;
-
-        if (colorBox.getText().toString() == "" || colorBox.getText().toString().isEmpty()) {
-            color = user.getColor();
-        } else {
-            color = colorBox.getText().toString();
+        if ((chosenColor == "" ||chosenColor.isEmpty())
+                && (inputNewPassword.getText().toString() ==  "" || inputNewPassword.getText().toString().isEmpty()))
+        {
+            Toast.makeText(getApplicationContext(), "Please fill in a field to change!", Toast.LENGTH_SHORT).show();
         }
+        else {
+            String color = null;
+            String password = null;
 
-        if ((oldPasswordBox.getText().toString().isEmpty() || oldPasswordBox.getText().toString() == "")
-                && (newPasswordBox.getText().toString().isEmpty() || newPasswordBox.getText().toString() == "")) {
-            password = user.getPassword();
+            if (chosenColor.toString() == "" || chosenColor.toString().isEmpty()) {
+                color = user.getColor();
+            } else {
+                color = chosenColor.toString();
+            }
 
-        } else {
-            password = newPasswordBox.getText().toString();
+            if ((inputNewPassword.getText().toString().isEmpty() || inputNewPassword.getText().toString() == "")) {
+                password = user.getPassword();
+
+            } else {
+                password = inputNewPassword.getText().toString();
+            }
+
+            String suffix = null;
+
+            try {
+                suffix = "?first_name='" + URLEncoder.encode(fname, "UTF-8") + "'"
+                        + "&last_name='" + URLEncoder.encode(lname, "UTF-8") + "'"
+                        + "&color='" + URLEncoder.encode(color, "UTF-8") + "'"
+                        + "&password='" + URLEncoder.encode(password, "UTF-8") + "'"
+                        + "&email='" + URLEncoder.encode(email, "UTF-8") + "'"
+                        + "&id='" + URLEncoder.encode(String.valueOf(id), "UTF-8") + "'";
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            String cURL = USER_UPDATE_URL + suffix;
+
+            Log.d("", cURL);
+
+            final HashMap<String, String> parameter = new HashMap<>();
+            parameter.put("first_name", fname);
+            parameter.put("last_name", lname);
+            parameter.put("color", color);
+            parameter.put("password", password);
+            parameter.put("email", email);
+            parameter.put("id", String.valueOf(id));
+
+            updateUser(cURL, parameter);
         }
-
-        String suffix = null;
-
-        try {
-            suffix = "?first_name='" + URLEncoder.encode(fname, "UTF-8") + "'"
-                    + "&last_name='" + URLEncoder.encode(lname, "UTF-8") + "'"
-                    + "&color='" + URLEncoder.encode(color, "UTF-8") + "'"
-                    + "&password='" + URLEncoder.encode(password, "UTF-8") + "'"
-                    + "&email='" + URLEncoder.encode(email, "UTF-8") + "'"
-                    + "&id='" + URLEncoder.encode(String.valueOf(id), "UTF-8") + "'";
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        String cURL = USER_UPDATE_URL + suffix;
-
-        Log.d("", cURL);
-
-        final HashMap<String, String> parameter = new HashMap<>();
-        parameter.put("first_name", fname);
-        parameter.put("last_name", lname);
-        parameter.put("color", color);
-        parameter.put("password", password);
-        parameter.put("email", email);
-        parameter.put("id", String.valueOf(id));
-
-        updateUser(cURL, parameter);
 
     }
 

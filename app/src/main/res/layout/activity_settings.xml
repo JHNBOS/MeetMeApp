@@ -1,139 +1,82 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_settings"
+    android:id="@+id/settings"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:background="@color/colorPrimary"
-    android:paddingBottom="0dp"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:fillViewport="true"
     tools:context="nl.jhnbos.meetmeapp.Settings">
 
-    <TextView
-        android:id="@+id/colorTextView"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="74dp"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="Color"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/colorButton2"
-        android:layout_width="170dp"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/colorTextView"
-        android:layout_marginLeft="25dp"
-        android:layout_marginStart="25dp"
         android:background="@color/colorPrimary"
-        android:text="Pick Color"
-        android:textColor="@android:color/white" />
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="56dp">
 
-    <EditText
-        android:id="@+id/colorEditText2"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/colorTextView"
-        android:layout_marginLeft="18dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginStart="18dp"
-        android:layout_toEndOf="@+id/colorButton2"
-        android:layout_toRightOf="@+id/colorButton2"
-        android:ems="10"
-        android:inputType="text"
-        android:singleLine="true" />
+        <ImageView
+            android:id="@+id/logoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="75dp"
+            android:contentDescription="Logo"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            app:srcCompat="@drawable/logo"
+            tools:ignore="HardcodedText" />
 
-    <Space
-        android:id="@+id/spacer1"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/colorEditText2" />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_newPassword"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="8dp"
+            android:textColorHint="@android:color/white"
+            android:theme="@style/EditTextTheme"
+            android:visibility="visible">
 
-    <TextView
-        android:id="@+id/oldPasswordTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/spacer1"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="Old Password"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp" />
+            <EditText
+                android:id="@+id/input_newPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="New Password"
+                android:inputType="textPassword"
+                android:textColor="@android:color/white"
+                android:textColorLink="@color/colorAccent"
+                tools:ignore="HardcodedText" />
+        </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/oldPasswordEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/colorEditText2"
-        android:layout_alignLeft="@+id/colorButton2"
-        android:layout_alignRight="@+id/colorEditText2"
-        android:layout_alignStart="@+id/colorButton2"
-        android:layout_below="@+id/oldPasswordTextView"
-        android:ems="10"
-        android:inputType="textPassword" />
+        <Button
+            android:id="@+id/btn_newColor"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="45dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorPrimaryDark"
+            android:padding="12dp"
+            android:text="Pick Color"
+            android:textColor="@color/colorAccent"
+            tools:ignore="HardcodedText" />
 
-    <Space
-        android:id="@+id/spacer2"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/oldPasswordEditText" />
+        <Button
+            android:id="@+id/btn_changeSettings"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorPrimaryDark"
+            android:padding="12dp"
+            android:text="Change Settings"
+            android:textColor="@android:color/white"
+            tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/newPasswordTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/spacer2"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="New Password"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/newPasswordEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/oldPasswordEditText"
-        android:layout_alignLeft="@+id/oldPasswordEditText"
-        android:layout_alignRight="@+id/oldPasswordEditText"
-        android:layout_alignStart="@+id/oldPasswordEditText"
-        android:layout_below="@+id/newPasswordTextView"
-        android:ems="10"
-        android:inputType="textPassword" />
-
-    <Space
-        android:id="@+id/spacer3"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/newPasswordEditText" />
-
-    <Button
-        android:id="@+id/updateButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/colorPrimaryDarker"
-        android:text="Update"
-        android:textColor="@android:color/white" />
-</RelativeLayout>
+    </LinearLayout>
+</ScrollView>

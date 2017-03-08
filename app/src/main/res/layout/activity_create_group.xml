@@ -10,7 +10,6 @@
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
     android:paddingTop="56dp"
-    android:theme="@style/Base.V23.Theme.AppCompat"
     tools:context="nl.jhnbos.meetmeapp.CreateGroup">
 
     <ImageView
