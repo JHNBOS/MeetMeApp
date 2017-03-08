@@ -4,16 +4,32 @@
     android:id="@+id/activity_show_members"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     android:orientation="vertical"
     tools:context="nl.jhnbos.meetmeapp.ShowMembers">
+
+    <ImageView
+        android:id="@+id/logoView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:background="@color/colorBackground"
+        android:contentDescription="Logo"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:src="@drawable/logo"
+        tools:ignore="HardcodedText" />
 
     <ListView
         android:id="@+id/memberlistView"
         android:layout_width="match_parent"
-        android:layout_height="610dp"
-        android:background="@color/colorPrimary"
+        android:layout_height="510dp"
+        android:layout_marginTop="-28dp"
+        android:background="@color/colorBackground"
         android:cacheColorHint="@color/colorAccent"
         android:divider="@color/colorAccent"
+        android:dividerHeight="1dp"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false" />
 
@@ -23,7 +39,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:text="Return"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/white"
         android:textStyle="normal|bold"
         tools:ignore="HardcodedText" />
 

@@ -11,7 +11,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorBackground"
         android:orientation="vertical"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
@@ -123,7 +123,7 @@
             android:background="@color/colorPrimaryDark"
             android:padding="12dp"
             android:text="Pick Color"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/white"
             tools:ignore="HardcodedText" />
 
         <Button
@@ -136,7 +136,7 @@
             android:paddingBottom="12dp"
             android:paddingTop="12dp"
             android:text="Sign Up"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/white"
             tools:ignore="HardcodedText" />
 
 

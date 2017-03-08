@@ -39,7 +39,7 @@
         <activity
             android:name=".CreateGroup"
             android:label="Create Group"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -47,7 +47,7 @@
         <activity
             android:name=".AddContact"
             android:label="Add Contact"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -59,7 +59,7 @@
         <activity
             android:name=".AddGroupMember"
             android:label="Add Groupmembers"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -67,7 +67,7 @@
         <activity
             android:name=".ShowMembers"
             android:label="Show Groupmembers"
-            android:theme="@style/AppTheme.ActionBar">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -75,7 +75,7 @@
         <activity
             android:name=".ShowContact"
             android:label="Contact Info"
-            android:theme="@style/AppTheme.ActionBar">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -98,7 +98,7 @@
         <activity
             android:name=".Settings"
             android:label="Settings"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -106,7 +106,7 @@
         <activity
             android:name=".ShowInfo"
             android:label="My Details"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

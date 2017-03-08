@@ -25,7 +25,8 @@
         android:id="@+id/weekView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorAccent"
+        android:layout_marginTop="55dp"
+        android:background="@color/white"
         app:columnGap="8dp"
         app:dayBackgroundColor="#05000000"
         app:dayNameLength="length_short"
@@ -43,7 +44,6 @@
         app:nowLineColor="@color/colorPrimary"
         app:showNowLine="true"
         app:textSize="12sp"
-        app:todayBackgroundColor="#1848adff"
-        android:layout_marginTop="55dp"/>
+        app:todayBackgroundColor="#1848adff" />
 
 </android.support.design.widget.CoordinatorLayout>

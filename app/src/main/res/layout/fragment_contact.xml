@@ -10,7 +10,7 @@
         android:id="@+id/clist"
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorBackground"
         android:cacheColorHint="@color/colorAccent"
         android:divider="@color/colorAccent"
         android:dividerHeight="1dp"
@@ -23,7 +23,7 @@
         android:layout_height="60dp"
         android:background="@color/colorPrimaryDark"
         android:text="Add Contact"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/white"
         android:textStyle="normal|bold"
         tools:ignore="HardcodedText" />
 

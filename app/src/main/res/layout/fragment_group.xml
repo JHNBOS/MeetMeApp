@@ -10,8 +10,8 @@
         android:id="@+id/glist"
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:background="@color/colorPrimary"
-        android:cacheColorHint="@color/colorAccent"
+        android:background="@color/colorBackground"
+        android:cacheColorHint="@color/white"
         android:divider="@color/colorAccent"
         android:dividerHeight="1dp"
         android:footerDividersEnabled="false"
@@ -23,7 +23,7 @@
         android:layout_height="60dp"
         android:background="@color/colorPrimaryDark"
         android:text="Create Group"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/white"
         android:textStyle="normal|bold"
         tools:ignore="HardcodedText" />
 

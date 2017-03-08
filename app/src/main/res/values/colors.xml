@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#d749d669</color>
-    <color name="colorPrimaryDark">#d738a350</color>
-    <color name="colorPrimaryDarker">#d72d8741</color>
-    <color name="colorAccent">#ffffff</color>
+    <color name="colorBackground">#9e9e9e</color>
+    <color name="colorPrimary">#d7499dec</color>
+    <color name="colorPrimaryDark">#d7268be9</color>
+    <color name="colorPrimaryDarker">#d71180e7</color>
+    <color name="colorAccent">#ffc107</color>
     <color name="text_no_focus">#cccccc</color>
     <color name="black">#000000</color>
     <color name="jet">#222222</color>
@@ -13,6 +14,6 @@
     <color name="aluminum">#999999</color>
     <color name="base">#AAAAAA</color>
     <color name="iron">#cccccc</color>
-    <color name="white">#FFFFFF</color>
+    <color name="white">#ffffff</color>
     <color name="gold">#fff200</color>
 </resources>

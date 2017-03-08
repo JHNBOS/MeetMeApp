@@ -1,7 +1,7 @@
 <resources>
 
     <style name="itemTextStyle.AppTheme" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:background">@color/colorPrimaryDark</item>
     </style>
 
@@ -13,11 +13,11 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:itemTextAppearance">@style/itemTextStyle.AppTheme</item>
         <item name="android:itemBackground">@color/colorPrimaryDark</item>
-        <item name="android:actionMenuTextColor">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
     </style>
 
-    <style name="AppTheme.ActionBar" parent="Theme.AppCompat.Light">
+    <style name="AppTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -28,8 +28,8 @@
         <item name="android:itemBackground">@color/colorPrimaryDark</item>
         <item name="android:itemTextAppearance">@style/itemTextStyle.AppTheme</item>
         <item name="actionBarItemBackground">@color/colorPrimaryDark</item>
-        <item name="android:actionMenuTextColor">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
     </style>
 
     <style name="MyActionBar" parent="Theme.AppCompat.Light">
@@ -38,14 +38,14 @@
 
     <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/iron</item>
+        <item name="android:textColorPrimary">@color/white</item>
         <item name="android:background">@color/colorPrimaryDark</item>
     </style>
 
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
         <item name="colorAccent">@color/gold</item>
-        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/white</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
