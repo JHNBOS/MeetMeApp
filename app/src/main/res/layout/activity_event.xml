@@ -86,6 +86,7 @@
             android:layout_height="140dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="8dp"
+            android:calendarTextColor="@color/colorAccent"
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
             android:fitsSystemWindows="false"

@@ -14,6 +14,7 @@
         <item name="android:itemTextAppearance">@style/itemTextStyle.AppTheme</item>
         <item name="android:itemBackground">@color/colorPrimaryDark</item>
         <item name="android:actionMenuTextColor">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.ActionBar" parent="Theme.AppCompat.Light">
@@ -28,6 +29,7 @@
         <item name="android:itemTextAppearance">@style/itemTextStyle.AppTheme</item>
         <item name="actionBarItemBackground">@color/colorPrimaryDark</item>
         <item name="android:actionMenuTextColor">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorAccent</item>
     </style>
 
     <style name="MyActionBar" parent="Theme.AppCompat.Light">
