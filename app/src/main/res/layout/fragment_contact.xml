@@ -9,12 +9,12 @@
     <ListView
         android:id="@+id/clist"
         android:layout_width="match_parent"
-        android:layout_height="610dp"
+        android:layout_height="508dp"
         android:background="@color/colorPrimary"
         android:cacheColorHint="@color/colorAccent"
         android:divider="@color/colorAccent"
         android:footerDividersEnabled="false"
-        android:headerDividersEnabled="false"/>
+        android:headerDividersEnabled="false" />
 
     <Button
         android:id="@+id/addContactButton"

@@ -9,7 +9,7 @@
     <ListView
         android:id="@+id/glist"
         android:layout_width="match_parent"
-        android:layout_height="610dp"
+        android:layout_height="508dp"
         android:background="@color/colorPrimary"
         android:cacheColorHint="@color/colorAccent"
         android:divider="@color/colorAccent"
