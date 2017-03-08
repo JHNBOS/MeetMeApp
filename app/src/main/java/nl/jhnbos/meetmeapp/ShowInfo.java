@@ -26,12 +26,11 @@ public class ShowInfo extends AppCompatActivity implements View.OnClickListener 
     private String email;
 
     //Layout Items
-    private TextView firstnameField;
-    private TextView lastnameField;
-    private TextView emailField;
-    private View colorBox;
-    private TextView colorField;
-    private Button returnButton;
+    private TextView inputFirstName;
+    private TextView inputLastName;
+    private TextView inputEmail;
+    private View viewColor;
+    private Button btnReturn;
 
     //Objects
     private User user;
@@ -52,15 +51,14 @@ public class ShowInfo extends AppCompatActivity implements View.OnClickListener 
         user = new User();
 
         //Instantiating variables
-        firstnameField = (TextView) findViewById(R.id.firstnameField2);
-        lastnameField = (TextView) findViewById(R.id.lastnameField2);
-        emailField = (TextView) findViewById(R.id.emailField2);
-        colorField = (TextView) findViewById(R.id.colorField3);
-        colorBox = (View) findViewById(R.id.colorBox3);
-        returnButton = (Button) findViewById(R.id.returnMainButton);
+        inputFirstName = (TextView) findViewById(R.id.input_infoFirstName);
+        inputLastName = (TextView) findViewById(R.id.input_infoLastName);
+        inputEmail = (TextView) findViewById(R.id.input_infoEmail);
+        viewColor = (View) findViewById(R.id.view_color);
+        btnReturn = (Button) findViewById(R.id.btn_return);
 
         //Listener
-        returnButton.setOnClickListener(this);
+        btnReturn.setOnClickListener(this);
 
         //GetUser
         getUserJSON getUserJSON = null;
@@ -95,7 +93,7 @@ public class ShowInfo extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if (v == returnButton) {
+        if (v == btnReturn) {
             Intent intent = new Intent(ShowInfo.this, MainActivity.class);
             intent.putExtra("Email", email);
 
@@ -126,15 +124,19 @@ public class ShowInfo extends AppCompatActivity implements View.OnClickListener 
 
             }
 
-            firstnameField.setText(user.getFirstName());
-            lastnameField.setText(user.getLastName());
-            emailField.setText(user.getEmail());
-            colorField.setText("#" + user.getColor());
+            inputFirstName.setText(user.getFirstName());
+            inputLastName.setText(user.getLastName());
+            inputEmail.setText(user.getEmail());
 
             String color = "#" + user.getColor();
             int colorInt = Color.parseColor(color);
 
-            colorBox.setBackgroundColor(colorInt);
+            viewColor.setBackgroundColor(colorInt);
+
+            //Set non editable
+            inputFirstName.setEnabled(false);
+            inputLastName.setEnabled(false);
+            inputEmail.setEnabled(false);
         } catch (JSONException e) {
             e.printStackTrace();
         }

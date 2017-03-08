@@ -1,183 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_show_info"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    android:paddingBottom="0dp"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingTop="56dp"
     tools:context="nl.jhnbos.meetmeapp.ShowInfo">
 
-    <Space
-        android:id="@+id/spacer1"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />"
-
-    <TextView
-        android:id="@+id/fnameView2"
+    <ImageView
+        android:id="@+id/logoView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/spacer1"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="First Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:textStyle="normal|bold" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="40dp"
+        android:contentDescription="Logo"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:src="@drawable/logo"
+        tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/firstnameField2"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_infoFirstName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/colorField3"
-        android:layout_alignLeft="@+id/colorBox3"
-        android:layout_alignRight="@+id/colorField3"
-        android:layout_alignStart="@+id/colorBox3"
-        android:layout_below="@+id/fnameView2"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp" />
+        android:layout_height="75dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="8dp"
+        android:textColorHint="@android:color/white"
+        android:theme="@style/EditTextTheme"
+        android:visibility="visible">
 
-    <Space
-        android:id="@+id/spacer2"
+        <EditText
+            android:id="@+id/input_infoFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="First Name"
+            android:inputType="text"
+            android:textColor="@android:color/white"
+            android:textColorLink="@color/colorAccent"
+            tools:ignore="HardcodedText" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_infoLastName"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/firstnameField2" />
+        android:layout_height="75dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="8dp"
+        android:textColorHint="@android:color/white"
+        android:theme="@style/EditTextTheme"
+        android:visibility="visible">
 
-    <TextView
-        android:id="@+id/lnameView2"
+        <EditText
+            android:id="@+id/input_infoLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Last Name"
+            android:inputType="text"
+            android:textColor="@android:color/white"
+            android:textColorLink="@color/colorAccent"
+            tools:ignore="HardcodedText" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_infoEmail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/spacer2"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="Last Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:textStyle="normal|bold" />
+        android:layout_height="75dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="8dp"
+        android:textColorHint="@android:color/white"
+        android:theme="@style/EditTextTheme"
+        android:visibility="visible">
 
-    <TextView
-        android:id="@+id/lastnameField2"
+        <EditText
+            android:id="@+id/input_infoEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="text"
+            android:textColor="@android:color/white"
+            android:textColorLink="@color/colorAccent"
+            tools:ignore="HardcodedText,TextFields" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_infoColor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/colorField3"
-        android:layout_alignLeft="@+id/firstnameField2"
-        android:layout_alignRight="@+id/colorField3"
-        android:layout_alignStart="@+id/firstnameField2"
-        android:layout_below="@+id/lnameView2"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp" />
+        android:layout_height="75dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="8dp"
+        android:textColorHint="@android:color/white"
+        android:theme="@style/EditTextTheme"
+        android:visibility="visible">
 
-    <Space
-        android:id="@+id/spacer3"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/lastnameField2" />
-
-    <TextView
-        android:id="@+id/emailView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/spacer3"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="Email"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:textStyle="normal|bold" />
-
-    <TextView
-        android:id="@+id/emailField2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/colorField3"
-        android:layout_alignLeft="@+id/lastnameField2"
-        android:layout_alignRight="@+id/colorField3"
-        android:layout_alignStart="@+id/lastnameField2"
-        android:layout_below="@+id/emailView2"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp" />
-
-    <Space
-        android:id="@+id/spacer4"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/emailField2" />
-
-    <TextView
-        android:id="@+id/colorView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/spacer4"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="Color"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:textStyle="normal|bold" />
-
-    <View
-        android:id="@+id/colorBox3"
-        android:layout_width="120dp"
-        android:layout_height="25dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/colorView3"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp"
-        android:background="#3fe1fa"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp" />
-
-    <TextView
-        android:id="@+id/colorField3"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/colorBox3"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp" />
+        <View
+            android:id="@+id/view_color"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/returnMainButton"
+        android:id="@+id/btn_return"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_weight="1"
+        android:layout_marginBottom="24dp"
+        android:layout_marginTop="30dp"
         android:background="@color/colorPrimaryDark"
-        android:text="Return To Main Menu"
+        android:padding="12dp"
+        android:text="Return"
         android:textColor="@android:color/white"
-        android:textStyle="normal|bold" />
+        tools:ignore="HardcodedText" />
 
-</RelativeLayout>
+
+</LinearLayout>

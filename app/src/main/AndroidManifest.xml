@@ -38,14 +38,16 @@
         </activity>
         <activity
             android:name=".CreateGroup"
-            android:label="Create Group">
+            android:label="Create Group"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".AddContact"
-            android:label="Add Contact">
+            android:label="Add Contact"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -56,21 +58,24 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddGroupMember"
-            android:label="Add Groupmembers">
+            android:label="Add Groupmembers"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".ShowMembers"
-            android:label="Show Groupmembers">
+            android:label="Show Groupmembers"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".ShowContact"
-            android:label="Contact Info">
+            android:label="Contact Info"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -82,21 +87,24 @@
         </activity>
         <activity
             android:name=".Event"
-            android:label="Create Event">
+            android:label="Create Event"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Week" />
         </activity>
         <activity
             android:name=".Settings"
-            android:label="Settings">
+            android:label="Settings"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".ShowInfo"
-            android:label="My Details">
+            android:label="My Details"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

@@ -28,14 +28,11 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
     private String contact;
 
     //Textviews
-    private TextView firstnameField;
-    private TextView lastnameField;
-    private TextView emailField;
-    private View colorBox;
-    private TextView colorField;
-
-    //Layout
-    private Button returnButton;
+    private TextView inputFirstName;
+    private TextView inputLastName;
+    private TextView inputEmail;
+    private View viewColor;
+    private Button btnReturn;
 
     //Objects
     private StringRequest stringRequest1;
@@ -53,12 +50,11 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
         contact = this.getIntent().getStringExtra("Contact");
 
         //Instantiating variables
-        firstnameField = (TextView) findViewById(R.id.firstnameField);
-        lastnameField = (TextView) findViewById(R.id.lastnameField);
-        emailField = (TextView) findViewById(R.id.emailField);
-        colorField = (TextView) findViewById(R.id.colorField);
-        colorBox = (View) findViewById(R.id.colorBox);
-        returnButton = (Button) findViewById(R.id.returnContactButton);
+        inputFirstName = (TextView) findViewById(R.id.input_cinfoFirstName);
+        inputLastName = (TextView) findViewById(R.id.input_cinfoLastName);
+        inputEmail = (TextView) findViewById(R.id.input_cinfoEmail);
+        viewColor = (View) findViewById(R.id.cview_color);
+        btnReturn = (Button) findViewById(R.id.btn_creturn);
 
         String url1 = null;
 
@@ -71,7 +67,7 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
         getData(url1);
 
         //Listeners
-        returnButton.setOnClickListener(this);
+        btnReturn.setOnClickListener(this);
 
     }
 
@@ -116,15 +112,14 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
                         user.setPassword(jo.getString("password"));
                         user.setColor(jo.getString("color"));
 
-                        firstnameField.setText(user.getFirstName());
-                        lastnameField.setText(user.getLastName());
-                        emailField.setText(user.getEmail());
-                        colorField.setText("#" + user.getColor());
+                        inputFirstName.setText(user.getFirstName());
+                        inputLastName.setText(user.getLastName());
+                        inputEmail.setText(user.getEmail());
 
                         String color = "#" + user.getColor();
                         int colorInt = Color.parseColor(color);
 
-                        colorBox.setBackgroundColor(colorInt);
+                        viewColor.setBackgroundColor(colorInt);
                     }
 
                 } catch (JSONException e) {

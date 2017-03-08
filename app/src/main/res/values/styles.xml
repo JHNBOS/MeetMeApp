@@ -17,6 +17,7 @@
         <item name="android:actionBarItemBackground">@color/colorPrimaryDark</item>
         <item name="android:windowTitleBackgroundStyle">@color/colorPrimaryDark</item>
         <item name="android:itemBackground">@color/colorPrimaryDarker</item>
+        <item name="android:itemTextAppearance">@color/colorAccent</item>
     </style>
 
     <style name="MyActionBar" parent="Theme.AppCompat">

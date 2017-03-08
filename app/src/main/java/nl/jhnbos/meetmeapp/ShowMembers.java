@@ -55,13 +55,13 @@ public class ShowMembers extends AppCompatActivity implements View.OnClickListen
         //Instantiating variables
         group = this.getIntent().getStringExtra("Group");
         lv = (ListView) findViewById(R.id.memberlistView);
-        returnButton = (Button) findViewById(R.id.returnButton);
+        returnButton = (Button) findViewById(R.id.btn_mreturn);
         memberList = new ArrayList<>();
 
         http = new HTTP();
 
         //ADAPTER
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, memberList);
+        adapter = new ArrayAdapter<String>(this, R.layout.list_item, memberList);
 
         //Listeners
         returnButton.setOnClickListener(this);
