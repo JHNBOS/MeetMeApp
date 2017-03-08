@@ -155,7 +155,10 @@ public class ShowInfo extends AppCompatActivity implements View.OnClickListener 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading = ProgressDialog.show(ShowInfo.this, "Retrieving user...", null, true, true);
+            loading = new ProgressDialog(ShowInfo.this, R.style.AppTheme_Dark_Dialog);
+            loading.setIndeterminate(true);
+            loading.setMessage("Retrieving User...");
+            loading.show();
         }
 
         @Override

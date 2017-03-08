@@ -27,7 +27,7 @@ public class Login extends AppCompatActivity {
     private String password;
 
     //LAYOUT ITEMS
-    private Button loginButton;
+    private Button btnLogin;
     private TextView signUpLink;
     private EditText emailInput;
     private EditText passwordInput;
@@ -48,7 +48,7 @@ public class Login extends AppCompatActivity {
         //Instantiating variables
         emailInput = (EditText) findViewById(R.id.input_email);
         passwordInput = (EditText) findViewById(R.id.input_password);
-        loginButton = (Button) findViewById(R.id.btn_login);
+        btnLogin = (Button) findViewById(R.id.btn_login);
         signUpLink = (TextView) findViewById(R.id.link_signup);
 
         checkCredentials();
@@ -67,7 +67,7 @@ public class Login extends AppCompatActivity {
         URL = url;
 
         //Listeners
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin(URL);
@@ -84,6 +84,11 @@ public class Login extends AppCompatActivity {
 
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
+
+    public void onBackPressed() {
+        // disable going back to the MainActivity
+        moveTaskToBack(true);
+    }
 
     //Save username and password
     private void saveCredentials() {
@@ -134,6 +139,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void attemptLogin(final String url) {
+        btnLogin.setEnabled(false);
         final String email = emailInput.getText().toString().trim();
         final String password = passwordInput.getText().toString().trim();
 
@@ -146,7 +152,8 @@ public class Login extends AppCompatActivity {
                 loading = new ProgressDialog(Login.this, R.style.AppTheme_Dark_Dialog);
                 loading.setIndeterminate(true);
                 loading.setMessage("Authenticating...");
-                loading.show();            }
+                loading.show();
+            }
 
             @Override
             protected String doInBackground(Void... v) {
@@ -169,6 +176,7 @@ public class Login extends AppCompatActivity {
 
                 if (!s.equals(email + password)) {
                     Toast.makeText(Login.this, s, Toast.LENGTH_LONG).show();
+                    btnLogin.setEnabled(true);
                 } else {
                     saveCredentials();
 
@@ -177,6 +185,7 @@ public class Login extends AppCompatActivity {
 
                     Toast.makeText(Login.this, "Login Succeeded!", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
+                    finish();
                 }
 
             }

@@ -22,8 +22,8 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
     private String currentUser;
 
     //LAYOUT ITEMS
-    private EditText contactEmailField;
-    private Button addContactButton;
+    private EditText inputContact;
+    private Button btnAddContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +38,13 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        contactEmailField = (EditText) findViewById(R.id.contactEditText);
-        addContactButton = (Button) findViewById(R.id.addContactsButton);
+        inputContact = (EditText) findViewById(R.id.input_contact);
+        btnAddContact = (Button) findViewById(R.id.btn_addContact);
 
         currentUser = getIntent().getExtras().getString("Email");
 
         //Listeners
-        addContactButton.setOnClickListener(this);
+        btnAddContact.setOnClickListener(this);
     }
 
 
@@ -53,8 +53,8 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if (v == addContactButton) {
-            String contactEmail = contactEmailField.getText().toString();
+        if (v == btnAddContact) {
+            String contactEmail = inputContact.getText().toString();
             String url = null;
 
             try {
@@ -101,7 +101,10 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(AddContact.this, "Adding contact...", null, true, true);
+                loading = new ProgressDialog(AddContact.this, R.style.AppTheme_Dark_Dialog);
+                loading.setIndeterminate(true);
+                loading.setMessage("Adding Contact...");
+                loading.show();
             }
 
             @Override

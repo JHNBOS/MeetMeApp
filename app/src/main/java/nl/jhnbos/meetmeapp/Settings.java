@@ -126,7 +126,10 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(Settings.this, "Updating user...", null, true, true);
+                loading = new ProgressDialog(Settings.this, R.style.AppTheme_Dark_Dialog);
+                loading.setIndeterminate(true);
+                loading.setMessage("Updating User...");
+                loading.show();
             }
 
             @Override
@@ -264,7 +267,10 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading = ProgressDialog.show(Settings.this, "Retrieving user...", null, true, true);
+            loading = new ProgressDialog(Settings.this, R.style.AppTheme_Dark_Dialog);
+            loading.setIndeterminate(true);
+            loading.setMessage("Retrieving User...");
+            loading.show();
         }
 
         @Override

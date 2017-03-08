@@ -118,6 +118,7 @@ public class Register extends AppCompatActivity {
 
     //ATTEMPT REGISTER
     private void attemptRegister(final String url, final HashMap<String, String> parameters) {
+        btnSignUp.setEnabled(false);
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
 
@@ -146,9 +147,11 @@ public class Register extends AppCompatActivity {
 
                 if (!s.equals(Email)) {
                     Toast.makeText(Register.this, s, Toast.LENGTH_LONG).show();
+                    btnSignUp.setEnabled(true);
                 } else {
                     Toast.makeText(Register.this, "User Registered!", Toast.LENGTH_SHORT).show();
-                    Register.this.onBackPressed();
+                    //Register.this.onBackPressed();
+                    finish();
                 }
 
             }

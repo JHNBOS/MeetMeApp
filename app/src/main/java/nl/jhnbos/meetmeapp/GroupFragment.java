@@ -239,7 +239,10 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(getActivity(), "Retrieving groups...", null, true, true);
+                loading = new ProgressDialog(getActivity(), R.style.AppTheme_Dark_Dialog);
+                loading.setIndeterminate(true);
+                loading.setMessage("Retrieving Groups...");
+                loading.show();
             }
 
             @Override
@@ -271,8 +274,10 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(getActivity(), "Retrieving user...", null, true, true);
-            }
+                loading = new ProgressDialog(getActivity(), R.style.AppTheme_Dark_Dialog);
+                loading.setIndeterminate(true);
+                loading.setMessage("Retrieving User...");
+                loading.show();            }
 
             @Override
             protected String doInBackground(Void... v) {

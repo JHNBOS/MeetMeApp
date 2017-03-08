@@ -20,16 +20,20 @@ import java.util.HashMap;
 
 public class CreateGroup extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String GET_ALL_GROUPS_URL = "http://jhnbos.nl/android/getAllGroups.php";
+    //STRINGS
     private static final String ADDGROUP_URL = "http://jhnbos.nl/android/addGroup.php";
     private static final String ADDGROUPMEMBER_URL = "http://jhnbos.nl/android/addGroupMember.php";
-    public StringRequest stringRequest1;
-    public ArrayList<String> controlList;
-    private EditText groupNameField;
-    private Button createButton;
     private String currentUser;
     private String groupName;
+
+    //OBJECTS
+    public ArrayList<String> controlList;
     private HTTP http;
+
+    //LAYOUT ITEMS
+    private EditText inputName;
+    private Button btnCreateGroup;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +48,14 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        groupNameField = (EditText) findViewById(R.id.gnameEditText);
-        createButton = (Button) findViewById(R.id.createGButton);
+        inputName = (EditText) findViewById(R.id.input_group);
+        btnCreateGroup = (Button) findViewById(R.id.btn_createGroup);
+
+        btnCreateGroup.setOnClickListener(this);
+
+        //Initialize variables
         controlList = new ArrayList<>();
-
-        createButton.setOnClickListener(this);
-
         currentUser = getIntent().getStringExtra("Email");
-
         http = new HTTP();
     }
     /*-----------------------------------------------------------------------------------------------------*/
@@ -59,9 +63,9 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if (v == createButton) {
+        if (v == btnCreateGroup) {
 
-            groupName = groupNameField.getText().toString();
+            groupName = inputName.getText().toString();
             String url1 = null;
             String url2 = null;
 
@@ -134,8 +138,10 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(CreateGroup.this, "Creating group...", null, true, true);
-            }
+                loading = new ProgressDialog(CreateGroup.this, R.style.AppTheme_Dark_Dialog);
+                loading.setIndeterminate(true);
+                loading.setMessage("Creating Group...");
+                loading.show();            }
 
             @Override
             protected String doInBackground(Void... v) {
@@ -174,7 +180,6 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
                 } else {
                     Toast.makeText(CreateGroup.this, s, Toast.LENGTH_LONG).show();
                     CreateGroup.this.onBackPressed();
-                    //addGroupMember(group, email);
                 }
 
             }

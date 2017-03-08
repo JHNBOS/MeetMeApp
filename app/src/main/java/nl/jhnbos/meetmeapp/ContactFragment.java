@@ -146,8 +146,10 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(getActivity(), "Retrieving contacts...", null, true, true);
-            }
+                loading = new ProgressDialog(getActivity(), R.style.AppTheme_Dark_Dialog);
+                loading.setIndeterminate(true);
+                loading.setMessage("Retrieving Contacts...");
+                loading.show();            }
 
             @Override
             protected String doInBackground(Void... v) {

@@ -167,7 +167,10 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(AddGroupMember.this, "Adding groupmember(s)...", null, true, true);
+                loading = new ProgressDialog(AddGroupMember.this, R.style.AppTheme_Dark_Dialog);
+                loading.setIndeterminate(true);
+                loading.setMessage("Adding Groupmember(s)...");
+                loading.show();
             }
 
             @Override
@@ -208,7 +211,10 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(AddGroupMember.this, "Retrieving contacts...", null, true, true);
+                loading = new ProgressDialog(AddGroupMember.this, R.style.AppTheme_Dark_Dialog);
+                loading.setIndeterminate(true);
+                loading.setMessage("Retrieving Contacts...");
+                loading.show();
             }
 
             @Override

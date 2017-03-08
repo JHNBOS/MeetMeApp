@@ -415,7 +415,10 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(Week.this, "Removing event...", null, true, true);
+                loading = new ProgressDialog(Week.this, R.style.AppTheme_Dark_Dialog);
+                loading.setIndeterminate(true);
+                loading.setMessage("Removing Event...");
+                loading.show();
             }
 
             @Override
@@ -568,7 +571,10 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading = ProgressDialog.show(Week.this, "Retrieving events...", null, true, true);
+            loading = new ProgressDialog(Week.this, R.style.AppTheme_Dark_Dialog);
+            loading.setIndeterminate(true);
+            loading.setMessage("Retrieving Events...");
+            loading.show();
         }
 
         @Override
@@ -598,7 +604,10 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading = ProgressDialog.show(Week.this, "Retrieving user...", null, true, true);
+            loading = new ProgressDialog(Week.this, R.style.AppTheme_Dark_Dialog);
+            loading.setIndeterminate(true);
+            loading.setMessage("Retrieving User...");
+            loading.show();
         }
 
         @Override

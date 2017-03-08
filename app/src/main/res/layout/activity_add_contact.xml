@@ -1,68 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_add_contact"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="0dp"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="nl.jhnbos.meetmeapp.AddContact">
-
-    <TextView
-        android:id="@+id/contactTitleView"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_add_contact"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textSize="18sp"
-        android:textStyle="normal|bold" />
-
-    <TextView
-        android:id="@+id/cnameView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/titleView"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="123dp"
-        android:text="Contact Email"
-        android:textAlignment="textStart"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="18sp"
-        android:textStyle="normal|bold" />
-
-    <Button
-        android:id="@+id/addContactsButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:background="@color/colorPrimary"
-        android:text="Add"
-        android:textColor="@android:color/white"
-        android:textStyle="normal|bold" />
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="56dp"
+        android:theme="@style/Base.V23.Theme.AppCompat"
+        tools:context="nl.jhnbos.meetmeapp.AddContact">
 
-    <EditText
-        android:id="@+id/contactEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/cnameView"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="13dp"
-        android:ems="10"
-        android:inputType="textEmailAddress" />
+        <ImageView
+            android:id="@+id/logoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="85dp"
+            android:contentDescription="Logo"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:src="@drawable/logo"
+            tools:ignore="HardcodedText" />
 
-</RelativeLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_contact"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="8dp"
+            android:textColorHint="@android:color/white"
+            android:theme="@style/EditTextTheme"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/input_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Contact Email"
+                android:inputType="textEmailAddress"
+                android:textColor="@android:color/white"
+                android:textColorLink="@color/colorAccent"
+                tools:ignore="HardcodedText" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_addContact"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorPrimaryDark"
+            android:padding="12dp"
+            android:text="Add Contact"
+            android:textColor="@android:color/white"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
