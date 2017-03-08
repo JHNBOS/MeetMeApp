@@ -44,7 +44,6 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
         <item name="colorAccent">@color/gold</item>
         <item name="android:textColorPrimary">@color/colorAccent</item>
-        <item name="android:background">@color/colorPrimaryDark</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

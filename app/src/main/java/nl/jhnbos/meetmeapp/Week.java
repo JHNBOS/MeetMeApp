@@ -60,7 +60,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         setContentView(R.layout.activity_week_view);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        toolbar.setTitle(group);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(group);
 
