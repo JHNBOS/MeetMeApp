@@ -21,7 +21,7 @@
         <activity
             android:name=".Register"
             android:label="Register"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Login" />
@@ -29,7 +29,7 @@
         <activity
             android:name=".Login"
             android:label="Let's Meet"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,7 +39,7 @@
         <activity
             android:name=".CreateGroup"
             android:label="Create Group"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -47,7 +47,7 @@
         <activity
             android:name=".AddContact"
             android:label="Add Contact"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -59,7 +59,7 @@
         <activity
             android:name=".AddGroupMember"
             android:label="Add Groupmembers"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -67,7 +67,7 @@
         <activity
             android:name=".ShowMembers"
             android:label="Show Groupmembers"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.ActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -75,12 +75,14 @@
         <activity
             android:name=".ShowContact"
             android:label="Contact Info"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.ActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".Week">
+        <activity
+            android:name=".Week"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -88,7 +90,7 @@
         <activity
             android:name=".Event"
             android:label="Create Event"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Week" />
@@ -96,7 +98,7 @@
         <activity
             android:name=".Settings"
             android:label="Settings"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -104,7 +106,7 @@
         <activity
             android:name=".ShowInfo"
             android:label="My Details"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

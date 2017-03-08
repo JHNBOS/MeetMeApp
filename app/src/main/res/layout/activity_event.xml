@@ -83,7 +83,7 @@
         <DatePicker
             android:id="@+id/input_startDate"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="140dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="8dp"
             android:calendarViewShown="false"
@@ -95,7 +95,7 @@
         <TimePicker
             android:id="@+id/input_startTime"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="140dp"
             android:layout_marginBottom="14dp"
             android:layout_marginTop="8dp"
             android:timePickerMode="spinner"
@@ -113,7 +113,7 @@
         <DatePicker
             android:id="@+id/input_endDate"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="140dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="8dp"
             android:calendarViewShown="false"
@@ -125,7 +125,7 @@
         <TimePicker
             android:id="@+id/input_endTime"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="140dp"
             android:layout_marginBottom="14dp"
             android:layout_marginTop="8dp"
             android:timePickerMode="spinner"
