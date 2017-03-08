@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Layout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -78,7 +79,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
         registerForContextMenu(lv);
 
         //ADAPTER
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, contactsList);
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item, contactsList);
 
         // Inflate the layout for this fragment
         return rl;

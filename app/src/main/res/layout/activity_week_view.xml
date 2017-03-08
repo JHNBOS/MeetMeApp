@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_week_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <nl.jhnbos.meetmeapp.WeekView
         android:id="@+id/weekView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorAccent"
         app:columnGap="8dp"
         app:dayBackgroundColor="#05000000"
         app:dayNameLength="length_short"
@@ -28,4 +30,4 @@
         app:textSize="12sp"
         app:todayBackgroundColor="#1848adff" />
 
-</RelativeLayout>
+</LinearLayout>

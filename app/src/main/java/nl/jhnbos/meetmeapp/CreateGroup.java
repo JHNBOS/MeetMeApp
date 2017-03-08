@@ -1,6 +1,7 @@
 package nl.jhnbos.meetmeapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -174,8 +175,10 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
                 if (!s.equals(group)) {
                     Toast.makeText(CreateGroup.this, s, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(CreateGroup.this, s, Toast.LENGTH_LONG).show();
-                    CreateGroup.this.onBackPressed();
+                    Toast.makeText(CreateGroup.this, "Group Created", Toast.LENGTH_LONG).show();
+                    Intent main = new Intent(CreateGroup.this, MainActivity.class);
+                    startActivity(main);
+                    finish();
                 }
 
             }

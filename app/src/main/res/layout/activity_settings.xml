@@ -4,6 +4,7 @@
     android:id="@+id/activity_settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:paddingBottom="0dp"
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
@@ -132,7 +133,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryDarker"
         android:text="Update"
         android:textColor="@android:color/white" />
 </RelativeLayout>

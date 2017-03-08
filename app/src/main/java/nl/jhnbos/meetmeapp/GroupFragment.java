@@ -104,7 +104,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
         registerForContextMenu(lv);
 
         //ADAPTER
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groupsList);
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item, groupsList);
 
         // Inflate the layout for this fragment
         return rl;
