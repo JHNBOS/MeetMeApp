@@ -120,6 +120,11 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
                         int colorInt = Color.parseColor(color);
 
                         viewColor.setBackgroundColor(colorInt);
+
+                        //Set non editable
+                        inputFirstName.setEnabled(false);
+                        inputLastName.setEnabled(false);
+                        inputEmail.setEnabled(false);
                     }
 
                 } catch (JSONException e) {
