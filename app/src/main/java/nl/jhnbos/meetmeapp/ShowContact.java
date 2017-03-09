@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,10 +28,10 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
     private static final String GET_USER_URL = "http://jhnbos.nl/android/getUser.php";
     private String contact;
 
-    //Textviews
-    private TextView inputFirstName;
-    private TextView inputLastName;
-    private TextView inputEmail;
+    //Edit Texts
+    private EditText inputFirstName;
+    private EditText inputLastName;
+    private EditText inputEmail;
     private View viewColor;
     private Button btnReturn;
 
@@ -50,9 +51,9 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
         contact = this.getIntent().getStringExtra("Contact");
 
         //Instantiating variables
-        inputFirstName = (TextView) findViewById(R.id.input_cinfoFirstName);
-        inputLastName = (TextView) findViewById(R.id.input_cinfoLastName);
-        inputEmail = (TextView) findViewById(R.id.input_cinfoEmail);
+        inputFirstName = (EditText) findViewById(R.id.input_cinfoFirstName);
+        inputLastName = (EditText) findViewById(R.id.input_cinfoLastName);
+        inputEmail = (EditText) findViewById(R.id.input_cinfoEmail);
         viewColor = (View) findViewById(R.id.cview_color);
         btnReturn = (Button) findViewById(R.id.btn_creturn);
 
