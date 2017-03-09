@@ -108,25 +108,6 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    //ADD GROUPMEMBER
-    private void addGroupMember(String name, String email) {
-        try {
-            String response = http.sendGet(ADDGROUPMEMBER_URL + "?name=" + URLEncoder.encode(name, "UTF-8")
-                    + "&email=" + URLEncoder.encode(email, "UTF-8"));
-
-            if (response.equals(name)) {
-                //Go back to main
-                CreateGroup.this.onBackPressed();
-            } else {
-                Toast.makeText(this, "Problem with creating group!", Toast.LENGTH_LONG).show();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
     //ADD GROUP
     private void addGroup(final String url, final String url2, final String group, final String email) {
         class GetJSON extends AsyncTask<Void, Void, String> {
@@ -172,12 +153,14 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
                 super.onPostExecute(s);
                 loading.dismiss();
 
-                if (!s.equals(group)) {
+                if (!s.equals(currentUser)) {
                     Toast.makeText(CreateGroup.this, s, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(CreateGroup.this, "Group Created", Toast.LENGTH_LONG).show();
-                    Intent main = new Intent(CreateGroup.this, MainActivity.class);
-                    startActivity(main);
+                    Toast.makeText(CreateGroup.this, "Group Created!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(CreateGroup.this, MainActivity.class);
+                    intent.putExtra("Email", email);
+
+                    startActivity(intent);
                     finish();
                 }
 

@@ -126,8 +126,10 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
                 if (!s.equals(contact_email)) {
                     Toast.makeText(AddContact.this, s, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(AddContact.this, "Contact added!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddContact.this, "Contact Added!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(AddContact.this, MainActivity.class);
+                    intent.putExtra("Email", email);
+
                     startActivity(intent);
                     finish();
                 }
