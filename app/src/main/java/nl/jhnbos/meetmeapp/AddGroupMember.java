@@ -1,6 +1,7 @@
 package nl.jhnbos.meetmeapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -194,7 +195,12 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
                 if (!s.contains(group)) {
                     Toast.makeText(AddGroupMember.this, s, Toast.LENGTH_LONG).show();
                 } else {
-                    AddGroupMember.this.onBackPressed();
+                    Toast.makeText(AddGroupMember.this, "Groupmember Added!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(AddGroupMember.this, MainActivity.class);
+                    intent.putExtra("Email", email);
+
+                    startActivity(intent);
+                    finish();
                 }
             }
 
