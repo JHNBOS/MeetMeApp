@@ -10,4 +10,5 @@
     android:paddingRight="25dp"
     android:paddingTop="2dp"
     android:textAppearance="?android:attr/textAppearanceListItemSmall"
-    android:textColor="@color/white" />
+    android:textColor="@color/jet"
+    android:textSize="17sp" />

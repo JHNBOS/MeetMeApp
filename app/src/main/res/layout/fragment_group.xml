@@ -12,8 +12,8 @@
         android:layout_height="500dp"
         android:background="@color/colorBackground"
         android:cacheColorHint="@color/white"
-        android:divider="@color/colorAccent"
-        android:dividerHeight="1dp"
+        android:divider="@android:color/holo_orange_light"
+        android:dividerHeight="2dp"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false" />
 
@@ -23,6 +23,7 @@
         android:layout_height="60dp"
         android:background="@color/colorPrimaryDark"
         android:text="Create Group"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textStyle="normal|bold"
         tools:ignore="HardcodedText" />

@@ -8,13 +8,14 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:itemTextAppearance">@style/itemTextStyle.AppTheme</item>
         <item name="android:itemBackground">@color/colorPrimaryDark</item>
         <item name="android:actionMenuTextColor">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:editTextColor">@color/jet</item>
     </style>
 
     <style name="AppTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -30,6 +31,7 @@
         <item name="actionBarItemBackground">@color/colorPrimaryDark</item>
         <item name="android:actionMenuTextColor">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:editTextColor">@color/jet</item>
     </style>
 
     <style name="MyActionBar" parent="Theme.AppCompat.Light">

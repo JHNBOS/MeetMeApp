@@ -63,6 +63,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         toolbar.setTitle(group);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(group);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //ALLOW HTTP
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
