@@ -153,7 +153,7 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
                 super.onPostExecute(s);
                 loading.dismiss();
 
-                if (!s.equals(groupName)) {
+                if (!s.equals(currentUser)) {
                     Toast.makeText(CreateGroup.this, s, Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(CreateGroup.this, "Group Created!", Toast.LENGTH_SHORT).show();
