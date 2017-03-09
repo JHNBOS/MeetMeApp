@@ -8,12 +8,24 @@
     android:orientation="vertical"
     tools:context="nl.jhnbos.meetmeapp.AddGroupMember">
 
+    <ImageView
+        android:id="@+id/logoView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:background="@color/colorBackground"
+        android:contentDescription="Logo"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:src="@drawable/logo"
+        tools:ignore="HardcodedText" />
 
     <ListView
         android:id="@+id/gmlist"
         android:layout_width="match_parent"
-        android:layout_height="610dp"
-        android:background="@color/colorPrimary"
+        android:layout_height="510dp"
+        android:background="@color/colorBackground"
         android:cacheColorHint="@color/colorAccent"
         android:divider="@color/colorAccent"
         android:dividerHeight="1dp"
@@ -26,7 +38,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:text="Add To Group"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/white"
         android:textStyle="normal|bold"
         tools:ignore="HardcodedText" />
 

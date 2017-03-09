@@ -54,6 +54,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         //INITIALIZING VARIABLES
         email = getIntent().getStringExtra("Email");
         user = new User();
+        chosenColor = "";
 
         inputNewPassword = (EditText) findViewById(R.id.input_newPassword);
 

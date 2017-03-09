@@ -14,7 +14,7 @@
         <item name="android:itemTextAppearance">@style/itemTextStyle.AppTheme</item>
         <item name="android:itemBackground">@color/colorPrimaryDark</item>
         <item name="android:actionMenuTextColor">@color/white</item>
-        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimary">@color/jet</item>
         <item name="android:editTextColor">@color/jet</item>
     </style>
 

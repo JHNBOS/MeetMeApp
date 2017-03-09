@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:orientation="vertical"
-    android:paddingLeft="24dp"
-    android:paddingRight="24dp"
     android:paddingTop="56dp"
     tools:context="nl.jhnbos.meetmeapp.ShowInfo">
 
@@ -16,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="50dp"
         android:contentDescription="Logo"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
@@ -29,7 +27,9 @@
         android:layout_height="75dp"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="8dp"
-        android:textColorHint="@android:color/white"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:textColorHint="@color/jet"
         android:theme="@style/EditTextTheme"
         android:visibility="visible">
 
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:hint="First Name"
             android:inputType="text"
-            android:textColor="@android:color/white"
+            android:textColor="@color/jet"
             android:textColorLink="@color/colorAccent"
             tools:ignore="HardcodedText" />
     </android.support.design.widget.TextInputLayout>
@@ -50,7 +50,9 @@
         android:layout_height="75dp"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="8dp"
-        android:textColorHint="@android:color/white"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:textColorHint="@color/jet"
         android:theme="@style/EditTextTheme"
         android:visibility="visible">
 
@@ -60,7 +62,7 @@
             android:layout_height="wrap_content"
             android:hint="Last Name"
             android:inputType="text"
-            android:textColor="@android:color/white"
+            android:textColor="@color/jet"
             android:textColorLink="@color/colorAccent"
             tools:ignore="HardcodedText" />
     </android.support.design.widget.TextInputLayout>
@@ -71,7 +73,9 @@
         android:layout_height="75dp"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="8dp"
-        android:textColorHint="@android:color/white"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:textColorHint="@color/jet"
         android:theme="@style/EditTextTheme"
         android:visibility="visible">
 
@@ -81,7 +85,7 @@
             android:layout_height="wrap_content"
             android:hint="Email"
             android:inputType="text"
-            android:textColor="@android:color/white"
+            android:textColor="@color/jet"
             android:textColorLink="@color/colorAccent"
             tools:ignore="HardcodedText,TextFields" />
     </android.support.design.widget.TextInputLayout>
@@ -92,7 +96,9 @@
         android:layout_height="75dp"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="8dp"
-        android:textColorHint="@android:color/white"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:textColorHint="@color/jet"
         android:theme="@style/EditTextTheme"
         android:visibility="visible">
 
@@ -107,8 +113,7 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="75dp"
         android:background="@color/colorPrimaryDark"
         android:padding="12dp"
         android:text="Return"
