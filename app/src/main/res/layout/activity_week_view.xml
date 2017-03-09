@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbarWeek"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimaryDarker"
@@ -41,8 +41,11 @@
         app:maxHourHeight="250dp"
         app:minHourHeight="20dp"
         app:noOfVisibleDays="3"
-        app:nowLineColor="@color/colorPrimary"
         app:showNowLine="true"
+        app:nowLineThickness="2dp"
+        app:showHalfHours="true"
+        app:useNewColoringStyle="true"
+        app:nowLineColor="@color/colorPrimary"
         app:textSize="12sp"
         app:todayBackgroundColor="#1848adff" />
 

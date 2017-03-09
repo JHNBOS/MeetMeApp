@@ -13,8 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +35,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
+
+import hirondelle.date4j.DateTime;
 
 public class Week extends AppCompatActivity implements WeekView.EventClickListener, WeekView.EventLongPressListener, WeekView.EmptyViewClickListener, WeekView.ScrollListener, MonthLoader.MonthChangeListener, WeekView.MonthChangeListener {
 
@@ -59,8 +65,16 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_view);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(group);
+        //Get objects and strings from intent
+        group = getIntent().getExtras().getString("Group");
+        user = new User();
+        contact = getIntent().getExtras().getString("Email");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarWeek);
+        if (toolbar != null) {
+            this.setTitle(group);
+        }
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(group);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -68,11 +82,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         //ALLOW HTTP
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
-        //Get objects and strings from intent
-        group = getIntent().getExtras().getString("Group");
-        user = new User();
-        contact = getIntent().getExtras().getString("Email");
 
         //Lists
         eventList = new ArrayList<>();
@@ -101,6 +110,8 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
         setupDateTimeInterpreter(true);
+
+        mWeekView.goToHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
