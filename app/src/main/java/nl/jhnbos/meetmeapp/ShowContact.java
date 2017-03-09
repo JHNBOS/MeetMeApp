@@ -39,7 +39,6 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
     private Button btnReturn;
 
     //Objects
-    private StringRequest stringRequest1;
     private User user;
 
     @Override

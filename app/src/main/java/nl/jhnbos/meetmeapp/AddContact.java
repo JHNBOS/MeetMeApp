@@ -1,6 +1,7 @@
 package nl.jhnbos.meetmeapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -125,7 +126,10 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
                 if (!s.equals(contact_email)) {
                     Toast.makeText(AddContact.this, s, Toast.LENGTH_LONG).show();
                 } else {
-                    AddContact.this.onBackPressed();
+                    Toast.makeText(AddContact.this, "Contact added!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(AddContact.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
 
             }
