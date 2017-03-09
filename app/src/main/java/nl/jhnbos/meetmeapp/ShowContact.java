@@ -1,9 +1,12 @@
 package nl.jhnbos.meetmeapp;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +40,7 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
 
     //Objects
     private StringRequest stringRequest1;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,20 +60,21 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
         inputEmail = (EditText) findViewById(R.id.input_cinfoEmail);
         viewColor = (View) findViewById(R.id.cview_color);
         btnReturn = (Button) findViewById(R.id.btn_creturn);
-
-        String url1 = null;
-
-        try {
-            url1 = GET_USER_URL + "?email='" + URLEncoder.encode(contact, "UTF-8") + "'";
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        getData(url1);
+        user = new User();
 
         //Listeners
         btnReturn.setOnClickListener(this);
 
+        //GetUser
+        ShowContact.getUserJSON getUserJSON = null;
+
+        try {
+            getUserJSON = new ShowContact.getUserJSON();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        getUserJSON.execute();
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
@@ -88,63 +93,84 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        super.onBackPressed();
+    }
+
 
     //END OF LISTENERS
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
-    public void getData(String url1) {
-        stringRequest1 = new StringRequest(url1, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jArray = new JSONArray(response);
-                    JSONArray ja = jArray.getJSONArray(0);
+    private void initUser(String response) {
+        try {
+            JSONArray jArray = new JSONArray(response);
+            JSONArray ja = jArray.getJSONArray(0);
 
-                    User user = new User();
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject jo = ja.getJSONObject(i);
 
-                    for (int i = 0; i < ja.length(); i++) {
-                        JSONObject jo = ja.getJSONObject(i);
+                user.setID(jo.getInt("id"));
+                user.setFirstName(jo.getString("first_name"));
+                user.setLastName(jo.getString("last_name"));
+                user.setPassword(jo.getString("password"));
+                user.setEmail(jo.getString("email"));
+                user.setColor(jo.getString("color"));
 
-                        user.setID(jo.getInt("id"));
-                        user.setFirstName(jo.getString("first_name"));
-                        user.setLastName(jo.getString("last_name"));
-                        user.setEmail(jo.getString("email"));
-                        user.setPassword(jo.getString("password"));
-                        user.setColor(jo.getString("color"));
-
-                        inputFirstName.setText(user.getFirstName());
-                        inputLastName.setText(user.getLastName());
-                        inputEmail.setText(user.getEmail());
-
-                        String color = "#" + user.getColor();
-                        int colorInt = Color.parseColor(color);
-
-                        viewColor.setBackgroundColor(colorInt);
-
-                        //Set non editable
-                        inputFirstName.setEnabled(false);
-                        inputLastName.setEnabled(false);
-                        inputEmail.setEnabled(false);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ShowContact.this, "Error while reading from url", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        VolleySingleton.getInstance(ShowContact.this).addToRequestQueue(stringRequest1);
+            inputFirstName.setText(user.getFirstName());
+            inputLastName.setText(user.getLastName());
+            inputEmail.setText(user.getEmail());
+
+            String color = "#" + user.getColor();
+            int colorInt = Color.parseColor(color);
+
+            viewColor.setBackgroundColor(colorInt);
+
+            //Set non editable
+            inputFirstName.setEnabled(false);
+            inputLastName.setEnabled(false);
+            inputEmail.setEnabled(false);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void onClick(View v) {
-        super.onBackPressed();
+    //GET USER
+    private class getUserJSON extends AsyncTask<Void, Void, String> {
+        String url = GET_USER_URL + "?email='" + URLEncoder.encode(contact, "UTF-8") + "'";
+        ProgressDialog loading;
+
+        private getUserJSON() throws UnsupportedEncodingException {
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading = new ProgressDialog(ShowContact.this, R.style.AppTheme_Dark_Dialog);
+            loading.setIndeterminate(true);
+            loading.setMessage("Retrieving Contact...");
+            loading.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... v) {
+            RequestHandler rh = new RequestHandler();
+            String res = rh.sendGetRequest(url);
+            return res;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            loading.dismiss();
+
+            initUser(s);
+        }
     }
 
     //END OF METHODS
