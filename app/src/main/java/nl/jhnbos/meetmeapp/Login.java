@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -92,7 +93,7 @@ public class Login extends AppCompatActivity {
 
     //Save username and password
     private void saveCredentials() {
-        SharedPreferences sharedPref = Login.this.getSharedPreferences("LoginPrefs", 0);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("username", email);
         editor.putString("password", password);
@@ -102,7 +103,7 @@ public class Login extends AppCompatActivity {
 
     //Check username and password
     private void checkCredentials() {
-        SharedPreferences sharedPref = Login.this.getSharedPreferences("LoginPrefs", 0);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPref.edit();
 
         if (sharedPref != null) {

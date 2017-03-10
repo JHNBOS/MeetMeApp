@@ -15,9 +15,9 @@
         android:layout_height="550dp"
         android:layout_weight="1.03"
         android:background="@color/colorBackground"
-        android:cacheColorHint="@color/colorAccent"
-        android:divider="@color/colorAccent"
-        android:dividerHeight="2dp"
+        android:cacheColorHint="@color/divider"
+        android:divider="@color/divider"
+        android:dividerHeight="1dp"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false" />
 

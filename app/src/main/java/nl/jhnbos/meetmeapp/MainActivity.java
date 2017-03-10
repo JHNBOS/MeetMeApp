@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         //BACK BUTTON
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Instantiating variables
         email = this.getIntent().getStringExtra("Email");
