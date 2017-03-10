@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@android:id/text1"
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/textView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_alignParentBottom="false"
+    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:paddingLeft="20dp"
+    android:paddingRight="8dp"
     android:textAppearance="?android:attr/textAppearanceListItemSmall"
     android:textColor="@color/jet"
-    android:textSize="17sp"
-    tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
+    android:textSize="20sp" />

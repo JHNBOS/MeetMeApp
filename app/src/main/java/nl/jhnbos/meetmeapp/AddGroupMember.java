@@ -69,7 +69,7 @@ public class AddGroupMember extends AppCompatActivity implements View.OnClickLis
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         //ADAPTER
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, contactsList);
+        adapter = new ArrayAdapter<String>(this, R.layout.list_item_multiple, contactsList);
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
