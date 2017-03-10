@@ -6,29 +6,18 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:orientation="vertical"
-    tools:context="nl.jhnbos.meetmeapp.AddGroupMember">
-
-    <ImageView
-        android:id="@+id/logoView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="50dp"
-        android:background="@color/colorBackground"
-        android:contentDescription="Logo"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:src="@drawable/logo"
-        tools:ignore="HardcodedText" />
+    tools:context="nl.jhnbos.meetmeapp.AddGroupMember"
+    android:weightSum="1">
 
     <ListView
         android:id="@+id/gmlist"
         android:layout_width="match_parent"
-        android:layout_height="511dp"
+        android:layout_height="550dp"
+        android:layout_weight="1.03"
         android:background="@color/colorBackground"
         android:cacheColorHint="@color/colorAccent"
         android:divider="@color/colorAccent"
-        android:dividerHeight="1dp"
+        android:dividerHeight="2dp"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false" />
 
