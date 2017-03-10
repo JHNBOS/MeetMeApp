@@ -1,6 +1,7 @@
 package nl.jhnbos.meetmeapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -24,8 +25,9 @@ public class Login extends AppCompatActivity {
 
     //STRINGS
     private static final String LOGIN_URL = "http://jhnbos.nl/android/login.php";
-    private String email;
-    private String password;
+    private String email = "";
+    private String password = "";
+    private SharedPreferences sharedPref;
 
     //LAYOUT ITEMS
     private Button btnLogin;
@@ -47,6 +49,7 @@ public class Login extends AppCompatActivity {
         );
 
         //Instantiating variables
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         emailInput = (EditText) findViewById(R.id.input_email);
         passwordInput = (EditText) findViewById(R.id.input_password);
         btnLogin = (Button) findViewById(R.id.btn_login);
@@ -86,29 +89,39 @@ public class Login extends AppCompatActivity {
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF METHODS
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkCredentials();
+
+    }
+
     public void onBackPressed() {
         // disable going back to the MainActivity
         moveTaskToBack(true);
     }
 
     //Save username and password
-    private void saveCredentials() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    private void saveCredentials(String email, String password) {
+        Log.d("Login", "Start Saving preferences");
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("username", email);
-        editor.putString("password", password);
-        editor.commit();
+        editor.putString("userEmail", email);
+        editor.putString("userPassword", password);
 
+        Log.d("EMAIL", email);
+        Log.d("PASSWORD", password);
+        editor.apply();
     }
 
     //Check username and password
     private void checkCredentials() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Log.d("Login", "Start Searching preferences");
+
         SharedPreferences.Editor editor = sharedPref.edit();
 
         if (sharedPref != null) {
-            String emailValue = sharedPref.getString("username", "");
-            String passwordValue = sharedPref.getString("password", "");
+            String emailValue = sharedPref.getString("userEmail", "");
+            String passwordValue = sharedPref.getString("userPassword", "");
 
             if (emailValue != "" || !emailValue.isEmpty()) {
                 email = emailValue;
@@ -130,19 +143,13 @@ public class Login extends AppCompatActivity {
                 editor.remove("password");
                 editor.commit();
             }
-        } else {
-            email = emailInput.getText().toString().trim();
-            password = passwordInput.getText().toString().trim();
         }
-
-        Log.d("EMAIL", email);
-        Log.d("PASSWORD", password);
     }
 
     private void attemptLogin(final String url) {
         btnLogin.setEnabled(false);
-        final String email = emailInput.getText().toString().trim();
-        final String password = passwordInput.getText().toString().trim();
+        final String email = emailInput.getText().toString();
+        final String password = passwordInput.getText().toString();
 
         class GetJSON extends AsyncTask<Void, Void, String> {
             ProgressDialog loading;
@@ -179,14 +186,14 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this, s, Toast.LENGTH_LONG).show();
                     btnLogin.setEnabled(true);
                 } else {
-                    saveCredentials();
+                    saveCredentials(email, password);
 
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     intent.putExtra("Email", email);
 
                     Toast.makeText(Login.this, "Login Succeeded!", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
-                    finish();
+                    //finish();
                 }
 
             }

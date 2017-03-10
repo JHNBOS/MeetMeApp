@@ -229,8 +229,6 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
     @Override
     public void onEmptyViewClicked(Calendar time) {
-        Toast.makeText(Week.this, String.valueOf(time.get(Calendar.MONTH) + 1), Toast.LENGTH_LONG).show();
-
         //mWeekView.notifyDatasetChanged();
     }
 
