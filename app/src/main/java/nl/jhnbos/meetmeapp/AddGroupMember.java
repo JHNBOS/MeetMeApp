@@ -28,7 +28,7 @@ import java.util.HashMap;
 public class AddGroupMember extends AppCompatActivity implements View.OnClickListener {
 
     public static final String ADD_GROUPMEMBER_URL = "http://jhnbos.nl/android/addGroupMember.php";
-    public static final String GET_ALL_CONTACTS_URL = "http://jhnbos.nl/android/getAllContacts.php";
+    public static final String GET_ALL_CONTACTS_URL = "http://jhnbos.nl/android/getAllNonGroupMembers.php";
 
     //LISTS
     private ArrayList<String> contactsList;
