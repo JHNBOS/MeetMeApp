@@ -9,4 +9,30 @@
         <item name="colorAccent">@android:color/holo_green_light</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/jet</item>
+        <item name="actionBarTheme">@style/MyActionBar</item>
+        <item name="android:editTextColor">@color/jet</item>
+        <item name="android:itemBackground">@color/colorPrimaryDarker</item>
+        <item name="android:itemTextAppearance">@style/itemTextStyle.AppTheme</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDarker</item>
+    </style>
+
+    <style name="AppTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryDarker</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarker</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionBarTheme">@style/MyActionBar</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:editTextColor">@color/jet</item>
+        <item name="android:itemBackground">@color/colorPrimaryDarker</item>
+        <item name="android:itemTextAppearance">@style/itemTextStyle.AppTheme</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDarker</item>
+    </style>
 </resources>
