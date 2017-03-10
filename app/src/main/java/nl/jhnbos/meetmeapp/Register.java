@@ -83,7 +83,11 @@ public class Register extends AppCompatActivity {
                 parameter.put("password", password);
                 parameter.put("email", email);
 
-                attemptRegister(cURL, parameter);
+                if(!email.contains("@") || !email.contains(".")){
+                    Toast.makeText(getApplicationContext(), "Please enter a valid email!", Toast.LENGTH_LONG).show();
+                } else {
+                    attemptRegister(cURL, parameter);
+                }
 
             }
         });

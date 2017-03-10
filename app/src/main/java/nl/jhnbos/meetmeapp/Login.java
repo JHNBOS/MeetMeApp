@@ -74,7 +74,13 @@ public class Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin(URL);
+                String email = emailInput.getText().toString();
+
+                if(!email.contains("@") || !email.contains(".")){
+                    Toast.makeText(getApplicationContext(), "Please enter a valid email!", Toast.LENGTH_LONG).show();
+                } else {
+                    attemptLogin(URL);
+                }
             }
         });
         signUpLink.setOnClickListener(new View.OnClickListener() {
