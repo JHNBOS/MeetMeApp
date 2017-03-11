@@ -41,12 +41,12 @@
         app:maxHourHeight="250dp"
         app:minHourHeight="20dp"
         app:noOfVisibleDays="3"
-        app:showNowLine="true"
+        app:nowLineColor="@color/colorPrimary"
         app:nowLineThickness="2dp"
         app:showHalfHours="true"
-        app:useNewColoringStyle="true"
-        app:nowLineColor="@color/colorPrimary"
+        app:showNowLine="true"
         app:textSize="12sp"
-        app:todayBackgroundColor="#1848adff" />
+        app:todayBackgroundColor="#1848adff"
+        app:useNewColoringStyle="true" />
 
 </android.support.design.widget.CoordinatorLayout>

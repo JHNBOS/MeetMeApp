@@ -12,8 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.StringRequest;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -24,11 +22,10 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
     //STRINGS
     private static final String ADDGROUP_URL = "http://jhnbos.nl/android/addGroup.php";
     private static final String ADDGROUPMEMBER_URL = "http://jhnbos.nl/android/addGroupMember.php";
-    private String currentUser;
-    private String groupName;
-
     //OBJECTS
     public ArrayList<String> controlList;
+    private String currentUser;
+    private String groupName;
     private HTTP http;
 
     //LAYOUT ITEMS
@@ -119,7 +116,8 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
                 loading = new ProgressDialog(CreateGroup.this, R.style.AppTheme_Dark_Dialog);
                 loading.setIndeterminate(true);
                 loading.setMessage("Creating Group...");
-                loading.show();            }
+                loading.show();
+            }
 
             @Override
             protected String doInBackground(Void... v) {

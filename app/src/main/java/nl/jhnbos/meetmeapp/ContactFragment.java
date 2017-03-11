@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.text.Layout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -151,7 +149,8 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
                 loading = new ProgressDialog(getActivity(), R.style.AppTheme_Dark_Dialog);
                 loading.setIndeterminate(true);
                 loading.setMessage("Retrieving Contacts...");
-                loading.show();            }
+                loading.show();
+            }
 
             @Override
             protected String doInBackground(Void... v) {

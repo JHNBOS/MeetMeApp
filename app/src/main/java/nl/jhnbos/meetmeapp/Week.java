@@ -13,13 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,9 +31,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TimeZone;
-
-import hirondelle.date4j.DateTime;
 
 public class Week extends AppCompatActivity implements WeekView.EventClickListener, WeekView.EventLongPressListener, WeekView.EmptyViewClickListener, WeekView.ScrollListener, MonthLoader.MonthChangeListener, WeekView.MonthChangeListener {
 
@@ -501,7 +494,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     }
 
     private void showEventInfo(WeekViewEvent event) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Week.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(Week.this, R.style.AppTheme_Dark_Dialog);
         builder.setTitle("Event Info");
 
         float dpi = this.getResources().getDisplayMetrics().density;

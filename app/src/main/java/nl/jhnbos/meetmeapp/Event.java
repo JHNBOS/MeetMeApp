@@ -1,6 +1,5 @@
 package nl.jhnbos.meetmeapp;
 
-import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -219,15 +218,12 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
 
             if (ev_title == "" || ev_title.isEmpty()) {
                 Toast.makeText(Event.this, "Please fill in all fields!", Toast.LENGTH_LONG).show();
-            }
-            else if(startDate == endDate){
+            } else if (startDate == endDate) {
                 Toast.makeText(Event.this, "Start and end cannot be the same time!", Toast.LENGTH_LONG).show();
-            }
-            else if(startDay == endDay && startMonth == endMonth && startYear == endYear
-                    && startHour == endHour && startMinute > endMinute){
+            } else if (startDay == endDay && startMonth == endMonth && startYear == endYear
+                    && startHour == endHour && startMinute > endMinute) {
                 Toast.makeText(Event.this, "End time cannot be before start time!", Toast.LENGTH_LONG).show();
-            }
-            else {
+            } else {
                 addEvent();
             }
 

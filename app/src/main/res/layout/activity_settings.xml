@@ -14,14 +14,15 @@
         android:layout_height="wrap_content"
         android:background="@color/colorBackground"
         android:orientation="vertical"
-        android:paddingTop="56dp">
+        android:paddingTop="56dp"
+        android:weightSum="1">
 
         <ImageView
             android:id="@+id/logoView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="75dp"
+            android:layout_marginBottom="45dp"
             android:contentDescription="Logo"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
@@ -29,15 +30,52 @@
             tools:ignore="HardcodedText" />
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_firstName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:theme="@style/EditTextTheme">
+
+            <EditText
+                android:id="@+id/input_sfirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="hint"
+                tools:ignore="HardcodedText" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_lastName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:theme="@style/EditTextTheme">
+
+            <EditText
+                android:id="@+id/input_slastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="hint"
+                tools:ignore="HardcodedText" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/text_newPassword"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
             android:theme="@style/EditTextTheme"
-            android:visibility="visible">
+            android:visibility="visible"
+            app:passwordToggleEnabled="true">
 
             <EditText
                 android:id="@+id/input_newPassword"
@@ -50,26 +88,60 @@
                 tools:ignore="HardcodedText" />
         </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/btn_newColor"
-            android:layout_width="150dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:background="@color/colorPrimaryDark"
-            android:padding="12dp"
-            android:text="Pick Color"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            android:textColor="@color/white"
-            tools:ignore="HardcodedText" />
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_newColor"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_weight="0.77"
+                android:background="@color/colorPrimaryDark"
+                android:padding="12dp"
+                android:text="Pick Color"
+                android:textColor="@color/white"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/text_infoColor"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:gravity="right"
+                android:textColorHint="@color/jet"
+                android:theme="@style/EditTextTheme"
+                android:visibility="visible"
+                app:passwordToggleEnabled="true"
+                tools:ignore="RtlHardcoded">
+
+                <View
+                    android:id="@+id/sview_color"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:gravity="right" />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
 
         <Button
             android:id="@+id/btn_changeSettings"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="183dp"
+            android:layout_marginTop="109dp"
             android:background="@color/colorPrimaryDark"
             android:padding="12dp"
             android:text="Change Settings"

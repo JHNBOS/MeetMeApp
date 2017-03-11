@@ -1,10 +1,12 @@
 package nl.jhnbos.meetmeapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -23,12 +25,21 @@ public class MainActivity extends AppCompatActivity {
         //BACK BUTTON
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         //Instantiating variables
         email = this.getIntent().getStringExtra("Email");
 
         setupTabs();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ShowDialog();
+        return;
     }
 
     /*-----------------------------------------------------------------------------------------------------*/
@@ -88,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
     //END OF METHODS
     /*-----------------------------------------------------------------------------------------------------*/
     //BEGIN OF LISTENERS
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -110,12 +122,35 @@ public class MainActivity extends AppCompatActivity {
 
                 startActivity(infoIntent);
                 return true;
-            case R.id.home:
-                super.onBackPressed();
+            case android.R.id.home:
+                ShowDialog();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void ShowDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dark_Dialog);
+        builder.setTitle("Logging out...");
+        builder.setMessage("Are you sure you want to log out?");
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //TODO
+                //dialog.dismiss();
+                Intent login = new Intent(MainActivity.this, Login.class);
+                startActivity(login);
+                finish();
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //TODO
+                dialog.dismiss();
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
     //END OF LISTENERS
 }

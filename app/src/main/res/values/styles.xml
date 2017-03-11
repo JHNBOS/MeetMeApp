@@ -16,7 +16,8 @@
         <item name="android:editTextColor">@color/jet</item>
         <item name="android:itemBackground">@color/colorPrimaryDarker</item>
         <item name="android:itemTextAppearance">@style/itemTextStyle.AppTheme</item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/colorPrimaryDarker</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/colorPrimaryDarker
+        </item>
     </style>
 
     <style name="AppTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -29,7 +30,8 @@
         <item name="android:editTextColor">@color/jet</item>
         <item name="android:itemBackground">@color/colorPrimaryDarker</item>
         <item name="android:itemTextAppearance">@style/itemTextStyle.AppTheme</item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/colorPrimaryDarker</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/colorPrimaryDarker
+        </item>
     </style>
 
     <style name="MyActionBar" parent="Theme.AppCompat.Light">
@@ -52,7 +54,7 @@
     </style>
 
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/white</item>
     </style>

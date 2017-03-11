@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:orientation="vertical"
-    tools:context="nl.jhnbos.meetmeapp.AddGroupMember"
-    android:weightSum="1">
+    android:weightSum="1"
+    tools:context="nl.jhnbos.meetmeapp.AddGroupMember">
 
     <ListView
         android:id="@+id/gmlist"

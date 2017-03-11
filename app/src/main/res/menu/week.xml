@@ -7,7 +7,7 @@
         android:id="@+id/eventcreate"
         android:orderInCategory="1"
         android:title="Create Event"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/action_day_view"

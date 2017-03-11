@@ -4,12 +4,10 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
@@ -83,7 +81,9 @@ public class Register extends AppCompatActivity {
                 parameter.put("password", password);
                 parameter.put("email", email);
 
-                if(!email.contains("@") || !email.contains(".")){
+                if (email == "" || fname == "" || lname == "" || color == "" || password == "") {
+                    Toast.makeText(getApplicationContext(), "Please enter all fields!", Toast.LENGTH_LONG).show();
+                } else if (!email.contains("@") || !email.contains(".")) {
                     Toast.makeText(getApplicationContext(), "Please enter a valid email!", Toast.LENGTH_LONG).show();
                 } else {
                     attemptRegister(cURL, parameter);

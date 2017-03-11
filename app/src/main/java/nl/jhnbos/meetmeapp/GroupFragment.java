@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.android.volley.toolbox.StringRequest;
 
@@ -279,7 +277,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
                 loading = new ProgressDialog(getActivity(), R.style.AppTheme_Dark_Dialog);
                 loading.setIndeterminate(true);
                 loading.setMessage("Retrieving User...");
-                loading.show();            }
+                loading.show();
+            }
 
             @Override
             protected String doInBackground(Void... v) {

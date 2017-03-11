@@ -1,7 +1,6 @@
 package nl.jhnbos.meetmeapp;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -76,7 +75,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 String email = emailInput.getText().toString();
 
-                if(!email.contains("@") || !email.contains(".")){
+                if (!email.contains("@") || !email.contains(".")) {
                     Toast.makeText(getApplicationContext(), "Please enter a valid email!", Toast.LENGTH_LONG).show();
                 } else {
                     attemptLogin(URL);

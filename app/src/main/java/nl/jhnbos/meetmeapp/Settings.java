@@ -2,6 +2,7 @@ package nl.jhnbos.meetmeapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -33,6 +34,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
     //LAYOUT ITEMS
     private EditText inputNewPassword;
+    private EditText inputFirstName;
+    private EditText inputLastName;
+    private View viewColor;
     private Button btnColorPicker;
     private Button btnUpdate;
 
@@ -57,7 +61,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         chosenColor = "";
 
         inputNewPassword = (EditText) findViewById(R.id.input_newPassword);
-
+        inputFirstName = (EditText) findViewById(R.id.input_sfirstName);
+        inputLastName = (EditText) findViewById(R.id.input_slastName);
+        viewColor = (View) findViewById(R.id.sview_color);
         btnColorPicker = (Button) findViewById(R.id.btn_newColor);
         btnUpdate = (Button) findViewById(R.id.btn_changeSettings);
 
@@ -163,6 +169,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 String hex = numbers.substring(Math.max(0, numbers.length() - 6));
 
                 chosenColor = hex.toUpperCase();
+                viewColor.setBackgroundColor(Color.parseColor("#" + chosenColor));
             }
 
             @Override
@@ -174,19 +181,19 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
     //Run updateUser
     private void runUpdate() {
-        String fname = user.getFirstName();
-        String lname = user.getLastName();
         String email = user.getEmail();
         int id = user.getID();
 
-        if ((chosenColor == "" ||chosenColor.isEmpty())
-                && (inputNewPassword.getText().toString() ==  "" || inputNewPassword.getText().toString().isEmpty()))
-        {
+        if ((chosenColor == "" || chosenColor.isEmpty())
+                && (inputNewPassword.getText().toString() == "" || inputNewPassword.getText().toString().isEmpty())
+                && (inputFirstName.getText().toString() == "" || inputFirstName.getText().toString().isEmpty())
+                && (inputLastName.getText().toString() == "" || inputLastName.getText().toString().isEmpty())) {
             Toast.makeText(getApplicationContext(), "Please fill in a field to change!", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             String color = null;
             String password = null;
+            String fname = null;
+            String lname = null;
 
             if (chosenColor.toString() == "" || chosenColor.toString().isEmpty()) {
                 color = user.getColor();
@@ -199,6 +206,20 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
             } else {
                 password = inputNewPassword.getText().toString();
+            }
+
+            if ((inputFirstName.getText().toString().isEmpty() || inputFirstName.getText().toString() == "")) {
+                fname = user.getFirstName();
+
+            } else {
+                fname = inputFirstName.getText().toString();
+            }
+
+            if ((inputLastName.getText().toString().isEmpty() || inputLastName.getText().toString() == "")) {
+                lname = user.getLastName();
+
+            } else {
+                lname = inputLastName.getText().toString();
             }
 
             String suffix = null;
@@ -246,8 +267,17 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 user.setPassword(jo.getString("password"));
                 user.setEmail(jo.getString("email"));
                 user.setColor(jo.getString("color"));
-
             }
+
+            inputFirstName.setText(user.getFirstName());
+            inputLastName.setText(user.getLastName());
+            inputNewPassword.setText(user.getPassword());
+
+            String color = "#" + user.getColor();
+            int colorInt = Color.parseColor(color);
+
+            viewColor.setBackgroundColor(colorInt);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

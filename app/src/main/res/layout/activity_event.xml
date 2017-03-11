@@ -3,8 +3,8 @@
     android:id="@+id/activity_event"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:fillViewport="true"
     android:background="@color/colorPrimary"
+    android:fillViewport="true"
     tools:context="nl.jhnbos.meetmeapp.Event">
 
     <LinearLayout
@@ -62,11 +62,11 @@
             android:id="@+id/text_start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
             android:text="Start"
             android:textColor="@color/jet"
             android:textSize="18sp"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
             tools:ignore="HardcodedText" />
 
         <DatePicker
@@ -99,10 +99,10 @@
             android:id="@+id/text_end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="End"
-            android:textColor="@color/jet"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
+            android:text="End"
+            android:textColor="@color/jet"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
 
