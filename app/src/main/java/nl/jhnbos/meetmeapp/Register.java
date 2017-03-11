@@ -1,6 +1,7 @@
 package nl.jhnbos.meetmeapp;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class Register extends AppCompatActivity {
     private EditText inputEmail;
     private Button btnSignUp;
     private Button btnColorPick;
+    private View viewColor;
 
 
     @Override
@@ -45,6 +47,7 @@ public class Register extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.input_password);
         inputEmail = (EditText) findViewById(R.id.input_email);
         btnSignUp = (Button) findViewById(R.id.btn_signUp);
+        viewColor = (View) findViewById(R.id.rview_color);
         btnColorPick = (Button) findViewById(R.id.btn_color);
         chosenColor = new String();
 
@@ -172,7 +175,11 @@ public class Register extends AppCompatActivity {
                 currentColor = color;
                 String numbers = String.format("%x", color);
 
-                chosenColor = numbers.substring(Math.max(0, numbers.length() - 6));
+                String hex = numbers.substring(Math.max(0, numbers.length() - 6));
+
+                chosenColor = hex.toUpperCase();
+                viewColor.setBackgroundColor(Color.parseColor("#" + chosenColor));
+
             }
 
             @Override

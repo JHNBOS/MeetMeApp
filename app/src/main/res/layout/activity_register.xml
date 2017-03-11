@@ -117,26 +117,58 @@
                 tools:ignore="HardcodedText" />
         </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/btn_color"
-            android:layout_width="150dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="45dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/colorPrimaryDark"
-            android:padding="12dp"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            android:text="Pick Color"
-            android:textColor="@color/white"
-            tools:ignore="HardcodedText" />
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_color"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_weight="0.77"
+                android:background="@color/colorPrimaryDark"
+                android:padding="12dp"
+                android:text="Pick Color"
+                android:textColor="@color/white"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/text_infoColor"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:gravity="right"
+                android:textColorHint="@color/jet"
+                android:theme="@style/EditTextTheme"
+                android:visibility="visible"
+                app:passwordToggleEnabled="true"
+                tools:ignore="RtlHardcoded">
+
+                <View
+                    android:id="@+id/rview_color"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:gravity="right" />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_signUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="30dp"
             android:background="@color/colorPrimaryDark"
             android:paddingBottom="12dp"
             android:paddingTop="12dp"
