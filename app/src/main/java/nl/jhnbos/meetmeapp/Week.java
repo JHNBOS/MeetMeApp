@@ -500,7 +500,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         float dpi = this.getResources().getDisplayMetrics().density;
 
         final TextView input = new TextView(this);
-        input.setTextColor(R.style.itemTextStyle_AppTheme);
+        input.setTextColor(getResources().getColor(R.color.white));
         input.setTextSize(16);
 
         builder.setView(input, (int) (25 * dpi), (int) (8 * dpi), (int) (14 * dpi), (int) (8 * dpi));

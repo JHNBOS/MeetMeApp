@@ -32,7 +32,6 @@
                 android:layout_height="wrap_content"
                 android:hint="Title"
                 android:inputType="text"
-                android:textColor="@color/jet"
                 android:textColorLink="@color/colorAccent"
                 tools:ignore="HardcodedText" />
         </android.support.design.widget.TextInputLayout>
@@ -55,7 +54,6 @@
                 android:layout_height="wrap_content"
                 android:hint="Location"
                 android:inputType="text"
-                android:textColor="@color/jet"
                 android:textColorLink="@color/colorAccent"
                 tools:ignore="HardcodedText" />
         </android.support.design.widget.TextInputLayout>
