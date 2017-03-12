@@ -113,7 +113,7 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = new ProgressDialog(CreateGroup.this, R.style.AppTheme_Dark_Dialog);
+                loading = new ProgressDialog(CreateGroup.this, R.style.AppTheme_Dialog);
                 loading.setIndeterminate(true);
                 loading.setMessage("Creating Group...");
                 loading.show();

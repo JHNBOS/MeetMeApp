@@ -100,7 +100,7 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = new ProgressDialog(AddContact.this, R.style.AppTheme_Dark_Dialog);
+                loading = new ProgressDialog(AddContact.this, R.style.AppTheme_Dialog);
                 loading.setIndeterminate(true);
                 loading.setMessage("Adding Contact...");
                 loading.show();

@@ -142,7 +142,7 @@ public class ShowContact extends AppCompatActivity implements View.OnClickListen
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading = new ProgressDialog(ShowContact.this, R.style.AppTheme_Dark_Dialog);
+            loading = new ProgressDialog(ShowContact.this, R.style.AppTheme_Dialog);
             loading.setIndeterminate(true);
             loading.setMessage("Retrieving Contact...");
             loading.show();

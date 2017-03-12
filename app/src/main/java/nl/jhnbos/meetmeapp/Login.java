@@ -162,7 +162,7 @@ public class Login extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = new ProgressDialog(Login.this, R.style.AppTheme_Dark_Dialog);
+                loading = new ProgressDialog(Login.this, R.style.AppTheme_Dialog);
                 loading.setIndeterminate(true);
                 loading.setMessage("Authenticating...");
                 loading.show();

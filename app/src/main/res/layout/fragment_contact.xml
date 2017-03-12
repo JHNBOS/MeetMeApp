@@ -9,7 +9,8 @@
     <ListView
         android:id="@+id/clist"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="0dp"
+        android:layout_weight="5"
         android:background="@color/colorBackground"
         android:cacheColorHint="@color/divider"
         android:divider="@color/divider"

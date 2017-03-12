@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void ShowDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dark_Dialog);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_Dialog);
         builder.setTitle("Logging out...");
         builder.setMessage("Are you sure you want to log out?");
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {

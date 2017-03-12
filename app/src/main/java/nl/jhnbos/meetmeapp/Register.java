@@ -132,7 +132,7 @@ public class Register extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = new ProgressDialog(Register.this, R.style.AppTheme_Dark_Dialog);
+                loading = new ProgressDialog(Register.this, R.style.AppTheme_Dialog);
                 loading.setIndeterminate(true);
                 loading.setMessage("Creating Account...");
                 loading.show();

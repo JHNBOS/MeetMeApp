@@ -88,7 +88,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
 
     //SHOW DIALOG WHEN DELETING GROUP
     private void ShowDialog(final String data, final String email) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
         builder.setTitle("Remove Contact?");
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -146,7 +146,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener, A
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = new ProgressDialog(getActivity(), R.style.AppTheme_Dark_Dialog);
+                loading = new ProgressDialog(getActivity(), R.style.AppTheme_Dialog);
                 loading.setIndeterminate(true);
                 loading.setMessage("Retrieving Contacts...");
                 loading.show();

@@ -11,7 +11,8 @@
     <ListView
         android:id="@+id/memberlistView"
         android:layout_width="match_parent"
-        android:layout_height="556dp"
+        android:layout_height="0dp"
+        android:layout_weight="5"
         android:background="@color/colorBackground"
         android:cacheColorHint="@color/divider"
         android:divider="@color/divider"

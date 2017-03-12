@@ -113,7 +113,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
 
     //SHOW DIALOG WHEN DELETING GROUP
     private void ShowDialog(final String data) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_Dialog);
         builder.setTitle("Remove Group?");
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -239,7 +239,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = new ProgressDialog(getActivity(), R.style.AppTheme_Dark_Dialog);
+                loading = new ProgressDialog(getActivity(), R.style.AppTheme_Dialog);
                 loading.setIndeterminate(true);
                 loading.setMessage("Retrieving Groups...");
                 loading.show();
@@ -274,10 +274,10 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = new ProgressDialog(getActivity(), R.style.AppTheme_Dark_Dialog);
-                loading.setIndeterminate(true);
-                loading.setMessage("Retrieving User...");
-                loading.show();
+                //loading = new ProgressDialog(getActivity(), R.style.AppTheme_Dialog);
+                //loading.setIndeterminate(true);
+                //loading.setMessage("Retrieving User...");
+                //loading.show();
             }
 
             @Override
@@ -291,7 +291,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Ada
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                loading.dismiss();
+                //loading.dismiss();
 
                 initUser(s);
             }

@@ -419,7 +419,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = new ProgressDialog(Week.this, R.style.AppTheme_Dark_Dialog);
+                loading = new ProgressDialog(Week.this, R.style.AppTheme_Dialog);
                 loading.setIndeterminate(true);
                 loading.setMessage("Removing Event...");
                 loading.show();
@@ -473,7 +473,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
 
     //SHOW DIALOG WHEN DELETING EVENT
     private void ShowDialog(final WeekViewEvent data) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Week.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(Week.this, R.style.AppTheme_Dialog);
         builder.setTitle("Remove Event?");
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -494,12 +494,13 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
     }
 
     private void showEventInfo(WeekViewEvent event) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Week.this, R.style.AppTheme_Dark_Dialog);
+        AlertDialog.Builder builder = new AlertDialog.Builder(Week.this, R.style.AppTheme_Dialog);
         builder.setTitle("Event Info");
 
         float dpi = this.getResources().getDisplayMetrics().density;
 
         final TextView input = new TextView(this);
+        input.setTextColor(R.style.itemTextStyle_AppTheme);
         input.setTextSize(16);
 
         builder.setView(input, (int) (25 * dpi), (int) (8 * dpi), (int) (14 * dpi), (int) (8 * dpi));
@@ -575,7 +576,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading = new ProgressDialog(Week.this, R.style.AppTheme_Dark_Dialog);
+            loading = new ProgressDialog(Week.this, R.style.AppTheme_Dialog);
             loading.setIndeterminate(true);
             loading.setMessage("Retrieving Events...");
             loading.show();
@@ -608,7 +609,7 @@ public class Week extends AppCompatActivity implements WeekView.EventClickListen
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading = new ProgressDialog(Week.this, R.style.AppTheme_Dark_Dialog);
+            loading = new ProgressDialog(Week.this, R.style.AppTheme_Dialog);
             loading.setIndeterminate(true);
             loading.setMessage("Retrieving User...");
             loading.show();
